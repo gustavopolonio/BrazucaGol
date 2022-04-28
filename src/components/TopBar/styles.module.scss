@@ -1,0 +1,93 @@
+.container {
+  width: 100%;
+  background: #DEE2E6;
+}
+
+.content {
+  width: 100%;
+  max-width: 1440px;
+  padding: 0.5rem 2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.searchBox {
+  
+  label {
+    padding: 0.5rem 1rem;
+    background: #495057;
+    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+
+    input {
+      border: none;
+      background: #495057;
+      color: #F8F9FA;
+      padding: 0 1rem 0 0.5rem;
+  
+      &::placeholder {
+        color: #DEE2E6;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.seasonInfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+
+  .onlinePlayersBox {
+    position: relative;
+    margin: 0 1rem;
+
+    .onlinePlayers {
+      display: block;
+      text-align: center;
+      background: #007200;
+      padding: 0.2rem 2rem;
+      border-radius: 2rem;
+      color: #DEE2E6;
+    }
+
+    span {
+      width: 100%;
+      display: block;
+      text-align: center;
+      margin-top: 0.2rem;
+    }
+    
+    .timeRound {
+      position: absolute;
+      top: 106%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.25rem;
+    }
+  }
+}
+
+.authButton {
+  background: #F21B3F;
+  border: none;
+  padding: 0.3rem 0.5rem;
+  font-weight: bold;
+  color: #F8F9FA;
+  display: flex;
+  align-items: center;
+
+  transition: filter 0.2s;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+
+  svg {
+    margin-left: 0.6rem;
+  }
+}
