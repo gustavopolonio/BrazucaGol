@@ -20,7 +20,9 @@ export function Header() {
             </div>
           </div>
 
-          <div className={styles.progressBar}></div>
+          <div className={styles.progressBarContainer}>
+            <div className={styles.fillerProgressBar}></div>
+          </div>
 
           <table>
             <tbody>

@@ -8,7 +8,7 @@ interface CountdownKickProps {
 }
 
 export function CountdownKick({ title, kickType, children }: CountdownKickProps) {
-  const [time, setTime] = useState(5)
+  const [time, setTime] = useState(300)
   const { 
     autoGoals, 
     setAutoGoals, 
@@ -38,7 +38,7 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
               // console.log('penaltyProbability', penaltyProbability)
               // console.log('PENALTY LOST')
             }
-            setTime(5)
+            setTime(300)
           break
 
           case 'free-kick': // Calculate probability to do goal (70% of chance)
@@ -51,7 +51,7 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
               // console.log('freeKickProbability', freeKickProbability)
               // console.log('FREE KICK LOST')
             }
-            setTime(5)
+            setTime(300)
           break
 
           case 'trail': // Calculate probability to do goal (30% of chance)
@@ -64,12 +64,12 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
               console.log('trailProbability', trailProbability)
               console.log('TRAIL LOST')
             }
-            setTime(5)
+            setTime(300)
           break
 
           default:
             setAutoGoals(autoGoals + 1)
-            setTime(5)
+            setTime(300)
         }
        
       }
