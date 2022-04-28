@@ -1,5 +1,6 @@
 import { CountdownKick } from '../components/CountdownKick'
 import { TopBar } from '../components/TopBar'
+import { Header } from '../components/Header'
 import { useIndividualGoals } from '../contexts/IndividualGoalsContext'
 
 export default function Home() {
@@ -8,6 +9,9 @@ export default function Home() {
   return (
     <>
       <TopBar />
+      <Header />
+
+
       <CountdownKick title='AUTO' kickType='auto'>
         Gols de auto: {autoGoals}
       </CountdownKick>
