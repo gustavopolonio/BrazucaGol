@@ -1,6 +1,7 @@
 import { useState, useEffect, ReactNode } from 'react'
 import { useIndividualGoals } from '../../contexts/IndividualGoalsContext'
 import { IoIosFootball } from 'react-icons/io'
+import { PenaltyKick } from '../PenaltyKick'
 
 import styles from './styles.module.scss'
 
@@ -11,17 +12,19 @@ interface CountdownKickProps {
 }
 
 export function CountdownKick({ title, kickType, children }: CountdownKickProps) {
-  const [time, setTime] = useState(300)
-  const { 
-    autoGoals, 
-    setAutoGoals, 
-    penaltyGoals, 
-    setPenaltyGoals, 
-    freeKickGoals, 
-    setFreeKickGoals,
-    trailGoals,
-    setTrailGoals
-  } = useIndividualGoals()
+  const [time, setTime] = useState(5)
+  const [isKickReady, setIsKickReady] = useState(false)
+  const [isModalKickOpen, setIsModalKickOpen] = useState(false)
+  // const { 
+  //   autoGoals, 
+  //   setAutoGoals, 
+  //   penaltyGoals, 
+  //   setPenaltyGoals, 
+  //   freeKickGoals, 
+  //   setFreeKickGoals,
+  //   trailGoals,
+  //   setTrailGoals
+  // } = useIndividualGoals()
 
 
   useEffect(() => {
@@ -29,64 +32,73 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
       if (time > 0) {
         setTime(time - 1)
       } else { // Time to kick
-        switch (kickType) {
+        setIsKickReady(true)
 
-          case 'penalty': // Calculate probability to do goal (90% of chance)
-            const penaltyProbability = Math.random() * 100
-            if (penaltyProbability < 90) {
-              // console.log('penaltyProbability', penaltyProbability)
-              // console.log('PENALTY GOAL')
-              setPenaltyGoals(penaltyGoals + 1)
-            } else {
-              // console.log('penaltyProbability', penaltyProbability)
-              // console.log('PENALTY LOST')
-            }
-            setTime(300)
-          break
+        // switch (kickType) {
 
-          case 'free-kick': // Calculate probability to do goal (70% of chance)
-            const freeKickProbability = Math.random() * 100
-            if (freeKickProbability < 70) {
-              // console.log('freeKickProbability', freeKickProbability)
-              // console.log('FREE KICK GOAL')
-              setFreeKickGoals(freeKickGoals + 1)
-            } else {
-              // console.log('freeKickProbability', freeKickProbability)
-              // console.log('FREE KICK LOST')
-            }
-            setTime(300)
-          break
+        //   case 'penalty': // Calculate probability to do goal (90% of chance)
+        //     const penaltyProbability = Math.random() * 100
+        //     if (penaltyProbability < 90) { // Penalty goal
+        //       setPenaltyGoals(penaltyGoals + 1)
+        //     } else { // Penalty lost
+        //     }
+        //     // setTime(300)
 
-          case 'trail': // Calculate probability to do goal (30% of chance)
-            const trailProbability = Math.random() * 100
-            if (trailProbability < 30) {
-              console.log('trailProbability', trailProbability)
-              console.log('TRAIL GOAL')
-              setTrailGoals(trailGoals + 1)
-            } else {
-              console.log('trailProbability', trailProbability)
-              console.log('TRAIL LOST')
-            }
-            setTime(300)
-          break
 
-          default:
-            setAutoGoals(autoGoals + 1)
-            setTime(300)
-        }
+        //   break
+
+        //   case 'free-kick': // Calculate probability to do goal (70% of chance)
+        //     const freeKickProbability = Math.random() * 100
+        //     if (freeKickProbability < 70) { // Free kick goal
+        //       setFreeKickGoals(freeKickGoals + 1)
+        //     } else { // Free kick lost
+        //     }
+        //     setTime(300)
+        //   break
+
+        //   case 'trail': // Calculate probability to do goal (30% of chance)
+        //     const trailProbability = Math.random() * 100
+        //     if (trailProbability < 30) { // Trail goal
+        //       setTrailGoals(trailGoals + 1)
+        //     } else { // Trail lost
+        //     }
+        //     setTime(300)
+        //   break
+
+        //   default:
+        //     setAutoGoals(autoGoals + 1)
+        //     setTime(300)
+        // }
        
       }
     }, 1000)
   }, [time])
 
+
+
   return (
     <div className={styles.ballContainer}>
-      <div className={styles.ballContent}>
-        <IoIosFootball fontSize={90} />
-        {/* <p>{time}</p> */}
-      </div>
+      { !isKickReady ? 
+        ( // Kick isnt ready
+          <div className={styles.ballContent}>
+            <p>{time}</p>
+          </div>
+        ) : ( // Kick is ready
+          <button 
+            type='button'
+            className={`${styles.ballContent} ${styles.kickIsReady}`}
+            onClick={() => setIsModalKickOpen(true)}
+          >
+            <IoIosFootball fontSize={90} />
+          </button>
+        ) 
+      }
+
       <h1>{title}</h1>
+      <p>{time}</p>
       {/* {children} */}
+
+      { isModalKickOpen && <PenaltyKick kickType={kickType} setTime={setTime} /> }
     </div>
   )
 }
