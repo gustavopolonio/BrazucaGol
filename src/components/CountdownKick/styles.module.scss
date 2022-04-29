@@ -1,0 +1,33 @@
+.ballContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  > h1 {
+    margin-top: 0.5rem;
+  }
+}
+
+.ballContent {
+  position: relative;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  background-color: white;
+
+  svg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  > p {
+    position: absolute;
+    font-size: 36px;
+    font-weight: bold;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

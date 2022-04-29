@@ -3,6 +3,8 @@ import { TopBar } from '../components/TopBar'
 import { Header } from '../components/Header'
 import { useIndividualGoals } from '../contexts/IndividualGoalsContext'
 
+import styles from './styles.module.scss'
+
 export default function Home() {
   const { autoGoals, penaltyGoals, freeKickGoals, trailGoals, totalGoals } = useIndividualGoals()
 
@@ -11,19 +13,21 @@ export default function Home() {
       <TopBar />
       <Header />
 
+      <div className={styles.ballsContainer}>
+        <CountdownKick title='AUTO' kickType='auto'>
+          Gols de auto: {autoGoals}
+        </CountdownKick>
+        <CountdownKick title='PÊNALTI' kickType='penalty'>
+          Gols de penalti: {penaltyGoals}
+        </CountdownKick>
+        <CountdownKick title='FALTA' kickType='free-kick'>
+          Gols de falta: {freeKickGoals}
+        </CountdownKick>
+        <CountdownKick title='TRILHA' kickType='trail'>
+          Gols de trilha: {trailGoals}
+        </CountdownKick>
+      </div>
 
-      <CountdownKick title='AUTO' kickType='auto'>
-        Gols de auto: {autoGoals}
-      </CountdownKick>
-      <CountdownKick title='PÊNALTI' kickType='penalty'>
-        Gols de penalti: {penaltyGoals}
-      </CountdownKick>
-      <CountdownKick title='FALTA' kickType='free-kick'>
-        Gols de falta: {freeKickGoals}
-      </CountdownKick>
-      <CountdownKick title='TRILHA' kickType='trail'>
-        Gols de trilha: {trailGoals}
-      </CountdownKick>
       <p><strong>Gols Totais: {totalGoals}</strong></p>
     </>
   )

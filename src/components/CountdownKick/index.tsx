@@ -1,5 +1,8 @@
 import { useState, useEffect, ReactNode } from 'react'
-import { useIndividualGoals } from '../contexts/IndividualGoalsContext'
+import { useIndividualGoals } from '../../contexts/IndividualGoalsContext'
+import { IoIosFootball } from 'react-icons/io'
+
+import styles from './styles.module.scss'
 
 interface CountdownKickProps {
   title: string,
@@ -77,9 +80,13 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
   }, [time])
 
   return (
-    <>
-      <h1>{title}: {time}</h1>
-      {children}
-    </>
+    <div className={styles.ballContainer}>
+      <div className={styles.ballContent}>
+        <IoIosFootball fontSize={90} />
+        {/* <p>{time}</p> */}
+      </div>
+      <h1>{title}</h1>
+      {/* {children} */}
+    </div>
   )
 }
