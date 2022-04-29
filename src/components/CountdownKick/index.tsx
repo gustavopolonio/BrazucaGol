@@ -1,7 +1,7 @@
 import { useState, useEffect, ReactNode } from 'react'
 import { useIndividualGoals } from '../../contexts/IndividualGoalsContext'
 import { IoIosFootball } from 'react-icons/io'
-import { PenaltyKick } from '../PenaltyKick'
+import { ModalKick } from '../ModalKick'
 
 import styles from './styles.module.scss'
 
@@ -53,7 +53,7 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
       {/* {children} */}
 
       { isModalKickOpen && 
-        <PenaltyKick 
+        <ModalKick 
           kickType={kickType} 
           setTime={setTime} 
           setIsModalKickOpen={setIsModalKickOpen}
