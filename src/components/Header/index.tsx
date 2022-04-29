@@ -50,7 +50,7 @@ export function Header() {
           </table>
         </div>
 
-        <div className={styles.teamLogo}>
+        <div className={styles.teamLogoContainer}>
           <img 
             src="https://upload.wikimedia.org/wikipedia/commons/1/10/Palmeiras_logo.svg" 
             alt="Logo Palmeiras" 

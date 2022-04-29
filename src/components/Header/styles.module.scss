@@ -3,10 +3,16 @@
   max-width: 1440px;
   padding: 0.5rem 2rem;
   margin: 0 auto;
+  background: linear-gradient(-17deg, #99d98c, #184e77);
+  border-radius: 0 0 1.5rem 1.5rem;
+  box-shadow: 0px 7px 5px #ADB5BD;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+
+  margin-bottom: 5rem;
 }
 
 .logoContainer {
@@ -30,7 +36,7 @@
 }
 
 .playerData {
-  margin-right: 0.5rem;
+  margin-right: 2.5rem;
   display: flex;
   flex-direction: column;
 
@@ -74,6 +80,26 @@
   }
 
   table {
+    tr {
+      font-size: 14px;
+      font-weight: bold;
+      height: 22px;
+    }
+  }
+}
 
+.teamLogoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  img {
+    width: 140px;
+    height: auto;
+  }
+
+  strong {
+    font-size: 1.5rem;
+    margin-top: 1rem;
   }
 }
