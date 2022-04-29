@@ -48,7 +48,7 @@ export function IndividualGoalsProvider({ children }: IndividualGoalsProviderPro
 
   useEffect(() => {
     setTotalGoals(autoGoals + penaltyGoals + freeKickGoals + trailGoals)
-    console.log('totalGoals', totalGoals)
+    // console.log('totalGoals', totalGoals)
   }, [autoGoals, penaltyGoals, freeKickGoals, trailGoals])
 
   return (

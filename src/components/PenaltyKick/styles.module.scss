@@ -9,6 +9,20 @@
   border-radius: 10px;
 }
 
+.goalMessageContent {
+  width: 400px;
+  height: 300px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  strong {
+    color: white;
+    font-size: 2rem;
+  }
+}
+
 .content {
   position: relative;
 

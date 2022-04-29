@@ -43,7 +43,7 @@ export function Header() {
                 <td>27</td>
               </tr>
               <tr>
-                <td>Dinehiro</td>
+                <td>Dinheiro</td>
                 <td>22560</td>
               </tr>
             </tbody>
