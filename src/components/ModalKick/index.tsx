@@ -48,7 +48,7 @@ export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickRead
           setIsKickReady(false)
           setIsModalKickOpen(false)
           setTime(5)
-        }, 5)
+        }, 1800)
       break
   
       case 'free-kick': // Calculate probability to do goal (70% of chance)
@@ -65,7 +65,7 @@ export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickRead
           setIsKickReady(false)
           setIsModalKickOpen(false)
           setTime(5)
-        }, 2000)
+        }, 1800)
       break
   
       // case 'trail': // Calculate probability to do goal (30% of chance)
@@ -103,7 +103,6 @@ export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickRead
         </div>
       )}
 
-
       { kickType === 'free-kick' && (
         <div className={styles.content}>
           <img src="https://media.istockphoto.com/vectors/free-kick-vector-id472298675?k=20&m=472298675&s=612x612&w=0&h=52SwbGdqzSP85vBkC8ACz7YpmHkEthTzS4_l2scB7Ss=" alt="" />
@@ -115,9 +114,35 @@ export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickRead
         </div>
       ) }
 
-      {/* { kickType === 'trail' && (
+      { kickType === 'trail' && (
+        <div className={styles.content}>
+          <div className={styles.trailContent}>
+            <fieldset>
+              <input type="radio" name='trail-goalkepper' checked />
+            </fieldset>
 
-      ) } */}
+            <fieldset>
+              <input type="radio" name='trail-part-one' />
+              <input type="radio" name='trail-part-one' />
+              <input type="radio" name='trail-part-one' />
+              <input type="radio" name='trail-part-one' />
+            </fieldset>
+
+            <fieldset>
+              <input type="radio" name='trail-part-two' />
+              <input type="radio" name='trail-part-two' />
+              <input type="radio" name='trail-part-two' />
+              <input type="radio" name='trail-part-two' />
+            </fieldset>
+
+            <fieldset>
+              <input type="radio" name='trail-part-three' />
+              <input type="radio" name='trail-part-three' />
+              <input type="radio" name='trail-part-three' />
+            </fieldset>
+          </div>
+        </div>
+      ) }
       
     </div>
   )
