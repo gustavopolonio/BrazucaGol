@@ -1,6 +1,7 @@
 import { BsFillArrowUpLeftCircleFill, BsFillArrowUpCircleFill, BsFillArrowUpRightCircleFill } from "react-icons/bs"
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useIndividualGoals } from "../../contexts/IndividualGoalsContext"
-import { Dispatch, SetStateAction, useState } from 'react'
+import { LoadingSpinner } from '../Utils/LoadingSpinner'
 
 import styles from './styles.module.scss'
 
@@ -26,6 +27,7 @@ export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickRead
 
   const [showKickMessage, setShowKickMessage] = useState(false)
   const [messageAfterKick, setMessageAfterKick] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   function displayMessageAfterKick(message: string) {
     setShowKickMessage(true)
@@ -68,20 +70,45 @@ export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickRead
         }, 1800)
       break
   
-      // case 'trail': // Calculate probability to do goal (30% of chance)
-      //   const trailProbability = Math.random() * 100
-      //   if (trailProbability < 30) { // Trail goal
-      //     setTrailGoals(trailGoals + 1)
-      //   } else { // Trail lost
-      //   }
-      //   setTime(300)
-      // break
+      case 'trail': // Calculate probability to do goal (30% of chance)
+        const trailProbability = Math.random() * 100
+
+        setIsLoading(true)
+
+        setTimeout(() => {
+          setIsLoading(false)
+          if (trailProbability < 30) { // Trail goal
+            setTrailGoals(trailGoals + 1)
+            displayMessageAfterKick('GOL !!!!')
+          } else { // Trail lost
+            displayMessageAfterKick('ERROU :(')
+          }
+        }, 1000)
+
+
+        setTimeout(() => {
+          setIsKickReady(false)
+          setIsModalKickOpen(false)
+          setTime(5)
+        }, 2800)
+      break
   
       // default:
       //   setAutoGoals(autoGoals + 1)
       //   setTime(300)
     }
   }
+
+  const [trailFirstColumn, setTrailFirstColumn] = useState(false)
+  const [trailSecondColumn, setTrailSecondColumn] = useState(false)
+  const [trailThirdColumn, setTrailThirdColumn] = useState(false)
+
+  
+  useEffect(() => {
+    if (trailFirstColumn && trailSecondColumn && trailThirdColumn) {
+      handleKickWasGoal()
+    }
+  }, [trailFirstColumn, trailSecondColumn, trailThirdColumn])
 
 
   return (
@@ -116,26 +143,28 @@ export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickRead
 
       { kickType === 'trail' && (
         <div className={styles.content}>
+          { isLoading && <LoadingSpinner /> }
+
           <div className={styles.trailContent}>
             <fieldset>
-              <input type="radio" name='trail-goalkepper' checked />
+              <input type="radio" name='trail-goalkepper' checked readOnly />
             </fieldset>
 
-            <fieldset>
+            <fieldset onChange={() => setTrailFirstColumn(true)}>
               <input type="radio" name='trail-part-one' />
               <input type="radio" name='trail-part-one' />
               <input type="radio" name='trail-part-one' />
               <input type="radio" name='trail-part-one' />
             </fieldset>
 
-            <fieldset>
+            <fieldset onChange={() => setTrailSecondColumn(true)}>
               <input type="radio" name='trail-part-two' />
               <input type="radio" name='trail-part-two' />
               <input type="radio" name='trail-part-two' />
               <input type="radio" name='trail-part-two' />
             </fieldset>
 
-            <fieldset>
+            <fieldset onChange={() => setTrailThirdColumn(true)}>
               <input type="radio" name='trail-part-three' />
               <input type="radio" name='trail-part-three' />
               <input type="radio" name='trail-part-three' />
