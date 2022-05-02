@@ -1,7 +1,7 @@
 import { useState, useEffect, ReactNode } from 'react'
-import { useIndividualGoals } from '../../contexts/IndividualGoalsContext'
 import { IoIosFootball } from 'react-icons/io'
 import { ModalKick } from '../ModalKick'
+import { useIndividualGoals } from '../../contexts/IndividualGoalsContext'
 
 import styles from './styles.module.scss'
 
@@ -15,13 +15,19 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
   const [time, setTime] = useState(5)
   const [isKickReady, setIsKickReady] = useState(false)
   const [isModalKickOpen, setIsModalKickOpen] = useState(false)
+  const { autoGoals, setAutoGoals } = useIndividualGoals()
 
   useEffect(() => {
     setTimeout(() => {
       if (time > 0) {
         setTime(time - 1)
       } else { // Time to kick
-        setIsKickReady(true)       
+        if (kickType === 'auto') {
+          setAutoGoals(autoGoals + 1)
+          setTime(5)
+        } else {
+          setIsKickReady(true)       
+        }
       }
     }, 1000)
   }, [time])
