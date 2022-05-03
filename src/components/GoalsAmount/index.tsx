@@ -1,156 +1,440 @@
 import { AiFillFire } from 'react-icons/ai'
 import { GiSpikyWing, GiAbstract024, GiAbstract079, GiAbstract116, GiConcentrationOrb } from 'react-icons/gi'
+import { PlayerDetails } from '../PlayerDetails'
 
 import styles from './styles.module.scss'
 
-export function GoalsAmount() {
+export function GoalsAmountTables() {
 
   return (
     <div className={styles.goalsAmountContainer}>
-      <div className={styles.hourlyGoalsContainer}>
+      <div className={styles.goalsTable}>
         <h2>Hora</h2>
 
         <ul>
-          <li>
-            <div className={styles.borderBottom}></div>
-            <div className={styles.playerIdentification}>
-              <div className={styles.rankingPosition}>1</div>
-              <AiFillFire className={styles.iconPlayerLevel} />
-              <a href="" className={styles.iconplayerClub}>
-                <img src="https://svgshare.com/i/gps.svg" alt="" />
-              </a>
-              <a href="">
-                Gustavo_Polonio
-              </a>
-            </div>
-            29
-          </li>
-          <li>
-            <div className={styles.borderBottom}></div>
-            <div className={styles.playerIdentification}>
-              <div className={styles.rankingPosition}>2</div>
-              <GiSpikyWing className={styles.iconPlayerLevel} />
-              <a href="" className={styles.iconplayerClub}>
-                <img src="https://vetores.org/d/palmeiras.svg" alt="" />
-              </a>
-              <a href="">
-                Boexatinha_
-              </a>
-            </div>
-            29
-          </li>
-          <li>
-            <div className={styles.borderBottom}></div>
-            <div className={styles.playerIdentification}>
-              <div className={styles.rankingPosition}>3</div>
-              <GiAbstract024 className={styles.iconPlayerLevel} />
-              <a href="" className={styles.iconplayerClub}>
-                <img src="https://vetores.org/d/sao-paulo-futebol-clube.svg" alt="" />
-              </a>
-              <a href="">
-                Raul99
-              </a>
-            </div>
-            28
-          </li>
-          <li>
-            <div className={styles.borderBottom}></div>
-            <div className={styles.playerIdentification}>
-              <div className={styles.rankingPosition}>4</div>
-              <AiFillFire className={styles.iconPlayerLevel} />
-              <a href="" className={styles.iconplayerClub}>
-                <img src="https://cdn.worldvectorlogo.com/logos/coritiba.svg" alt="" />
-              </a>
-              <a href="">
-                Cris_90
-              </a>
-            </div>
-            26
-          </li>
-          <li>
-            <div className={styles.borderBottom}></div>
-            <div className={styles.playerIdentification}>
-              <div className={styles.rankingPosition}>5</div>
-              <GiAbstract079 className={styles.iconPlayerLevel} />
-              <a href="" className={styles.iconplayerClub}>
-                <img src="https://vetores.org/d/cuiaba.svg" alt="" />
-              </a>
-              <a href="">
-                Pindato
-              </a>
-            </div>
-            24
-          </li>
-          <li>
-            <div className={styles.borderBottom}></div>
-            <div className={styles.playerIdentification}>
-              <div className={styles.rankingPosition}>6</div>
-              <GiAbstract116 className={styles.iconPlayerLevel} />
-              <a href="" className={styles.iconplayerClub}>
-                <img src="https://svgshare.com/i/gps.svg" alt="" />
-              </a>
-              <a href="">
-                _m3ss1_
-              </a>
-            </div>
-            21
-          </li>
-          <li>
-            <div className={styles.borderBottom}></div>
-            <div className={styles.playerIdentification}>
-              <div className={styles.rankingPosition}>7</div>
-              <GiConcentrationOrb className={styles.iconPlayerLevel} />
-              <a href="" className={styles.iconplayerClub}>
-                <img src="https://cdn.worldvectorlogo.com/logos/coritiba.svg" alt="" />
-              </a>
-              <a href="">
-                fRedo
-              </a>
-            </div>
-            21
-          </li>
-          <li>
-            <div className={styles.borderBottom}></div>
-            <div className={styles.playerIdentification}>
-              <div className={styles.rankingPosition}>8</div>
-              <GiAbstract079 className={styles.iconPlayerLevel} />
-              <a href="" className={styles.iconplayerClub}>
-                <img src="https://vetores.org/d/flamengo.svg" alt="" />
-              </a>
-              <a href="">
-                Luotal
-              </a>
-            </div>
-            19
-          </li>
-          <li>
-            <div className={styles.borderBottom}></div>
-            <div className={styles.playerIdentification}>
-              <div className={styles.rankingPosition}>9</div>
-              <AiFillFire className={styles.iconPlayerLevel} />
-              <a href="" className={styles.iconplayerClub}>
-                <img src="https://vetores.org/d/fluminense.svg" alt="" />
-              </a>
-              <a href="">
-                Benee
-              </a>
-            </div>
-            17
-          </li>
-          <li>
-            <div className={styles.borderBottom}></div>
-            <div className={styles.playerIdentification}>
-              <div className={styles.rankingPosition}>10</div>
-              <GiConcentrationOrb className={styles.iconPlayerLevel} />
-              <a href="" className={styles.iconplayerClub}>
-                <img src="https://vetores.org/d/flamengo.svg" alt="" />
-              </a>
-              <a href="">
-                paivinha
-              </a>
-            </div>
-            15
-          </li>
+          <PlayerDetails 
+            ranking={1} 
+            nivel={<AiFillFire />} 
+            clubLogo='https://svgshare.com/i/gps.svg' 
+            playerName='Gustavo_Polonio'
+            playerGoals={29}
+          />
+
+          <PlayerDetails 
+            ranking={2} 
+            nivel={<GiSpikyWing />} 
+            clubLogo='https://vetores.org/d/palmeiras.svg' 
+            playerName='Boexatinha_'
+            playerGoals={29}
+          />
+
+          <PlayerDetails 
+            ranking={3} 
+            nivel={<GiAbstract024 />} 
+            clubLogo='https://vetores.org/d/sao-paulo-futebol-clube.svg' 
+            playerName='Raul99'
+            playerGoals={28}
+          />
+
+          <PlayerDetails 
+            ranking={4} 
+            nivel={<AiFillFire />} 
+            clubLogo='https://cdn.worldvectorlogo.com/logos/coritiba.svg' 
+            playerName='Cris_90'
+            playerGoals={26}
+          />
+
+          <PlayerDetails 
+            ranking={5} 
+            nivel={<GiAbstract079 />} 
+            clubLogo='https://vetores.org/d/cuiaba.svg' 
+            playerName='Pindato'
+            playerGoals={24}
+          />
+
+          <PlayerDetails 
+            ranking={6} 
+            nivel={<GiAbstract116 />} 
+            clubLogo='https://svgshare.com/i/gps.svg' 
+            playerName='_m3ss1_'
+            playerGoals={21}
+          />
+
+          <PlayerDetails 
+            ranking={7} 
+            nivel={<GiConcentrationOrb />} 
+            clubLogo='https://cdn.worldvectorlogo.com/logos/coritiba.svg' 
+            playerName='fRedo'
+            playerGoals={21}
+          />
+
+          <PlayerDetails 
+            ranking={8} 
+            nivel={<GiAbstract079 />} 
+            clubLogo='https://vetores.org/d/flamengo.svg' 
+            playerName='Luotal'
+            playerGoals={19}
+          />
+
+          <PlayerDetails 
+            ranking={9} 
+            nivel={<AiFillFire />} 
+            clubLogo='https://vetores.org/d/fluminense.svg' 
+            playerName='Benee'
+            playerGoals={17}
+          />
+
+          <PlayerDetails 
+            ranking={10} 
+            nivel={<GiConcentrationOrb />} 
+            clubLogo='https://vetores.org/d/flamengo.svg' 
+            playerName='paivinha'
+            playerGoals={15}
+          />
+        </ul>
+      </div>
+
+      <div className={styles.goalsTable}>
+        <h2>Rodada</h2>
+
+        <ul>
+          <PlayerDetails 
+            ranking={1} 
+            nivel={<AiFillFire />} 
+            clubLogo='https://svgshare.com/i/gps.svg' 
+            playerName='Gustavo_Polonio'
+            playerGoals={29}
+          />
+
+          <PlayerDetails 
+            ranking={2} 
+            nivel={<GiSpikyWing />} 
+            clubLogo='https://vetores.org/d/palmeiras.svg' 
+            playerName='Boexatinha_'
+            playerGoals={29}
+          />
+
+          <PlayerDetails 
+            ranking={3} 
+            nivel={<GiAbstract024 />} 
+            clubLogo='https://vetores.org/d/sao-paulo-futebol-clube.svg' 
+            playerName='Raul99'
+            playerGoals={28}
+          />
+
+          <PlayerDetails 
+            ranking={4} 
+            nivel={<AiFillFire />} 
+            clubLogo='https://cdn.worldvectorlogo.com/logos/coritiba.svg' 
+            playerName='Cris_90'
+            playerGoals={26}
+          />
+
+          <PlayerDetails 
+            ranking={5} 
+            nivel={<GiAbstract079 />} 
+            clubLogo='https://vetores.org/d/cuiaba.svg' 
+            playerName='Pindato'
+            playerGoals={24}
+          />
+
+          <PlayerDetails 
+            ranking={6} 
+            nivel={<GiAbstract116 />} 
+            clubLogo='https://svgshare.com/i/gps.svg' 
+            playerName='_m3ss1_'
+            playerGoals={21}
+          />
+
+          <PlayerDetails 
+            ranking={7} 
+            nivel={<GiConcentrationOrb />} 
+            clubLogo='https://cdn.worldvectorlogo.com/logos/coritiba.svg' 
+            playerName='fRedo'
+            playerGoals={21}
+          />
+
+          <PlayerDetails 
+            ranking={8} 
+            nivel={<GiAbstract079 />} 
+            clubLogo='https://vetores.org/d/flamengo.svg' 
+            playerName='Luotal'
+            playerGoals={19}
+          />
+
+          <PlayerDetails 
+            ranking={9} 
+            nivel={<AiFillFire />} 
+            clubLogo='https://vetores.org/d/fluminense.svg' 
+            playerName='Benee'
+            playerGoals={17}
+          />
+
+          <PlayerDetails 
+            ranking={10} 
+            nivel={<GiConcentrationOrb />} 
+            clubLogo='https://vetores.org/d/flamengo.svg' 
+            playerName='paivinha'
+            playerGoals={15}
+          />
+        </ul>
+      </div>
+
+      <div className={styles.goalsTable}>
+        <h2>Temporada</h2>
+
+        <ul>
+          <PlayerDetails 
+            ranking={1} 
+            nivel={<AiFillFire />} 
+            clubLogo='https://svgshare.com/i/gps.svg' 
+            playerName='Gustavo_Polonio'
+            playerGoals={29}
+          />
+
+          <PlayerDetails 
+            ranking={2} 
+            nivel={<GiSpikyWing />} 
+            clubLogo='https://vetores.org/d/palmeiras.svg' 
+            playerName='Boexatinha_'
+            playerGoals={29}
+          />
+
+          <PlayerDetails 
+            ranking={3} 
+            nivel={<GiAbstract024 />} 
+            clubLogo='https://vetores.org/d/sao-paulo-futebol-clube.svg' 
+            playerName='Raul99'
+            playerGoals={28}
+          />
+
+          <PlayerDetails 
+            ranking={4} 
+            nivel={<AiFillFire />} 
+            clubLogo='https://cdn.worldvectorlogo.com/logos/coritiba.svg' 
+            playerName='Cris_90'
+            playerGoals={26}
+          />
+
+          <PlayerDetails 
+            ranking={5} 
+            nivel={<GiAbstract079 />} 
+            clubLogo='https://vetores.org/d/cuiaba.svg' 
+            playerName='Pindato'
+            playerGoals={24}
+          />
+
+          <PlayerDetails 
+            ranking={6} 
+            nivel={<GiAbstract116 />} 
+            clubLogo='https://svgshare.com/i/gps.svg' 
+            playerName='_m3ss1_'
+            playerGoals={21}
+          />
+
+          <PlayerDetails 
+            ranking={7} 
+            nivel={<GiConcentrationOrb />} 
+            clubLogo='https://cdn.worldvectorlogo.com/logos/coritiba.svg' 
+            playerName='fRedo'
+            playerGoals={21}
+          />
+
+          <PlayerDetails 
+            ranking={8} 
+            nivel={<GiAbstract079 />} 
+            clubLogo='https://vetores.org/d/flamengo.svg' 
+            playerName='Luotal'
+            playerGoals={19}
+          />
+
+          <PlayerDetails 
+            ranking={9} 
+            nivel={<AiFillFire />} 
+            clubLogo='https://vetores.org/d/fluminense.svg' 
+            playerName='Benee'
+            playerGoals={17}
+          />
+
+          <PlayerDetails 
+            ranking={10} 
+            nivel={<GiConcentrationOrb />} 
+            clubLogo='https://vetores.org/d/flamengo.svg' 
+            playerName='paivinha'
+            playerGoals={15}
+          />
+        </ul>
+      </div>
+
+      <div className={styles.goalsTable}>
+        <h2>Record hora na temp</h2>
+
+        <ul>
+          <PlayerDetails 
+            ranking={1} 
+            nivel={<AiFillFire />} 
+            clubLogo='https://svgshare.com/i/gps.svg' 
+            playerName='Gustavo_Polonio'
+            playerGoals={29}
+          />
+
+          <PlayerDetails 
+            ranking={2} 
+            nivel={<GiSpikyWing />} 
+            clubLogo='https://vetores.org/d/palmeiras.svg' 
+            playerName='Boexatinha_'
+            playerGoals={29}
+          />
+
+          <PlayerDetails 
+            ranking={3} 
+            nivel={<GiAbstract024 />} 
+            clubLogo='https://vetores.org/d/sao-paulo-futebol-clube.svg' 
+            playerName='Raul99'
+            playerGoals={28}
+          />
+
+          <PlayerDetails 
+            ranking={4} 
+            nivel={<AiFillFire />} 
+            clubLogo='https://cdn.worldvectorlogo.com/logos/coritiba.svg' 
+            playerName='Cris_90'
+            playerGoals={26}
+          />
+
+          <PlayerDetails 
+            ranking={5} 
+            nivel={<GiAbstract079 />} 
+            clubLogo='https://vetores.org/d/cuiaba.svg' 
+            playerName='Pindato'
+            playerGoals={24}
+          />
+
+          <PlayerDetails 
+            ranking={6} 
+            nivel={<GiAbstract116 />} 
+            clubLogo='https://svgshare.com/i/gps.svg' 
+            playerName='_m3ss1_'
+            playerGoals={21}
+          />
+
+          <PlayerDetails 
+            ranking={7} 
+            nivel={<GiConcentrationOrb />} 
+            clubLogo='https://cdn.worldvectorlogo.com/logos/coritiba.svg' 
+            playerName='fRedo'
+            playerGoals={21}
+          />
+
+          <PlayerDetails 
+            ranking={8} 
+            nivel={<GiAbstract079 />} 
+            clubLogo='https://vetores.org/d/flamengo.svg' 
+            playerName='Luotal'
+            playerGoals={19}
+          />
+
+          <PlayerDetails 
+            ranking={9} 
+            nivel={<AiFillFire />} 
+            clubLogo='https://vetores.org/d/fluminense.svg' 
+            playerName='Benee'
+            playerGoals={17}
+          />
+
+          <PlayerDetails 
+            ranking={10} 
+            nivel={<GiConcentrationOrb />} 
+            clubLogo='https://vetores.org/d/flamengo.svg' 
+            playerName='paivinha'
+            playerGoals={15}
+          />
+        </ul>
+      </div>
+
+      <div className={styles.goalsTable}>
+        <h2>Record rodada na temp</h2>
+
+        <ul>
+          <PlayerDetails 
+            ranking={1} 
+            nivel={<AiFillFire />} 
+            clubLogo='https://svgshare.com/i/gps.svg' 
+            playerName='Gustavo_Polonio'
+            playerGoals={29}
+          />
+
+          <PlayerDetails 
+            ranking={2} 
+            nivel={<GiSpikyWing />} 
+            clubLogo='https://vetores.org/d/palmeiras.svg' 
+            playerName='Boexatinha_'
+            playerGoals={29}
+          />
+
+          <PlayerDetails 
+            ranking={3} 
+            nivel={<GiAbstract024 />} 
+            clubLogo='https://vetores.org/d/sao-paulo-futebol-clube.svg' 
+            playerName='Raul99'
+            playerGoals={28}
+          />
+
+          <PlayerDetails 
+            ranking={4} 
+            nivel={<AiFillFire />} 
+            clubLogo='https://cdn.worldvectorlogo.com/logos/coritiba.svg' 
+            playerName='Cris_90'
+            playerGoals={26}
+          />
+
+          <PlayerDetails 
+            ranking={5} 
+            nivel={<GiAbstract079 />} 
+            clubLogo='https://vetores.org/d/cuiaba.svg' 
+            playerName='Pindato'
+            playerGoals={24}
+          />
+
+          <PlayerDetails 
+            ranking={6} 
+            nivel={<GiAbstract116 />} 
+            clubLogo='https://svgshare.com/i/gps.svg' 
+            playerName='_m3ss1_'
+            playerGoals={21}
+          />
+
+          <PlayerDetails 
+            ranking={7} 
+            nivel={<GiConcentrationOrb />} 
+            clubLogo='https://cdn.worldvectorlogo.com/logos/coritiba.svg' 
+            playerName='fRedo'
+            playerGoals={21}
+          />
+
+          <PlayerDetails 
+            ranking={8} 
+            nivel={<GiAbstract079 />} 
+            clubLogo='https://vetores.org/d/flamengo.svg' 
+            playerName='Luotal'
+            playerGoals={19}
+          />
+
+          <PlayerDetails 
+            ranking={9} 
+            nivel={<AiFillFire />} 
+            clubLogo='https://vetores.org/d/fluminense.svg' 
+            playerName='Benee'
+            playerGoals={17}
+          />
+
+          <PlayerDetails 
+            ranking={10} 
+            nivel={<GiConcentrationOrb />} 
+            clubLogo='https://vetores.org/d/flamengo.svg' 
+            playerName='paivinha'
+            playerGoals={15}
+          />
         </ul>
       </div>
     </div>  

@@ -4,7 +4,7 @@ import { TopBar } from '../components/TopBar'
 import { Header } from '../components/Header'
 import { MenuSidebar } from '../components/MenuSidebar'
 import { MyAccountSidebar } from '../components/MyAccountSidebar'
-import { GoalsAmount } from '../components/GoalsAmount'
+import { GoalsAmountTables } from '../components/GoalsAmount'
 import { useIndividualGoals } from '../contexts/IndividualGoalsContext'
 import { api } from '../services/api'
 
@@ -58,9 +58,9 @@ export default function Home({ clubs }: HomeProps) {
       <main className={styles.mainContainer}>
         <MenuSidebar />
 
-        <GoalsAmount />
+        <GoalsAmountTables />
 
-        {/* <MyAccountSidebar /> */}
+        <MyAccountSidebar />
       </main>
     </>
   )
