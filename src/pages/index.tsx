@@ -2,6 +2,7 @@ import { GetServerSideProps } from 'next'
 import { CountdownKick } from '../components/CountdownKick'
 import { TopBar } from '../components/TopBar'
 import { Header } from '../components/Header'
+import { MenuSidebar } from '../components/MenuSidebar'
 import { useIndividualGoals } from '../contexts/IndividualGoalsContext'
 import { api } from '../services/api'
 
@@ -52,6 +53,10 @@ export default function Home({ clubs }: HomeProps) {
           </div>
         ))}
       </div>
+
+      <main className={styles.mainContainer}>
+          <MenuSidebar />
+      </main>
     </>
   )
 }

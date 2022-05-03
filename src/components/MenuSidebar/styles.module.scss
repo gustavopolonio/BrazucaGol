@@ -1,0 +1,28 @@
+.menuContainer {
+  width: 300px;
+
+  border: 1px solid black;
+  border-radius: 10px;
+  overflow: hidden;
+  
+  h2 {
+    text-align: center;
+    background: #ABFF4F;
+    padding: 0.5rem 0;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    background: #F8F9FA;
+
+    a {
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+      height: 2.5rem;
+      border-bottom: 1px solid #343A40;
+    }
+  }
+}
