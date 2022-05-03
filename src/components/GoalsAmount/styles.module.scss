@@ -1,0 +1,67 @@
+.goalsAmountContainer {
+  margin-left: 3rem;
+}
+
+.hourlyGoalsContainer {
+  width: 260px;
+
+  border: 1px solid black;
+  border-radius: 10px;
+  overflow: hidden;
+
+  h2 {
+    text-align: center;
+    background: #ABFF4F;
+    padding: 0.5rem 0;
+  }
+
+  ul {
+    padding: 1rem;
+    background: #F8F9FA;
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 2rem;
+
+      position: relative;
+
+      .borderBottom {
+        position: absolute;
+        border-bottom: 1px solid #ADB5BD;
+        width: 50%;
+        bottom: 0px;
+        left: 50%;
+        transform: translatex(-50%);
+      }
+
+      .playerIdentification {
+        display: flex;
+        align-items: center;
+
+        .rankingPosition {
+          width: 22px;
+          text-align: center;
+        }
+
+        svg {
+          width: 28px;
+          height: 28px;
+          margin: 0 2px;
+        }
+
+        .iconplayerClub {
+          width: 22px;
+          height: 22px;
+          margin-right: 4px;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+}

@@ -3,11 +3,12 @@ import { CountdownKick } from '../components/CountdownKick'
 import { TopBar } from '../components/TopBar'
 import { Header } from '../components/Header'
 import { MenuSidebar } from '../components/MenuSidebar'
+import { MyAccountSidebar } from '../components/MyAccountSidebar'
+import { GoalsAmount } from '../components/GoalsAmount'
 import { useIndividualGoals } from '../contexts/IndividualGoalsContext'
 import { api } from '../services/api'
 
 import styles from './styles.module.scss'
-
 
 interface Club {
   id: string,
@@ -56,6 +57,10 @@ export default function Home({ clubs }: HomeProps) {
 
       <main className={styles.mainContainer}>
         <MenuSidebar />
+
+        <GoalsAmount />
+
+        {/* <MyAccountSidebar /> */}
       </main>
     </>
   )
