@@ -1,6 +1,5 @@
 .menuContainer {
-  width: 300px;
-
+  width: 260px;
   border: 1px solid black;
   border-radius: 10px;
   overflow: hidden;
@@ -14,15 +13,31 @@
   nav {
     display: flex;
     flex-direction: column;
-    padding: 1.5rem;
+    padding: 1rem 1.5rem 1.5rem;
     background: #F8F9FA;
 
     a {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       font-weight: 700;
-      height: 2.5rem;
-      border-bottom: 1px solid #343A40;
+      height: 2.8rem;
+      
+      position: relative;
+
+      svg {
+        width: 30px;
+        height: 30px;
+      }
+
+      div {
+        position: absolute;
+        border-bottom: 1px solid #ADB5BD;
+        width: 75%;
+        bottom: 0px;
+        left: 50%;
+        transform: translatex(-50%);
+      }
     }
   }
 }
