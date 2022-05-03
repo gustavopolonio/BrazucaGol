@@ -1,11 +1,26 @@
+import { GetServerSideProps } from 'next'
 import { CountdownKick } from '../components/CountdownKick'
 import { TopBar } from '../components/TopBar'
 import { Header } from '../components/Header'
 import { useIndividualGoals } from '../contexts/IndividualGoalsContext'
+import { api } from '../services/api'
 
 import styles from './styles.module.scss'
 
-export default function Home() {
+
+interface Club {
+  id: string,
+  name: string,
+  encodedName: string,
+  logoLink: string,
+  stadiumName: string,
+  state: string
+}
+interface HomeProps {
+  clubs: Club[]
+}
+
+export default function Home({ clubs }: HomeProps) {
   const { autoGoals, penaltyGoals, freeKickGoals, trailGoals, totalGoals } = useIndividualGoals()
 
   return (
@@ -28,7 +43,25 @@ export default function Home() {
         </CountdownKick>
       </div>
 
-      <p><strong>Gols Totais: {totalGoals}</strong></p>
+      <p className={styles.temporary}><strong>Gols Totais: {totalGoals}</strong></p>
+
+      <div className={styles.clubsContainer}>
+        {clubs.map(club => (
+          <div key={club.encodedName} className={styles.clubLogoContainer}>
+            <img src={club.logoLink} alt={club.name} />
+          </div>
+        ))}
+      </div>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+
+  const response = await api.get('/')
+  const clubs = response.data
+
+  return {
+    props: { clubs }
+  }
 }

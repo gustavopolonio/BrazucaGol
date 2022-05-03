@@ -49,7 +49,7 @@ export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickRead
         setTimeout(() => {
           setIsKickReady(false)
           setIsModalKickOpen(false)
-          setTime(5)
+          setTime(300)
         }, 1800)
       break
   
@@ -66,7 +66,7 @@ export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickRead
         setTimeout(() => {
           setIsKickReady(false)
           setIsModalKickOpen(false)
-          setTime(5)
+          setTime(300)
         }, 1800)
       break
   
@@ -89,13 +89,12 @@ export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickRead
         setTimeout(() => {
           setIsKickReady(false)
           setIsModalKickOpen(false)
-          setTime(5)
+          setTime(300)
         }, 2800)
       break
   
-      // default:
-      //   setAutoGoals(autoGoals + 1)
-      //   setTime(300)
+      default:
+        console.log('Default case in switch')
     }
   }
 

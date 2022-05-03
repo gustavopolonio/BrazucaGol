@@ -12,7 +12,7 @@ interface CountdownKickProps {
 }
 
 export function CountdownKick({ title, kickType, children }: CountdownKickProps) {
-  const [time, setTime] = useState(5)
+  const [time, setTime] = useState(300)
   const [isKickReady, setIsKickReady] = useState(false)
   const [isModalKickOpen, setIsModalKickOpen] = useState(false)
   const { autoGoals, setAutoGoals } = useIndividualGoals()
@@ -24,7 +24,7 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
       } else { // Time to kick
         if (kickType === 'auto') {
           setAutoGoals(autoGoals + 1)
-          setTime(5)
+          setTime(300)
         } else {
           setIsKickReady(true)       
         }
@@ -55,7 +55,6 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
       }
 
       <h1>{title}</h1>
-      <p>{time}</p>
       {/* {children} */}
 
       { isModalKickOpen && 
