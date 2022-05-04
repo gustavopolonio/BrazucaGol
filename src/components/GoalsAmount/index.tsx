@@ -14,7 +14,7 @@ export function GoalsAmountTables() {
         <ul>
           <PlayerDetails 
             ranking={1} 
-            nivel={<AiFillFire />} 
+            Nivel={AiFillFire}           
             clubLogo='https://svgshare.com/i/gps.svg' 
             playerName='Gustavo_Polonio'
             playerGoals={29}
@@ -22,7 +22,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={2} 
-            nivel={<GiSpikyWing />} 
+            Nivel={GiSpikyWing} 
             clubLogo='https://vetores.org/d/palmeiras.svg' 
             playerName='Boexatinha_'
             playerGoals={29}
@@ -30,7 +30,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={3} 
-            nivel={<GiAbstract024 />} 
+            Nivel={GiAbstract024} 
             clubLogo='https://vetores.org/d/sao-paulo-futebol-clube.svg' 
             playerName='Raul99'
             playerGoals={28}
@@ -38,7 +38,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={4} 
-            nivel={<AiFillFire />} 
+            Nivel={AiFillFire} 
             clubLogo='https://cdn.worldvectorlogo.com/logos/coritiba.svg' 
             playerName='Cris_90'
             playerGoals={26}
@@ -46,7 +46,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={5} 
-            nivel={<GiAbstract079 />} 
+            Nivel={GiAbstract079} 
             clubLogo='https://vetores.org/d/cuiaba.svg' 
             playerName='Pindato'
             playerGoals={24}
@@ -54,7 +54,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={6} 
-            nivel={<GiAbstract116 />} 
+            Nivel={GiAbstract116} 
             clubLogo='https://svgshare.com/i/gps.svg' 
             playerName='_m3ss1_'
             playerGoals={21}
@@ -62,7 +62,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={7} 
-            nivel={<GiConcentrationOrb />} 
+            Nivel={GiConcentrationOrb} 
             clubLogo='https://cdn.worldvectorlogo.com/logos/coritiba.svg' 
             playerName='fRedo'
             playerGoals={21}
@@ -70,7 +70,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={8} 
-            nivel={<GiAbstract079 />} 
+            Nivel={GiAbstract079} 
             clubLogo='https://vetores.org/d/flamengo.svg' 
             playerName='Luotal'
             playerGoals={19}
@@ -78,7 +78,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={9} 
-            nivel={<AiFillFire />} 
+            Nivel={AiFillFire} 
             clubLogo='https://vetores.org/d/fluminense.svg' 
             playerName='Benee'
             playerGoals={17}
@@ -86,7 +86,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={10} 
-            nivel={<GiConcentrationOrb />} 
+            Nivel={GiConcentrationOrb} 
             clubLogo='https://vetores.org/d/flamengo.svg' 
             playerName='paivinha'
             playerGoals={15}
@@ -100,7 +100,7 @@ export function GoalsAmountTables() {
         <ul>
           <PlayerDetails 
             ranking={1} 
-            nivel={<AiFillFire />} 
+            Nivel={AiFillFire} 
             clubLogo='https://svgshare.com/i/gps.svg' 
             playerName='Gustavo_Polonio'
             playerGoals={29}
@@ -108,7 +108,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={2} 
-            nivel={<GiSpikyWing />} 
+            Nivel={GiSpikyWing} 
             clubLogo='https://vetores.org/d/palmeiras.svg' 
             playerName='Boexatinha_'
             playerGoals={29}
@@ -116,7 +116,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={3} 
-            nivel={<GiAbstract024 />} 
+            Nivel={GiAbstract024} 
             clubLogo='https://vetores.org/d/sao-paulo-futebol-clube.svg' 
             playerName='Raul99'
             playerGoals={28}
@@ -124,7 +124,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={4} 
-            nivel={<AiFillFire />} 
+            Nivel={AiFillFire} 
             clubLogo='https://cdn.worldvectorlogo.com/logos/coritiba.svg' 
             playerName='Cris_90'
             playerGoals={26}
@@ -132,7 +132,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={5} 
-            nivel={<GiAbstract079 />} 
+            Nivel={GiAbstract079} 
             clubLogo='https://vetores.org/d/cuiaba.svg' 
             playerName='Pindato'
             playerGoals={24}
@@ -140,7 +140,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={6} 
-            nivel={<GiAbstract116 />} 
+            Nivel={GiAbstract116} 
             clubLogo='https://svgshare.com/i/gps.svg' 
             playerName='_m3ss1_'
             playerGoals={21}
@@ -148,7 +148,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={7} 
-            nivel={<GiConcentrationOrb />} 
+            Nivel={GiConcentrationOrb} 
             clubLogo='https://cdn.worldvectorlogo.com/logos/coritiba.svg' 
             playerName='fRedo'
             playerGoals={21}
@@ -156,7 +156,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={8} 
-            nivel={<GiAbstract079 />} 
+            Nivel={GiAbstract079} 
             clubLogo='https://vetores.org/d/flamengo.svg' 
             playerName='Luotal'
             playerGoals={19}
@@ -164,7 +164,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={9} 
-            nivel={<AiFillFire />} 
+            Nivel={AiFillFire} 
             clubLogo='https://vetores.org/d/fluminense.svg' 
             playerName='Benee'
             playerGoals={17}
@@ -172,7 +172,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={10} 
-            nivel={<GiConcentrationOrb />} 
+            Nivel={GiConcentrationOrb} 
             clubLogo='https://vetores.org/d/flamengo.svg' 
             playerName='paivinha'
             playerGoals={15}
@@ -186,7 +186,7 @@ export function GoalsAmountTables() {
         <ul>
           <PlayerDetails 
             ranking={1} 
-            nivel={<AiFillFire />} 
+            Nivel={AiFillFire} 
             clubLogo='https://svgshare.com/i/gps.svg' 
             playerName='Gustavo_Polonio'
             playerGoals={29}
@@ -194,7 +194,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={2} 
-            nivel={<GiSpikyWing />} 
+            Nivel={GiSpikyWing} 
             clubLogo='https://vetores.org/d/palmeiras.svg' 
             playerName='Boexatinha_'
             playerGoals={29}
@@ -202,7 +202,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={3} 
-            nivel={<GiAbstract024 />} 
+            Nivel={GiAbstract024} 
             clubLogo='https://vetores.org/d/sao-paulo-futebol-clube.svg' 
             playerName='Raul99'
             playerGoals={28}
@@ -210,7 +210,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={4} 
-            nivel={<AiFillFire />} 
+            Nivel={AiFillFire} 
             clubLogo='https://cdn.worldvectorlogo.com/logos/coritiba.svg' 
             playerName='Cris_90'
             playerGoals={26}
@@ -218,7 +218,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={5} 
-            nivel={<GiAbstract079 />} 
+            Nivel={GiAbstract079} 
             clubLogo='https://vetores.org/d/cuiaba.svg' 
             playerName='Pindato'
             playerGoals={24}
@@ -226,7 +226,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={6} 
-            nivel={<GiAbstract116 />} 
+            Nivel={GiAbstract116} 
             clubLogo='https://svgshare.com/i/gps.svg' 
             playerName='_m3ss1_'
             playerGoals={21}
@@ -234,7 +234,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={7} 
-            nivel={<GiConcentrationOrb />} 
+            Nivel={GiConcentrationOrb} 
             clubLogo='https://cdn.worldvectorlogo.com/logos/coritiba.svg' 
             playerName='fRedo'
             playerGoals={21}
@@ -242,7 +242,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={8} 
-            nivel={<GiAbstract079 />} 
+            Nivel={GiAbstract079} 
             clubLogo='https://vetores.org/d/flamengo.svg' 
             playerName='Luotal'
             playerGoals={19}
@@ -250,7 +250,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={9} 
-            nivel={<AiFillFire />} 
+            Nivel={AiFillFire} 
             clubLogo='https://vetores.org/d/fluminense.svg' 
             playerName='Benee'
             playerGoals={17}
@@ -258,7 +258,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={10} 
-            nivel={<GiConcentrationOrb />} 
+            Nivel={GiConcentrationOrb} 
             clubLogo='https://vetores.org/d/flamengo.svg' 
             playerName='paivinha'
             playerGoals={15}
@@ -272,7 +272,7 @@ export function GoalsAmountTables() {
         <ul>
           <PlayerDetails 
             ranking={1} 
-            nivel={<AiFillFire />} 
+            Nivel={AiFillFire} 
             clubLogo='https://svgshare.com/i/gps.svg' 
             playerName='Gustavo_Polonio'
             playerGoals={29}
@@ -280,7 +280,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={2} 
-            nivel={<GiSpikyWing />} 
+            Nivel={GiSpikyWing} 
             clubLogo='https://vetores.org/d/palmeiras.svg' 
             playerName='Boexatinha_'
             playerGoals={29}
@@ -288,7 +288,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={3} 
-            nivel={<GiAbstract024 />} 
+            Nivel={GiAbstract024} 
             clubLogo='https://vetores.org/d/sao-paulo-futebol-clube.svg' 
             playerName='Raul99'
             playerGoals={28}
@@ -296,7 +296,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={4} 
-            nivel={<AiFillFire />} 
+            Nivel={AiFillFire} 
             clubLogo='https://cdn.worldvectorlogo.com/logos/coritiba.svg' 
             playerName='Cris_90'
             playerGoals={26}
@@ -304,7 +304,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={5} 
-            nivel={<GiAbstract079 />} 
+            Nivel={GiAbstract079} 
             clubLogo='https://vetores.org/d/cuiaba.svg' 
             playerName='Pindato'
             playerGoals={24}
@@ -312,7 +312,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={6} 
-            nivel={<GiAbstract116 />} 
+            Nivel={GiAbstract116} 
             clubLogo='https://svgshare.com/i/gps.svg' 
             playerName='_m3ss1_'
             playerGoals={21}
@@ -320,7 +320,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={7} 
-            nivel={<GiConcentrationOrb />} 
+            Nivel={GiConcentrationOrb} 
             clubLogo='https://cdn.worldvectorlogo.com/logos/coritiba.svg' 
             playerName='fRedo'
             playerGoals={21}
@@ -328,7 +328,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={8} 
-            nivel={<GiAbstract079 />} 
+            Nivel={GiAbstract079} 
             clubLogo='https://vetores.org/d/flamengo.svg' 
             playerName='Luotal'
             playerGoals={19}
@@ -336,7 +336,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={9} 
-            nivel={<AiFillFire />} 
+            Nivel={AiFillFire} 
             clubLogo='https://vetores.org/d/fluminense.svg' 
             playerName='Benee'
             playerGoals={17}
@@ -344,7 +344,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={10} 
-            nivel={<GiConcentrationOrb />} 
+            Nivel={GiConcentrationOrb} 
             clubLogo='https://vetores.org/d/flamengo.svg' 
             playerName='paivinha'
             playerGoals={15}
@@ -358,7 +358,7 @@ export function GoalsAmountTables() {
         <ul>
           <PlayerDetails 
             ranking={1} 
-            nivel={<AiFillFire />} 
+            Nivel={AiFillFire} 
             clubLogo='https://svgshare.com/i/gps.svg' 
             playerName='Gustavo_Polonio'
             playerGoals={29}
@@ -366,7 +366,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={2} 
-            nivel={<GiSpikyWing />} 
+            Nivel={GiSpikyWing} 
             clubLogo='https://vetores.org/d/palmeiras.svg' 
             playerName='Boexatinha_'
             playerGoals={29}
@@ -374,7 +374,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={3} 
-            nivel={<GiAbstract024 />} 
+            Nivel={GiAbstract024} 
             clubLogo='https://vetores.org/d/sao-paulo-futebol-clube.svg' 
             playerName='Raul99'
             playerGoals={28}
@@ -382,7 +382,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={4} 
-            nivel={<AiFillFire />} 
+            Nivel={AiFillFire} 
             clubLogo='https://cdn.worldvectorlogo.com/logos/coritiba.svg' 
             playerName='Cris_90'
             playerGoals={26}
@@ -390,7 +390,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={5} 
-            nivel={<GiAbstract079 />} 
+            Nivel={GiAbstract079} 
             clubLogo='https://vetores.org/d/cuiaba.svg' 
             playerName='Pindato'
             playerGoals={24}
@@ -398,7 +398,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={6} 
-            nivel={<GiAbstract116 />} 
+            Nivel={GiAbstract116} 
             clubLogo='https://svgshare.com/i/gps.svg' 
             playerName='_m3ss1_'
             playerGoals={21}
@@ -406,7 +406,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={7} 
-            nivel={<GiConcentrationOrb />} 
+            Nivel={GiConcentrationOrb} 
             clubLogo='https://cdn.worldvectorlogo.com/logos/coritiba.svg' 
             playerName='fRedo'
             playerGoals={21}
@@ -414,7 +414,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={8} 
-            nivel={<GiAbstract079 />} 
+            Nivel={GiAbstract079} 
             clubLogo='https://vetores.org/d/flamengo.svg' 
             playerName='Luotal'
             playerGoals={19}
@@ -422,7 +422,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={9} 
-            nivel={<AiFillFire />} 
+            Nivel={AiFillFire} 
             clubLogo='https://vetores.org/d/fluminense.svg' 
             playerName='Benee'
             playerGoals={17}
@@ -430,7 +430,7 @@ export function GoalsAmountTables() {
 
           <PlayerDetails 
             ranking={10} 
-            nivel={<GiConcentrationOrb />} 
+            Nivel={GiConcentrationOrb} 
             clubLogo='https://vetores.org/d/flamengo.svg' 
             playerName='paivinha'
             playerGoals={15}

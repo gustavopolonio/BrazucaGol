@@ -6,6 +6,7 @@ import { MenuSidebar } from '../components/MenuSidebar'
 import { MyAccountSidebar } from '../components/MyAccountSidebar'
 import { GoalsAmountTables } from '../components/GoalsAmount'
 import { useIndividualGoals } from '../contexts/IndividualGoalsContext'
+import { Footer } from '../components/Footer'
 import { api } from '../services/api'
 
 import styles from './styles.module.scss'
@@ -62,6 +63,8 @@ export default function Home({ clubs }: HomeProps) {
 
         <MyAccountSidebar />
       </main>
+
+      <Footer />
     </>
   )
 }
