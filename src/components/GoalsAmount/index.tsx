@@ -267,7 +267,7 @@ export function GoalsAmountTables() {
       </div>
 
       <div className={styles.goalsTable}>
-        <h2>Record hora na temp</h2>
+        <h2 className={styles.recordText}>Record hora na temp</h2>
 
         <ul>
           <PlayerDetails 
@@ -353,7 +353,7 @@ export function GoalsAmountTables() {
       </div>
 
       <div className={styles.goalsTable}>
-        <h2>Record rodada na temp</h2>
+        <h2 className={styles.recordText}>Record rodada na temp</h2>
 
         <ul>
           <PlayerDetails 

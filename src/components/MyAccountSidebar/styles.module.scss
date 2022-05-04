@@ -1,0 +1,62 @@
+.menuContainer {
+  width: 260px;
+  border: 1px solid black;
+  border-radius: 10px;
+  overflow: hidden;
+  height: fit-content;
+
+  h2 {
+    text-align: center;
+    background: #ABFF4F;
+    padding: 0.5rem 0;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1.5rem 1.5rem;
+    background: #F8F9FA;
+
+    a {
+      display: flex;
+      align-items: center;
+      // justify-content: space-between;
+      font-weight: 700;
+      height: 2.8rem;
+      
+      position: relative;
+
+      svg {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+      }
+
+      .borderBottom {
+        position: absolute;
+        border-bottom: 1px solid #ADB5BD;
+        width: 75%;
+        bottom: 0px;
+        left: 50%;
+        transform: translatex(-50%);
+      }
+
+      .messageInbox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: black;
+        color: greenyellow;
+        width: 24px;
+        height: 24px;
+        margin-right: 10px;
+      }
+    }
+
+    strong {
+      color: #4C4CFF;
+      margin-top: 1rem;
+      text-align: center;
+    }
+  }
+}

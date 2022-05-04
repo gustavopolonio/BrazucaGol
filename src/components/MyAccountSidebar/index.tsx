@@ -1,24 +1,23 @@
+import { BsPersonFill, BsFillGearFill } from 'react-icons/bs'
+import { GiOpenBook, GiSoccerKick } from 'react-icons/gi'
+import { FaExchangeAlt } from 'react-icons/fa'
+
 import styles from './styles.module.scss'
 
 export function MyAccountSidebar() {
 
   return (
     <aside className={styles.menuContainer}>
-      <h2>Menu</h2>
+      <h2>Minha Conta</h2>
 
       <nav>
-        <a href="">Principal<div></div></a>
-        <a href="">Rodadas<div></div></a>
-        <a href="">Níveis<div></div></a>
-        <a href="">Premiações<div></div></a>
-        <a href="">Ranking<div></div></a>
-        <a href="">Regras<div></div></a>
-        <a href="">Dúvidas<div></div></a>
-        <a href="">Divisão de Acesso<div></div></a>
-        <a href="">Divisão de Jogadores<div></div></a>
-        <a href="">Movimentações<div></div></a>
-        <a href="">Vips<div></div></a>
-        <a href="">Confirmar VIP<div></div></a>
+        <a href=""><div className={styles.messageInbox}>08</div>Recados<div className={styles.borderBottom}></div></a>
+        <a href=""><BsPersonFill />Aparência<div className={styles.borderBottom}></div></a>
+        <a href=""><GiOpenBook />Habilidades<div className={styles.borderBottom}></div></a>
+        <a href=""><FaExchangeAlt />Mudar de time<div className={styles.borderBottom}></div></a>
+        <a href=""><GiSoccerKick />Opções de chute<div className={styles.borderBottom}></div></a>
+        <a href=""><BsFillGearFill />Configurações<div className={styles.borderBottom}></div></a>
+        <strong>VIP 7 dias 08 minutos</strong>
       </nav>
     </aside>
   )
