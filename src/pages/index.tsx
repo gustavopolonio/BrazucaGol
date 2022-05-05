@@ -73,6 +73,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   const response = await api.get('/')
   const clubs = response.data
+  console.log(clubs)
 
   return {
     props: { clubs }

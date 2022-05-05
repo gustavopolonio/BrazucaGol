@@ -41,7 +41,7 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
       { !isKickReady ? 
         ( // Kick isnt ready
           <div className={styles.ballContent}>
-            <p>{time}</p>
+            <p>{Math.floor(time/60)}:{time%60 < 10 && `0`}{time%60}</p>
           </div>
         ) : ( // Kick is ready
           <button 
