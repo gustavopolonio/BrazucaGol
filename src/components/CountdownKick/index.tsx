@@ -2,6 +2,7 @@ import { useState, useEffect, ReactNode } from 'react'
 import { IoIosFootball } from 'react-icons/io'
 import { ModalKick } from '../ModalKick'
 import { useIndividualGoals } from '../../contexts/IndividualGoalsContext'
+import { formatTime } from '../../utils/formatTime'
 
 import styles from './styles.module.scss'
 
@@ -41,7 +42,7 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
       { !isKickReady ? 
         ( // Kick isnt ready
           <div className={styles.ballContent}>
-            <p>{Math.floor(time/60)}:{time%60 < 10 && `0`}{time%60}</p>
+            <p>{formatTime(time)}</p>
           </div>
         ) : ( // Kick is ready
           <button 
