@@ -3,8 +3,10 @@ import { IoIosFootball } from 'react-icons/io'
 import { ModalKick } from '../ModalKick'
 import { useIndividualGoals } from '../../contexts/IndividualGoalsContext'
 import { formatTime } from '../../utils/formatTime'
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 
 import styles from './styles.module.scss'
+import 'react-circular-progressbar/dist/styles.css'
 
 interface CountdownKickProps {
   title: string,
@@ -13,7 +15,8 @@ interface CountdownKickProps {
 }
 
 export function CountdownKick({ title, kickType, children }: CountdownKickProps) {
-  const [time, setTime] = useState(300)
+  const timeWithVip = 300
+  const [time, setTime] = useState(timeWithVip)
   const [isKickReady, setIsKickReady] = useState(false)
   const [isModalKickOpen, setIsModalKickOpen] = useState(false)
   const { autoGoals, setAutoGoals } = useIndividualGoals()
@@ -42,6 +45,15 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
       { !isKickReady ? 
         ( // Kick isnt ready
           <div className={styles.ballContent}>
+            <CircularProgressbar 
+              value={time} 
+              maxValue={timeWithVip} 
+              counterClockwise
+              styles={buildStyles({
+                pathColor: '#FF9914',
+                strokeLinecap: 'butt'
+              })}
+            />
             <p>{formatTime(time)}</p>
           </div>
         ) : ( // Kick is ready
@@ -50,7 +62,7 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
             className={`${styles.ballContent} ${styles.kickIsReady}`}
             onClick={handleClickToKick}
           >
-            <IoIosFootball fontSize={90} />
+            <IoIosFootball fontSize={108} />
           </button>
         ) 
       }
