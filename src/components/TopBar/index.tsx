@@ -5,7 +5,7 @@ import styles from './styles.module.scss'
 
 export function TopBar() {
   const [roundTimeAvailable, setRoundTimeAvailable] = useState('')
-
+  
   function formatRoundTimeAvailable(timeInSeconds: number) {
     let hours: number | string = Math.floor(timeInSeconds / 3600)
     const rest = timeInSeconds % 3600
@@ -25,35 +25,35 @@ export function TopBar() {
     return `${hours}:${minutes}:${seconds}`
   }
 
-  const date = new Date()
-
-  const dateInBraziliaTimeZone = date.toLocaleString('pt-BR', { 
-    timeZone: 'America/Sao_Paulo',
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric'
-  })
-
-  const [hours, minutes, seconds] = dateInBraziliaTimeZone.split(':')
-  const currentDateInSeconds = (Number(hours) * 60 * 60) + (Number(minutes) * 60) + Number(seconds)
-
-  // Round start at 20:00:00 (Brasilia)
-  const roundStartInSeconds = 20 * 60 * 60
-
-  if (currentDateInSeconds < roundStartInSeconds) {
-    const roundTimeAvailableInSeconds = roundStartInSeconds - currentDateInSeconds
-
-    useEffect(() => {
-      setRoundTimeAvailable(formatRoundTimeAvailable(roundTimeAvailableInSeconds))
-    }, [])
-
-  } else {
-    const roundTimeAvailableInSeconds = currentDateInSeconds - roundStartInSeconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const date = new Date()
     
-    useEffect(() => {
-      setRoundTimeAvailable(formatRoundTimeAvailable(roundTimeAvailableInSeconds))
-    }, [])
-  }
+      const dateInBraziliaTimeZone = date.toLocaleString('pt-BR', { 
+        timeZone: 'America/Sao_Paulo',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric'
+      })
+    
+      const [hours, minutes, seconds] = dateInBraziliaTimeZone.split(':')
+      const currentDateInSeconds = (Number(hours) * 60 * 60) + (Number(minutes) * 60) + Number(seconds)
+    
+      // Round start at 20:00:00 (Brasilia)
+      const roundStartInSeconds = 20 * 60 * 60
+    
+      if (currentDateInSeconds < roundStartInSeconds) {
+        const roundTimeAvailableInSeconds = roundStartInSeconds - currentDateInSeconds 
+        setRoundTimeAvailable(formatRoundTimeAvailable(roundTimeAvailableInSeconds))
+      } else {
+        const roundTimeAvailableInSeconds = 24 * 60 * 60 - ( currentDateInSeconds - roundStartInSeconds )
+        setRoundTimeAvailable(formatRoundTimeAvailable(roundTimeAvailableInSeconds))
+      }
+  
+    }, 1000)
+    return () => clearTimeout(timer)
+  }, [roundTimeAvailable])
+
 
   return (
     <div className={styles.container}>
