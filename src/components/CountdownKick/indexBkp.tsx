@@ -73,7 +73,7 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
 
       { isModalKickOpen && 
         <ModalKick 
-          kickType={kickType} 
+          kickType={kickType}
           setTime={setTime} 
           setIsModalKickOpen={setIsModalKickOpen}
           setIsKickReady={setIsKickReady}

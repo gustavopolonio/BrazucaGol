@@ -9,10 +9,12 @@ interface PenaltyKickProps {
   kickType: string,
   setTime: Dispatch<SetStateAction<number>>,
   setIsModalKickOpen: Dispatch<SetStateAction<boolean>>,
-  setIsKickReady: Dispatch<SetStateAction<boolean>>
+  setIsKickReady: Dispatch<SetStateAction<boolean>>,
+  setTimeKickIsReady: Dispatch<SetStateAction<number>>,
+  timeWithVip: number
 }
 
-export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickReady }: PenaltyKickProps) {
+export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickReady, setTimeKickIsReady, timeWithVip }: PenaltyKickProps) {
   const { 
     autoGoals, 
     setAutoGoals, 
@@ -49,13 +51,14 @@ export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickRead
         setTimeout(() => {
           setIsKickReady(false)
           setIsModalKickOpen(false)
-          setTime(300)
+          const currentTime = Math.floor(new Date().getTime() / 1000)
+          setTimeKickIsReady(currentTime + timeWithVip)
+          setTime(timeWithVip)
         }, 1800)
       break
   
       case 'free-kick': // Calculate probability to do goal (70% of chance)
         const freeKickProbability = Math.random() * 100
-        console.log('freeKickProbability', freeKickProbability)
         if (freeKickProbability < 70) { // Free kick goal
           setFreeKickGoals(freeKickGoals + 1)
           displayMessageAfterKick('GOL !!!!')
@@ -66,7 +69,9 @@ export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickRead
         setTimeout(() => {
           setIsKickReady(false)
           setIsModalKickOpen(false)
-          setTime(300)
+          const currentTime = Math.floor(new Date().getTime() / 1000)
+          setTimeKickIsReady(currentTime + timeWithVip)
+          setTime(timeWithVip)
         }, 1800)
       break
   
@@ -89,7 +94,9 @@ export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickRead
         setTimeout(() => {
           setIsKickReady(false)
           setIsModalKickOpen(false)
-          setTime(300)
+          const currentTime = Math.floor(new Date().getTime() / 1000)
+          setTimeKickIsReady(currentTime + timeWithVip)
+          setTime(timeWithVip)
         }, 2800)
       break
   
