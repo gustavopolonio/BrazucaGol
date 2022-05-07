@@ -5,26 +5,30 @@ import { LoadingSpinner } from '../Utils/LoadingSpinner'
 
 import styles from './styles.module.scss'
 
-interface PenaltyKickProps {
+interface ModalKickProps {
   kickType: string,
-  setTime: Dispatch<SetStateAction<number>>,
+  setTimeToKick: Dispatch<SetStateAction<number>>,
   setIsModalKickOpen: Dispatch<SetStateAction<boolean>>,
   setIsKickReady: Dispatch<SetStateAction<boolean>>,
-  setTimeKickIsReady: Dispatch<SetStateAction<number>>,
+  setTimeKickWillBeReady: Dispatch<SetStateAction<number>>,
   timeWithVip: number
 }
 
-export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickReady, setTimeKickIsReady, timeWithVip }: PenaltyKickProps) {
+export function ModalKick({ 
+  kickType, 
+  setTimeToKick, 
+  setIsModalKickOpen, 
+  setIsKickReady, 
+  setTimeKickWillBeReady, 
+  timeWithVip 
+}: ModalKickProps) {
   const { 
-    autoGoals, 
-    setAutoGoals, 
     penaltyGoals, 
     setPenaltyGoals, 
     freeKickGoals, 
     setFreeKickGoals,
     trailGoals,
-    setTrailGoals,
-    totalGoals
+    setTrailGoals
   } = useIndividualGoals()
 
   const [showKickMessage, setShowKickMessage] = useState(false)
@@ -34,6 +38,16 @@ export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickRead
   function displayMessageAfterKick(message: string) {
     setShowKickMessage(true)
     setMessageAfterKick(message)
+  }
+
+  function setConfigsToRestartCountdown(timeoutTimer: number) {
+    setTimeout(() => {
+      setIsKickReady(false)
+      setIsModalKickOpen(false)
+      const currentTime = Math.floor(new Date().getTime() / 1000)
+      setTimeKickWillBeReady(currentTime + timeWithVip)
+      setTimeToKick(timeWithVip)
+    }, timeoutTimer)
   }
 
   function handleKickWasGoal() {
@@ -48,13 +62,7 @@ export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickRead
           displayMessageAfterKick('ERROU :(')
         }
 
-        setTimeout(() => {
-          setIsKickReady(false)
-          setIsModalKickOpen(false)
-          const currentTime = Math.floor(new Date().getTime() / 1000)
-          setTimeKickIsReady(currentTime + timeWithVip)
-          setTime(timeWithVip)
-        }, 1800)
+        setConfigsToRestartCountdown(1800)
       break
   
       case 'free-kick': // Calculate probability to do goal (70% of chance)
@@ -66,18 +74,11 @@ export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickRead
           displayMessageAfterKick('ERROU :(')
         }
 
-        setTimeout(() => {
-          setIsKickReady(false)
-          setIsModalKickOpen(false)
-          const currentTime = Math.floor(new Date().getTime() / 1000)
-          setTimeKickIsReady(currentTime + timeWithVip)
-          setTime(timeWithVip)
-        }, 1800)
+        setConfigsToRestartCountdown(1800)
       break
   
       case 'trail': // Calculate probability to do goal (30% of chance)
         const trailProbability = Math.random() * 100
-
         setIsLoading(true)
 
         setTimeout(() => {
@@ -90,14 +91,7 @@ export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickRead
           }
         }, 1000)
 
-
-        setTimeout(() => {
-          setIsKickReady(false)
-          setIsModalKickOpen(false)
-          const currentTime = Math.floor(new Date().getTime() / 1000)
-          setTimeKickIsReady(currentTime + timeWithVip)
-          setTime(timeWithVip)
-        }, 2800)
+        setConfigsToRestartCountdown(2800)
       break
   
       default:
@@ -108,7 +102,6 @@ export function ModalKick({ kickType, setTime, setIsModalKickOpen, setIsKickRead
   const [trailFirstColumn, setTrailFirstColumn] = useState(false)
   const [trailSecondColumn, setTrailSecondColumn] = useState(false)
   const [trailThirdColumn, setTrailThirdColumn] = useState(false)
-
   
   useEffect(() => {
     if (trailFirstColumn && trailSecondColumn && trailThirdColumn) {

@@ -1,30 +1,12 @@
 import { RiSearchLine, RiLogoutCircleRLine } from 'react-icons/ri'
 import { useState, useEffect } from 'react'
+import { formatTime } from '../../utils/formatTime'
 
 import styles from './styles.module.scss'
 
 export function TopBar() {
   const [roundTimeAvailable, setRoundTimeAvailable] = useState('')
   
-  function formatRoundTimeAvailable(timeInSeconds: number) {
-    let hours: number | string = Math.floor(timeInSeconds / 3600)
-    const rest = timeInSeconds % 3600
-    let minutes: number | string = Math.floor(rest / 60)
-    let seconds: number | string = rest % 60
-
-    if (hours < 10) {
-      hours = String(hours).padStart(2, '0')
-    }
-    if (minutes < 10) {
-      minutes = String(minutes).padStart(2, '0')
-    }
-    if (seconds < 10) {
-      seconds = String(seconds).padStart(2, '0')
-    }
-
-    return `${hours}:${minutes}:${seconds}`
-  }
-
   useEffect(() => {
     const timer = setTimeout(() => {
       const date = new Date()
@@ -44,10 +26,10 @@ export function TopBar() {
     
       if (currentDateInSeconds < roundStartInSeconds) {
         const roundTimeAvailableInSeconds = roundStartInSeconds - currentDateInSeconds 
-        setRoundTimeAvailable(formatRoundTimeAvailable(roundTimeAvailableInSeconds))
+        setRoundTimeAvailable(formatTime(roundTimeAvailableInSeconds, true))
       } else {
         const roundTimeAvailableInSeconds = 24 * 60 * 60 - ( currentDateInSeconds - roundStartInSeconds )
-        setRoundTimeAvailable(formatRoundTimeAvailable(roundTimeAvailableInSeconds))
+        setRoundTimeAvailable(formatTime(roundTimeAvailableInSeconds, true))
       }
   
     }, 1000)

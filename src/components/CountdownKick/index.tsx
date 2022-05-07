@@ -15,8 +15,6 @@ interface CountdownKickProps {
 }
 
 export function CountdownKick({ title, kickType, children }: CountdownKickProps) {
-  // const timeWithVip = 300
-  // const [time, setTime] = useState(timeWithVip)
   const [isKickReady, setIsKickReady] = useState(false)
   const [isModalKickOpen, setIsModalKickOpen] = useState(false)
   const { autoGoals, setAutoGoals } = useIndividualGoals()
@@ -24,27 +22,26 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
   const timeWithVip = 300 // Considering a kick of 5 min (300 sec)
 
   const enteredTime = Math.floor(new Date().getTime() / 1000)
-  const [timeKickIsReady, setTimeKickIsReady] = useState(enteredTime + timeWithVip)
-  const [time, setTime] = useState(timeWithVip)
+  const [timeKickWillBeReady, setTimeKickWillBeReady] = useState(enteredTime + timeWithVip)
+  const [timeToKick, setTimeToKick] = useState(timeWithVip)
 
   useEffect(() => {
     const timer = setTimeout(() => {
       const currentTime = Math.floor(new Date().getTime() / 1000)
-      // console.log('timeKickIsReady', timeKickIsReady)'
-      if (time > 1) {
-        setTime(timeKickIsReady - currentTime)
+      if (timeToKick > 1) {
+        setTimeToKick(timeKickWillBeReady - currentTime)
       } else { // Time to kick
         if (kickType === 'auto') {
           setAutoGoals(autoGoals + 1)
-          setTimeKickIsReady(currentTime + timeWithVip)
-          setTime(timeWithVip)
+          setTimeKickWillBeReady(currentTime + timeWithVip)
+          setTimeToKick(timeWithVip)
         } else {
           setIsKickReady(true)       
         }
       }
     }, 1000)
     return () => clearTimeout(timer)
-  }, [time])
+  }, [timeToKick])
 
   function handleClickToKick() {
     setIsModalKickOpen(true)
@@ -56,15 +53,15 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
         ( // Kick isnt ready
           <div className={styles.ballContent}>
             <CircularProgressbar 
-              value={time} 
-              maxValue={300}
+              value={timeToKick} 
+              maxValue={timeWithVip}
               counterClockwise
               styles={buildStyles({
                 pathColor: '#FF9914',
                 strokeLinecap: 'butt'
               })}
             />
-            <p>{formatTime(time)}</p>
+            <p>{formatTime(timeToKick, false)}</p>
           </div>
         ) : ( // Kick is ready
           <button 
@@ -83,10 +80,10 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
       { isModalKickOpen && 
         <ModalKick 
           kickType={kickType} 
-          setTime={setTime} 
+          setTimeToKick={setTimeToKick} 
           setIsModalKickOpen={setIsModalKickOpen}
           setIsKickReady={setIsKickReady}
-          setTimeKickIsReady={setTimeKickIsReady}
+          setTimeKickWillBeReady={setTimeKickWillBeReady}
           timeWithVip={timeWithVip}
         /> 
       }
