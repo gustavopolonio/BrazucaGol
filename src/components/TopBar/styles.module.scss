@@ -73,8 +73,8 @@
   }
 }
 
-.authButton {
-  background: #F21B3F;
+.authButtonLogOut,
+.authButtonLogIn {
   border: none;
   padding: 0.3rem 0.5rem;
   font-weight: bold;
@@ -87,8 +87,20 @@
   &:hover {
     filter: brightness(0.9);
   }
+}
+
+.authButtonLogOut {
+  background: #F21B3F;
 
   svg {
     margin-left: 0.6rem;
+  }
+}
+
+.authButtonLogIn {
+  background: green;
+
+  svg {
+    margin-right: 0.6rem;
   }
 }
