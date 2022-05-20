@@ -1,11 +1,14 @@
 import { RiSearchLine, RiLogoutCircleRLine } from 'react-icons/ri'
 import { useSession, signOut } from "next-auth/react"
-import Link from 'next/link'
 import { RoundTimeAvailable } from '../../components/RoundTimeAvailable'
 
 import styles from './styles.module.scss'
 
-export function TopBar() {
+interface TopBarProps {
+  onOpenSignInModal: () => void
+}
+
+export function TopBar({ onOpenSignInModal }: TopBarProps) {
   const { data: session } = useSession()
 
   return (
@@ -39,12 +42,10 @@ export function TopBar() {
             <RiLogoutCircleRLine fontSize={20} color={'F8F9FA'} />
           </button>
         ) : (
-          <Link href="/auth/signin" passHref>
-            <a className={styles.authButtonLogIn}>
-              <RiLogoutCircleRLine fontSize={20} color={'F8F9FA'} />
-              Entrar
-            </a>
-          </Link>
+          <button onClick={onOpenSignInModal} className={styles.authButtonLogIn}>
+            <RiLogoutCircleRLine fontSize={20} color={'F8F9FA'} />
+            Entrar
+          </button>
         )}
       </div>
     </div>

@@ -1,6 +1,5 @@
 import { GetServerSideProps } from 'next'
 import { CountdownKick } from '../components/CountdownKick'
-import { TopBar } from '../components/TopBar'
 import { Header } from '../components/Header'
 import { MenuSidebar } from '../components/MenuSidebar'
 import { MyAccountSidebar } from '../components/MyAccountSidebar'
@@ -28,7 +27,6 @@ export default function Home({ clubs }: HomeProps) {
 
   return (
     <>
-      <TopBar />
       <Header />
 
       <div className={styles.ballsContainer}>
