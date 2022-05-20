@@ -9,7 +9,7 @@ import { useIndividualGoals } from '../contexts/IndividualGoalsContext'
 import { Footer } from '../components/Footer'
 import { api } from '../services/api'
 
-import styles from './styles.module.scss'
+import styles from './home.module.scss'
 
 interface Club {
   id: string,
