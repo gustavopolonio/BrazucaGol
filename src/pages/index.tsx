@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next'
+import Head  from 'next/head'
 import { CountdownKick } from '../components/CountdownKick'
 import { Header } from '../components/Header'
 import { MenuSidebar } from '../components/MenuSidebar'
@@ -27,6 +28,10 @@ export default function Home({ clubs }: HomeProps) {
 
   return (
     <>
+      <Head>
+        <title>Home | Brazucagol</title>
+      </Head>
+
       <Header />
 
       <div className={styles.ballsContainer}>
