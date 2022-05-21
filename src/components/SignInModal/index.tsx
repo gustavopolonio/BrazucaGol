@@ -39,7 +39,7 @@ export function SignInModal({ isModalOpen, onCloseSignInModal }: SignInModalProp
           {providers?.map(provider => (
             <button 
               key={provider.name} 
-              onClick={() => signIn(provider.id)} 
+              onClick={() => signIn(provider.id, { callbackUrl: '/subscribe' })} 
               className={styles[provider.id]}
             >
               {provider.id === 'facebook' && (

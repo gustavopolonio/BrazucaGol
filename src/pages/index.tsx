@@ -31,7 +31,7 @@ export default function Home({ clubs }: HomeProps) {
       <Head>
         <title>Home | Brazucagol</title>
       </Head>
-
+    
       <Header />
 
       <div className={styles.ballsContainer}>

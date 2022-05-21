@@ -37,7 +37,7 @@ export function TopBar({ onOpenSignInModal }: TopBarProps) {
         </div>
 
         {session ? (
-          <button type='button' onClick={() => signOut()} className={styles.authButtonLogOut}>
+          <button type='button' onClick={() => signOut({ callbackUrl: '/' })} className={styles.authButtonLogOut}>
             Sair
             <RiLogoutCircleRLine fontSize={20} color={'F8F9FA'} />
           </button>
