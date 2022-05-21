@@ -1,0 +1,16 @@
+.ballsContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 160px);
+  gap: 2rem;
+  justify-content: center;
+  margin: -2.5rem auto 0;
+
+  width: 100%;
+  max-width: 1440px;
+  padding: 0.5rem 2rem;
+}
+
+.temporary {
+  position: absolute;
+  top: 50%;
+}

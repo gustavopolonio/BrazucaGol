@@ -3,10 +3,15 @@ import { SessionProvider } from "next-auth/react"
 import { useState } from 'react'
 import { IndividualGoalsProvider } from '../contexts/IndividualGoalsContext'
 import { TopBar } from '../components/TopBar'
+import { Header } from '../components/Header'
+import { CountdownKickContainer } from '../components/CountdownKickContainer'
+import { ClubsHighlightedes } from '../components/ClubsHighlightedes'
+import { MainContainer } from '../components/MainContainer'
 import { SignInModal } from '../components/SignInModal'
 import Modal from 'react-modal'
 
 import '../styles/global.scss'
+import { Footer } from '../components/Footer'
 
 Modal.setAppElement('#__next')
 
@@ -25,7 +30,16 @@ function MyApp({ Component, pageProps }: AppProps) {
     <SessionProvider session={pageProps.session}>
       <IndividualGoalsProvider>
         <TopBar onOpenSignInModal={handleOpenModal} />
-        <Component {...pageProps} />
+        <Header />
+        <CountdownKickContainer />
+        {/* <ClubsHighlightedes /> */}
+
+        <MainContainer>
+          <Component {...pageProps} />
+        </MainContainer>
+
+        <Footer />
+
         <SignInModal isModalOpen={isSignInModalOpen} onCloseSignInModal={handleCloseModal} />
       </IndividualGoalsProvider>
     </SessionProvider>

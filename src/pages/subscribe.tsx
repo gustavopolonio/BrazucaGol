@@ -1,14 +1,19 @@
 import { getSession } from 'next-auth/react'
 import { GetServerSideProps } from 'next'
+import Head from 'next/head'
 
 export default function Subscribe() {
 
   return (
-    <h1>Subscribe page</h1>
+    <>
+      <Head>
+        <title>Cadastre-se | Brazucagol</title>
+      </Head>
+    </>
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req })
 
   if (session?.isAvatarActive) {
