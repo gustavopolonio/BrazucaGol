@@ -4,7 +4,7 @@ import { api } from '../../services/api'
 import styles from './styles.module.scss'
 
 interface Club {
-  id: string,
+  id: number,
   name: string,
   encodedName: string,
   logoLink: string,
@@ -15,15 +15,11 @@ interface Club {
 export function ClubsHighlightedes() {
   const [clubs, setClubs] = useState<Club[]>()
 
-  // useEffect(() => {
-  //   fetch('https://api-brazilian-soccer-clubs.herokuapp.com', {
-  //     mode: 'cors'
-  //   })
-  //     .then(response => setClubs(response))
-  //     // .then(data => setClubs(data))
-  // }, [])
-
-
+  useEffect(() => {
+    fetch('https://api-brazilian-soccer-clubs.herokuapp.com')
+      .then(response => response.json())
+      // .then(data => console.log(data))
+  }, [])
 
   return (
     <div className={styles.clubsContainer}>

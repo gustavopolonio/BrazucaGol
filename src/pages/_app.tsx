@@ -32,7 +32,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <TopBar onOpenSignInModal={handleOpenModal} />
         <Header />
         <CountdownKickContainer />
-        {/* <ClubsHighlightedes /> */}
+        <ClubsHighlightedes />
 
         <MainContainer>
           <Component {...pageProps} />
