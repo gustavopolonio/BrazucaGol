@@ -34,6 +34,35 @@ export default async function handler(
   }
 
   if (req.method === 'POST') {
+    const { avatarName, avatarClub } = req.body
+
+    try {
+      await fauna.query(
+        q.If(
+          q.Not(
+            q.Exists(
+              q.Match(
+                q.Index('avatar_by_name'),
+                avatarName
+              )
+            )
+          ),
+          q.Create(
+            q.Collection('avatars'),
+            { data:
+            {
+              name: avatarName,
+              clubId: avatarClub
+            } }
+          ),
+          true
+        )
+      )
+  
+      return res.status(201).json({ success: true })
+    } catch(err) {
+      return res.status(501).json({ error: `Sorry something happened! ${err.message}` })
+    }
 
   }
 

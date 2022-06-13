@@ -63,12 +63,12 @@ export default function CreateAvatar() {
   }
 
   async function onSubmit(data: CreateAvatarData): Promise<void> {
-    console.log('data', data)
-    
-    // Check if avatarName  is available (faunadb)
 
-    // if is available: create avatar in fauna
-
+    const response = await api.post('/api/avatars', {
+      ...data,
+      avatarClub: Number(data.avatarClub)
+    })
+    console.log(response)
   }
 
   return (
