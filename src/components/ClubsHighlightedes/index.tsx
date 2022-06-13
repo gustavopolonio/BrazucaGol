@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { api } from '../../services/api'
 
 import styles from './styles.module.scss'
 
@@ -18,7 +17,7 @@ export function ClubsHighlightedes() {
   useEffect(() => {
     fetch('https://api-brazilian-soccer-clubs.herokuapp.com')
       .then(response => response.json())
-      // .then(data => console.log(data))
+      .then(data => setClubs(data))
   }, [])
 
   return (

@@ -13,7 +13,26 @@
       margin-top: 8px;
     }
 
+    > div {
+      display: flex;
+      align-items: center;
+
+      button {
+        background: transparent;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+          margin: 0 8px;
+          font-size: 18px;
+        }
+      }
+    }
+
     input, select {
+      flex: 1;
       margin-top: 6px;
       padding: 6px 10px;
     }
