@@ -15,6 +15,11 @@ interface Club {
   state: string
 }
 
+interface CreateAvatarData {
+  playerClub: string;
+  playerName: string
+}
+
 function compare( a: Club, b: Club ) {
   if ( a.name < b.name ){
     return -1;
@@ -27,8 +32,6 @@ function compare( a: Club, b: Club ) {
 
 export default function CreateAvatar() {
   const [clubs, setClubs] = useState<Club[]>([])
-  // const [playerName, setPlayerName] = useState('')
-  // const [playerClub, setPlayerClub] = useState(-1)
   const { register, handleSubmit, formState: { errors } } = useForm()
 
   useEffect(() => {
@@ -37,7 +40,7 @@ export default function CreateAvatar() {
       .then(data => setClubs(data.sort(compare)))
   }, [])
 
-  function onSubmit2(data) {
+  function onSubmit(data: CreateAvatarData) {
     console.log('data', data)
   }
 
@@ -47,34 +50,45 @@ export default function CreateAvatar() {
         <title>Cadastre-se | Brazucagol</title>
       </Head>
 
-      <form onSubmit={handleSubmit(onSubmit2)} className={styles.createAvatarForm}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.createAvatarForm}>
         <label>
           Nome do jogador
           <input 
             {...register('playerName', {
-              required: {
-                value: true,
-                message: 'Campo obrigatorio'
-              },
+              required: 'Campo obrigatório',
               minLength: {
                 value: 3,
                 message: 'Min 3 caracteres'
               }
             })}
           />
-          { errors.playerName && errors.playerName.message }
+          { errors.playerName ? (
+            <span>{errors.playerName.message}</span>
+          ) : (
+            <span></span>
+          ) }
         </label>
 
         <label>
           Selecione seu time
           <select 
-            {...register('playerClub')}
+            {...register('playerClub', {
+              min: {
+                value: 0,
+                message: 'Selecione um time'
+              }
+            })}
           >
             <option value={-1}>------------</option>
             { clubs.map(club => (
               <option key={club.id} value={club.id}>{club.name}</option>
             )) }
           </select>
+          { errors.playerClub ? (
+            <span>{errors.playerClub.message}</span>
+          ) : (
+            <span></span>
+          ) }
         </label>
 
         <button type='submit'>Criar Jogador</button>

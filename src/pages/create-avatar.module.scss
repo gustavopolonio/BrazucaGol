@@ -7,5 +7,28 @@
   label {
     display: flex;
     flex-direction: column;
+    width: 280px;
+
+    & + label {
+      margin-top: 8px;
+    }
+
+    input, select {
+      margin-top: 6px;
+      padding: 6px 10px;
+    }
+
+    span {
+      margin-top: 6px;
+      font-size: 14px;
+      height: 14px;
+      color: red;
+    }
+  }
+
+  button[type="submit"] {
+    margin-top: 16px;
+    width: 280px;
+    height: 32px;
   }
 }
