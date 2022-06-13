@@ -3,9 +3,8 @@ import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { query as q } from 'faunadb'
-import { fauna } from '../services/faunadb'
 import { IoMdRefresh } from 'react-icons/io'
+import { BsCheckCircleFill } from 'react-icons/bs'
 import { api } from '../services/api'
 
 import styles from './create-avatar.module.scss'
@@ -36,7 +35,9 @@ function compare( a: Club, b: Club ) {
 
 export default function CreateAvatar() {
   const [clubs, setClubs] = useState<Club[]>([])
-  const { register, handleSubmit, formState: { errors }, watch } = useForm()
+  const [nameExists, setNameExists] = useState(false)
+  const [showCheckedIcon, setShowCheckedIcon] = useState(false)
+  const { register, handleSubmit, formState: { errors }, watch, trigger } = useForm()
 
   useEffect(() => {
     fetch('https://api-brazilian-soccer-clubs.herokuapp.com')
@@ -52,13 +53,18 @@ export default function CreateAvatar() {
       }
     })
 
-    // console.log('avatarExists', data.avatarExists)
+    const isInputNameValid = await trigger('avatarName')
 
-    return data.avatarExists
+    if (!data.avatarExists && isInputNameValid) {
+      setShowCheckedIcon(true)
+    } else {
+      setNameExists(data.avatarExists)
+    }
   }
 
   async function onSubmit(data: CreateAvatarData): Promise<void> {
     console.log('data', data)
+    
     // Check if avatarName  is available (faunadb)
 
     // if is available: create avatar in fauna
@@ -82,16 +88,22 @@ export default function CreateAvatar() {
                   value: 3,
                   message: 'Min 3 caracteres'
                 },
-                validate: {
-                  avatarExists: async () => await checkAvatarName() || 'error'
-                }
+                onChange: () => {setNameExists(false); setShowCheckedIcon(false)}
               })}
             />
+
+            { showCheckedIcon && <BsCheckCircleFill style={{position: 'absolute', right: '42px', color: 'green'}} /> }
+            
             <button type="button" onClick={() => checkAvatarName()}>
               <IoMdRefresh />
+              <div className={styles.messageHolder}>
+                <p>Clique aqui para checar se esse nome está disponível</p>
+              </div>
             </button>
           </div>
-          { errors.avatarName ? (
+          { nameExists ? (
+            <span>Esse nome já está em uso</span>
+          ) : errors.avatarName ? (
             <span>{errors.avatarName.message}</span>
           ) : (
             <span></span>

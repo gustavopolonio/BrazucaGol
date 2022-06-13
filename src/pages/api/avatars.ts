@@ -6,7 +6,6 @@ export default async function handler(
   req: NextApiRequest, 
   res: NextApiResponse
 ): Promise<void> {
-  console.log(req.method)
   if (req.method === 'GET') {
     const { avatarName } = req.query
 
