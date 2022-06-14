@@ -1,17 +1,14 @@
 import { AppProps } from 'next/app'
 import { SessionProvider } from "next-auth/react"
 import { useState } from 'react'
+import Modal from 'react-modal'
 import { IndividualGoalsProvider } from '../contexts/IndividualGoalsContext'
 import { TopBar } from '../components/TopBar'
 import { Header } from '../components/Header'
-import { CountdownKickContainer } from '../components/CountdownKickContainer'
-import { ClubsHighlightedes } from '../components/ClubsHighlightedes'
-import { MainContainer } from '../components/MainContainer'
 import { SignInModal } from '../components/SignInModal'
-import Modal from 'react-modal'
+import { Footer } from '../components/Footer'
 
 import '../styles/global.scss'
-import { Footer } from '../components/Footer'
 
 Modal.setAppElement('#__next')
 
@@ -31,12 +28,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       <IndividualGoalsProvider>
         <TopBar onOpenSignInModal={handleOpenModal} />
         <Header />
-        <CountdownKickContainer />
-        <ClubsHighlightedes />
 
-        <MainContainer>
-          <Component {...pageProps} />
-        </MainContainer>
+        <Component {...pageProps} />
 
         <Footer />
 
