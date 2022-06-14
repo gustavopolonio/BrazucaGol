@@ -1,5 +1,7 @@
 import { RiSearchLine, RiLogoutCircleRLine } from 'react-icons/ri'
 import { useSession, signOut } from "next-auth/react"
+import { useEffect, useState } from 'react'
+import { api } from '../../services/api'
 import { RoundTimeAvailable } from '../../components/RoundTimeAvailable'
 
 import styles from './styles.module.scss'
@@ -8,8 +10,30 @@ interface TopBarProps {
   onOpenSignInModal: () => void
 }
 
+interface AvatarQueryResponse {
+  name: string,
+  clubId: number,
+  userId: {
+    id: string
+  }
+}
+
 export function TopBar({ onOpenSignInModal }: TopBarProps) {
   const { data: session } = useSession()
+  const [avatarData, setAvatarData] = useState<AvatarQueryResponse>()
+
+  useEffect(() => {
+    console.log(session?.isAvatarActive)
+    if (session?.isAvatarActive) {
+      const getAvatarInfos = async () => {
+        const response = await api.get("/api/avatar")
+        setAvatarData(response.data.data.data)
+      }
+      getAvatarInfos()
+    }
+  }, [session])
+
+  console.log('avatarData', avatarData)  
 
   return (
     <div className={styles.container}>
@@ -35,6 +59,8 @@ export function TopBar({ onOpenSignInModal }: TopBarProps) {
           </div>
           <p>9 TEMPORADA</p>
         </div>
+
+        { session?.isAvatarActive && <strong>gustavinho10</strong> }
 
         {session ? (
           <button type='button' onClick={() => signOut({ callbackUrl: '/' })} className={styles.authButtonLogOut}>

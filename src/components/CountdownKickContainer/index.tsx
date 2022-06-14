@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react'
 import styles from './styles.module.scss'
 
 interface CountdownKickContainerProps {
-  isAvatarActive: boolean
+  isAvatarActive: boolean | null
 }
 
 export function CountdownKickContainer({ isAvatarActive }: CountdownKickContainerProps) {

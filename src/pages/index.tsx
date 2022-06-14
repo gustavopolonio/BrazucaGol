@@ -10,7 +10,7 @@ import { MenuSidebar } from '../components/MenuSidebar'
 import { MyAccountSidebar } from '../components/MyAccountSidebar'
 
 interface HomeProps {
-  isAvatarActive: boolean
+  isAvatarActive: boolean | null
 }
 
 export default function Home({ isAvatarActive }: HomeProps) {
@@ -36,7 +36,11 @@ export default function Home({ isAvatarActive }: HomeProps) {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req })
-  const isAvatarActive = session?.isAvatarActive
+  let isAvatarActive = session?.isAvatarActive
+  
+  if (!isAvatarActive) {
+    isAvatarActive = null
+  } 
   
   return {
     props: { isAvatarActive }
