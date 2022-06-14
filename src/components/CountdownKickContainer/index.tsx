@@ -6,8 +6,6 @@ import styles from './styles.module.scss'
 
 export function CountdownKickContainer() {
   const { data: session } = useSession()
-  console.log(session)
-
   const { autoGoals, penaltyGoals, freeKickGoals, trailGoals, totalGoals } = useIndividualGoals()
 
   return (

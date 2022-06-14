@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import { getSession } from 'next-auth/react'
 import { query as q } from 'faunadb'
 import { fauna } from '../../services/faunadb'
 
@@ -33,8 +34,22 @@ export default async function handler(
     })
   }
 
-  if (req.method === 'POST') {
+  if (req.method === 'POST') {    
     const { avatarName, avatarClub } = req.body
+    const { user } = await getSession({ req })
+    
+    // search user_by_email and catch its Ref (this is my userId in avatars Collection)
+    const userRef = await fauna.query(
+      q.Select(
+        "ref",
+        q.Get(
+          q.Match(
+            q.Index("user_by_email"),
+            user.email
+          )
+        )
+      )
+    )
 
     try {
       await fauna.query(
@@ -49,13 +64,27 @@ export default async function handler(
           ),
           q.Create(
             q.Collection('avatars'),
-            { data:
-            {
-              name: avatarName,
-              clubId: avatarClub
-            } }
+            { 
+              data: {
+                name: avatarName,
+                clubId: avatarClub,
+                userId: userRef
+              } 
+            }
           ),
           true
+        )
+      )
+
+      // Change the isAvatarActive to True
+      await fauna.query(
+        q.Update(
+          userRef,
+          {
+            data: {
+              isAvatarActive: true
+            }
+          }
         )
       )
   

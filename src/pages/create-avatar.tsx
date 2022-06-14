@@ -1,6 +1,7 @@
 import { getSession } from 'next-auth/react'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { IoMdRefresh } from 'react-icons/io'
@@ -37,6 +38,7 @@ export default function CreateAvatar() {
   const [clubs, setClubs] = useState<Club[]>([])
   const [nameExists, setNameExists] = useState(false)
   const [showCheckedIcon, setShowCheckedIcon] = useState(false)
+  const router = useRouter()
   const { register, handleSubmit, formState: { errors }, watch, trigger } = useForm()
 
   useEffect(() => {
@@ -63,12 +65,14 @@ export default function CreateAvatar() {
   }
 
   async function onSubmit(data: CreateAvatarData): Promise<void> {
-
     const response = await api.post('/api/avatars', {
       ...data,
       avatarClub: Number(data.avatarClub)
     })
-    console.log(response)
+
+    if (response.status === 201) {
+      router.push('/')
+    }
   }
 
   return (
