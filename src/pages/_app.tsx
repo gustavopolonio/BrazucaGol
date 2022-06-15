@@ -7,6 +7,9 @@ import { TopBar } from '../components/TopBar'
 import { Header } from '../components/Header'
 import { SignInModal } from '../components/SignInModal'
 import { Footer } from '../components/Footer'
+import { CountdownKickContainer } from '../components/CountdownKickContainer'
+import { ClubsHighlightedes } from '../components/ClubsHighlightedes'
+import { MainContainer } from '../components/MainContainer'
 
 import '../styles/global.scss'
 
@@ -28,8 +31,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       <IndividualGoalsProvider>
         <TopBar onOpenSignInModal={handleOpenModal} />
         <Header />
+        <CountdownKickContainer />
+        <ClubsHighlightedes />
 
-        <Component {...pageProps} />
+        <MainContainer>
+          <Component {...pageProps} />
+        </MainContainer>
 
         <Footer />
 

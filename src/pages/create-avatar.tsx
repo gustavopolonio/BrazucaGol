@@ -8,8 +8,6 @@ import { useForm } from 'react-hook-form'
 import { IoMdRefresh } from 'react-icons/io'
 import { BsCheckCircleFill } from 'react-icons/bs'
 import { api } from '../services/api'
-import { MenuSidebar } from '../components/MenuSidebar'
-import { MyAccountSidebar } from '../components/MyAccountSidebar'
 
 import styles from './create-avatar.module.scss'
 
@@ -89,70 +87,63 @@ export default function CreateAvatar() {
         <title>Cadastre-se | Brazucagol</title>
       </Head>
 
-      <main className={styles.mainContainer}>
-        <MenuSidebar />
-
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.createAvatarForm}>
-          <label>
-            Nome do jogador
-            <div>
-              <input 
-                {...register('avatarName', {
-                  required: 'Campo obrigatório',
-                  minLength: {
-                    value: 3,
-                    message: 'Min 3 caracteres'
-                  },
-                  onChange: () => {setNameExists(false); setShowCheckedIcon(false)}
-                })}
-              />
-
-              { showCheckedIcon && <BsCheckCircleFill style={{position: 'absolute', right: '42px', color: 'green'}} /> }
-              
-              <button type="button" onClick={() => checkAvatarName()}>
-                <IoMdRefresh />
-                <div className={styles.messageHolder}>
-                  <p>Clique aqui para checar se esse nome está disponível</p>
-                </div>
-              </button>
-            </div>
-            { nameExists ? (
-              <span>Esse nome já está em uso</span>
-            ) : errors.avatarName ? (
-              <span>{errors.avatarName.message}</span>
-            ) : (
-              <span></span>
-            ) }
-          </label>
-
-          <label>
-            Selecione seu time
-            <select 
-              {...register('avatarClub', {
-                min: {
-                  value: 0,
-                  message: 'Selecione um time'
-                }
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.createAvatarForm}>
+        <label>
+          Nome do jogador
+          <div>
+            <input 
+              {...register('avatarName', {
+                required: 'Campo obrigatório',
+                minLength: {
+                  value: 3,
+                  message: 'Min 3 caracteres'
+                },
+                onChange: () => {setNameExists(false); setShowCheckedIcon(false)}
               })}
-            >
-              <option value={-1}>------------</option>
-              { clubs.map(club => (
-                <option key={club.id} value={club.id}>{club.name}</option>
-              )) }
-            </select>
-            { errors.avatarClub ? (
-              <span>{errors.avatarClub.message}</span>
-            ) : (
-              <span></span>
-            ) }
-          </label>
+            />
 
-          <button type='submit'>Criar Jogador</button>
-        </form>
+            { showCheckedIcon && <BsCheckCircleFill style={{position: 'absolute', right: '42px', color: 'green'}} /> }
+            
+            <button type="button" onClick={() => checkAvatarName()}>
+              <IoMdRefresh />
+              <div className={styles.messageHolder}>
+                <p>Clique aqui para checar se esse nome está disponível</p>
+              </div>
+            </button>
+          </div>
+          { nameExists ? (
+            <span>Esse nome já está em uso</span>
+          ) : errors.avatarName ? (
+            <span>{errors.avatarName.message}</span>
+          ) : (
+            <span></span>
+          ) }
+        </label>
 
-        <MyAccountSidebar />
-      </main>
+        <label>
+          Selecione seu time
+          <select 
+            {...register('avatarClub', {
+              min: {
+                value: 0,
+                message: 'Selecione um time'
+              }
+            })}
+          >
+            <option value={-1}>------------</option>
+            { clubs.map(club => (
+              <option key={club.id} value={club.id}>{club.name}</option>
+            )) }
+          </select>
+          { errors.avatarClub ? (
+            <span>{errors.avatarClub.message}</span>
+          ) : (
+            <span></span>
+          ) }
+        </label>
 
+        <button type='submit'>Criar Jogador</button>
+      </form>
     </>
   )
 }
