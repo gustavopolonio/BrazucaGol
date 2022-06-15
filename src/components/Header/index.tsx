@@ -1,9 +1,39 @@
 import { useSession } from 'next-auth/react'
+import { destroyCookie, parseCookies } from 'nookies'
+import { useEffect, useState } from 'react'
+import { api } from '../../services/api'
 
 import styles from './styles.module.scss'
 
+interface AvatarQueryResponse {
+  name: string,
+  clubId: number,
+  userId: {
+    id: string
+  }
+}
+
 export function Header() {
   const { data: session } = useSession()
+
+  // fetch("https://api-brazilian-soccer-clubs.herokuapp.com/")
+  //   .then(response => response.json())
+  //   .then(data => setClub(data.find(club => club.id === avatarData?.clubId)))
+  const [avatarData, setAvatarData] = useState<AvatarQueryResponse>()
+  const cookies = parseCookies()
+  const canGiveFirstKick = cookies.giveFirstKick
+
+  if (canGiveFirstKick === 'true') {
+    const getAvatarInfos = async () => {
+      const response = await api.get("/api/avatar")
+      setAvatarData(response.data.data.data)
+    }
+    getAvatarInfos()
+  }
+
+  useEffect(() => {
+    destroyCookie(null, 'giveFirstKick')
+  }, [])
 
   return (
     <header className={styles.header}>
@@ -13,7 +43,7 @@ export function Header() {
         <span className={styles.gol}>GOL</span>
       </h1>
 
-      {session?.isAvatarActive && (
+      {(session?.isAvatarActive || canGiveFirstKick === 'true') && (
         <div className={styles.dataContainer}>
           <div className={styles.playerData}>
             <div className={styles.playerLevel}>

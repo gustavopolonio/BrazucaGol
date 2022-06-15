@@ -1,6 +1,7 @@
 import { RiSearchLine, RiLogoutCircleRLine } from 'react-icons/ri'
 import { useSession, signOut } from "next-auth/react"
 import { useEffect, useState } from 'react'
+import { parseCookies, destroyCookie } from 'nookies'
 import { api } from '../../services/api'
 import { RoundTimeAvailable } from '../../components/RoundTimeAvailable'
 
@@ -22,8 +23,10 @@ export function TopBar({ onOpenSignInModal }: TopBarProps) {
   const { data: session } = useSession()
   const [avatarData, setAvatarData] = useState<AvatarQueryResponse>()
 
+  const cookies = parseCookies()
+  const canGiveFirstKick = cookies.giveFirstKick
+
   useEffect(() => {
-    console.log(session?.isAvatarActive)
     if (session?.isAvatarActive) {
       const getAvatarInfos = async () => {
         const response = await api.get("/api/avatar")
@@ -33,7 +36,19 @@ export function TopBar({ onOpenSignInModal }: TopBarProps) {
     }
   }, [session])
 
-  console.log('avatarData', avatarData)  
+
+  if (canGiveFirstKick === 'true') {
+    const getAvatarInfos = async () => {
+      const response = await api.get("/api/avatar")
+      setAvatarData(response.data.data.data)
+    }
+    getAvatarInfos()
+  }
+
+  useEffect(() => {
+    destroyCookie(null, 'giveFirstKick')
+  }, [])
+
 
   return (
     <div className={styles.container}>
@@ -60,7 +75,9 @@ export function TopBar({ onOpenSignInModal }: TopBarProps) {
           <p>9 TEMPORADA</p>
         </div>
 
-        { session?.isAvatarActive && <strong>gustavinho10</strong> }
+        { (session?.isAvatarActive || canGiveFirstKick === 'true') &&
+          <strong>Olá, {avatarData?.name}</strong> 
+        }
 
         {session ? (
           <button type='button' onClick={() => signOut({ callbackUrl: '/' })} className={styles.authButtonLogOut}>

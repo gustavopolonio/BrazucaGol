@@ -2,3 +2,4 @@ Route:
 - /api/avatars => tranform in /api/avatar (to get and post-create new avatars)
 - /api/avatar/[avatar_name] => to search for avatar (if already exists)
 
+Send state to start kick on cookies, and delete the cookie

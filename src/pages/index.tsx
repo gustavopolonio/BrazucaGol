@@ -1,14 +1,13 @@
 import Head  from 'next/head'
 import { GetServerSideProps } from 'next'
+import { getSession } from 'next-auth/react'
 import { GoalsAmountTables } from '../components/GoalsAmount'
 import { CountdownKickContainer } from '../components/CountdownKickContainer'
-
-import styles from './home.module.scss'
-import { getSession } from 'next-auth/react'
 import { ClubsHighlightedes } from '../components/ClubsHighlightedes'
 import { MenuSidebar } from '../components/MenuSidebar'
 import { MyAccountSidebar } from '../components/MyAccountSidebar'
 
+import styles from './home.module.scss'
 interface HomeProps {
   isAvatarActive: boolean | null
 }

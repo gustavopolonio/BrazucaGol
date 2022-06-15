@@ -2,6 +2,7 @@ import { getSession } from 'next-auth/react'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { setCookie } from 'nookies'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { IoMdRefresh } from 'react-icons/io'
@@ -40,9 +41,9 @@ export default function CreateAvatar() {
   const [clubs, setClubs] = useState<Club[]>([])
   const [nameExists, setNameExists] = useState(false)
   const [showCheckedIcon, setShowCheckedIcon] = useState(false)
-  const router = useRouter()
   const { register, handleSubmit, formState: { errors }, watch, trigger } = useForm()
-
+  const router = useRouter()
+  
   useEffect(() => {
     fetch('https://api-brazilian-soccer-clubs.herokuapp.com')
       .then(response => response.json())
@@ -73,7 +74,12 @@ export default function CreateAvatar() {
     })
 
     if (response.status === 201) {
-      router.push('/')
+      setCookie(null, 'giveFirstKick', 'true', {
+        maxAge: 60 * 60 * 24, // One day
+        path: '/'
+      })
+
+      router.push("/")
     }
   }
 

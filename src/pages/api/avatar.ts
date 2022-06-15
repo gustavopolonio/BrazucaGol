@@ -40,11 +40,14 @@ export default async function handler(
         )
       )
     ).then(response => {
+
       return res.json({
         data: response
       })
+    }).catch(err => {
+      return res.status(400).json({ err })
     })
-
-    
   }
+
+  return res.status(405).json({ err: `Method ${req.method} Not Allowed` })
 }

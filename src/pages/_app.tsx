@@ -34,6 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Footer />
 
         <SignInModal isModalOpen={isSignInModalOpen} onCloseSignInModal={handleCloseModal} />
+          
       </IndividualGoalsProvider>
     </SessionProvider>
   ) 
