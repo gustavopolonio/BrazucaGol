@@ -22,3 +22,4 @@ Individual goals:
   git pull
   yarn
   yarn dev
+  
