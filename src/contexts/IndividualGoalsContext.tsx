@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useState, useContext, Dispatch, SetStateAction, useEffect } from 'react'
+import { api } from '../services/api'
 
 interface IndividualGoalsProviderProps {
   children: ReactNode
@@ -29,11 +30,11 @@ const IndividualGoalsContext = createContext({
 } as IndividualGoalsContextProps)
 
 export function IndividualGoalsProvider({ children }: IndividualGoalsProviderProps) {
-  const [totalGoals, setTotalGoals] = useState(0)
   const [autoGoals, setAutoGoals] = useState(0)
   const [penaltyGoals, setPenaltyGoals] = useState(0)
   const [freeKickGoals, setFreeKickGoals] = useState(0)
   const [trailGoals, setTrailGoals] = useState(0)
+  const [totalGoals, setTotalGoals] = useState(0)
   const value = { 
     autoGoals, 
     setAutoGoals, 
@@ -50,6 +51,9 @@ export function IndividualGoalsProvider({ children }: IndividualGoalsProviderPro
     setTotalGoals(autoGoals + penaltyGoals + freeKickGoals + trailGoals)
     // console.log('totalGoals', totalGoals)
   }, [autoGoals, penaltyGoals, freeKickGoals, trailGoals])
+
+
+  api.get("/api/individual-goals")
 
   return (
     <IndividualGoalsContext.Provider value={value}>

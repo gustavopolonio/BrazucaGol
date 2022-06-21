@@ -1,5 +1,5 @@
 import { AppProps } from 'next/app'
-import { SessionProvider, useSession } from "next-auth/react"
+import { SessionProvider } from "next-auth/react"
 import { useState } from 'react'
 import Modal from 'react-modal'
 import { IndividualGoalsProvider } from '../contexts/IndividualGoalsContext'

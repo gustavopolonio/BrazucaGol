@@ -74,19 +74,19 @@ export function Header() {
             </table>
           </div>
 
-            <div className={styles.teamLogoContainer}>
-              { club ? (
-                <>
-                  <img 
-                    src={club.logoLink}
-                    alt={`Logo ${club.name}`}
-                  />
-                  <strong>{club.name}</strong>
-                </>
-              ) : (
-                <LoadingSpinner top='50%' left='50%' transform='translate(-50%, -50%)' />
-              ) }
-            </div>
+          <div className={styles.teamLogoContainer}>
+            { club ? (
+              <>
+                <img 
+                  src={club.logoLink}
+                  alt={`Logo ${club.name}`}
+                />
+                <strong>{club.name}</strong>
+              </>
+            ) : (
+              <LoadingSpinner top='50%' left='50%' transform='translate(-50%, -50%)' />
+            ) }
+          </div>
         </div>
       )}
     </header> 

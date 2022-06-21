@@ -2,18 +2,23 @@ Route:
 - /api/avatars => tranform in /api/avatar (to get and post-create new avatars)
 - /api/avatar/[avatar_name] => to search for avatar (if already exists)
 
-Passar essa chamada do avatarData para ser feita apenas 1x:
-  useEffect(() => {
-    if (session?.isAvatarActive) {
-      const getAvatarInfos = async () => {
-        const response = await api.get("/api/avatar")
-        setAvatarData(response.data.data.data)
-      }
-      getAvatarInfos()
-    }
-  }, [session])
 
+Individual goals:
+  - No IndividualGoalsContext, setar os valores iniciais fazendo GET no fauna
+  - No CountdownKick, qnd fizer algum gol setar esse valor no IndividualGoalsContext
+  - No IndividualGoalsContext, qnd algum valor mudar faço um POST p att o fauna
+  - Preciso fazer um GET pra pegar os valores dos gols att ou posso usar o IndividualGoalsContext
+  para dar display desses valores no Header?
 
 
   Pra frente:
     - Fazer a api de times brasileiros aceitar chamadas pelo id do clube
+
+
+
+  
+
+  Ana Clara:
+  git pull
+  yarn
+  yarn dev
