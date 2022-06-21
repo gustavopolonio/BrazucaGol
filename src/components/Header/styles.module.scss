@@ -89,14 +89,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 108px;
+  height: 234px;
+  position: relative;
 
   img {
-    width: 140px;
+    width: 100%;
     height: auto;
   }
 
   strong {
     font-size: 1.5rem;
     margin-top: 1rem;
+    text-align: center;
   }
 }

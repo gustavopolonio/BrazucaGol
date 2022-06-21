@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/react'
-import { destroyCookie, parseCookies } from 'nookies'
 import { useEffect, useState } from 'react'
 import { api } from '../../services/api'
+import { LoadingSpinner } from '../Utils/LoadingSpinner'
 
 import styles from './styles.module.scss'
 
@@ -13,27 +13,36 @@ interface AvatarQueryResponse {
   }
 }
 
+interface Club {
+  id: number,
+  name: string,
+  encodedName: string,
+  logoLink: string,
+  stadiumName: string,
+  state: string
+}
+
 export function Header() {
   const { data: session } = useSession()
 
-  // fetch("https://api-brazilian-soccer-clubs.herokuapp.com/")
-  //   .then(response => response.json())
-  //   .then(data => setClub(data.find(club => club.id === avatarData?.clubId)))
   const [avatarData, setAvatarData] = useState<AvatarQueryResponse>()
-  const cookies = parseCookies()
-  const canGiveFirstKick = cookies.giveFirstKick
-
-  if (canGiveFirstKick === 'true') {
-    const getAvatarInfos = async () => {
-      const response = await api.get("/api/avatar")
-      setAvatarData(response.data.data.data)
-    }
-    getAvatarInfos()
-  }
+  const [club, setClub] = useState<Club>()
 
   useEffect(() => {
-    destroyCookie(null, 'giveFirstKick')
-  }, [])
+    if (session?.isAvatarActive) {
+      const getAvatarInfos = async () => {
+        const response = await api.get("/api/avatar")
+        setAvatarData(response.data.data.data)
+      }
+      getAvatarInfos()
+    }
+  }, [session])
+
+  useEffect(() => {
+    fetch("https://api-brazilian-soccer-clubs.herokuapp.com/")
+      .then(response => response.json())
+      .then(data => setClub(data.find(club => club.id === avatarData?.clubId)))
+  }, [avatarData])
 
   return (
     <header className={styles.header}>
@@ -43,7 +52,7 @@ export function Header() {
         <span className={styles.gol}>GOL</span>
       </h1>
 
-      {(session?.isAvatarActive || canGiveFirstKick === 'true') && (
+      {session?.isAvatarActive && (
         <div className={styles.dataContainer}>
           <div className={styles.playerData}>
             <div className={styles.playerLevel}>
@@ -84,13 +93,19 @@ export function Header() {
             </table>
           </div>
 
-          <div className={styles.teamLogoContainer}>
-            <img 
-              src="https://upload.wikimedia.org/wikipedia/commons/1/10/Palmeiras_logo.svg" 
-              alt="Logo Palmeiras" 
-            />
-            <strong>Palmeiras</strong>
-          </div>
+            <div className={styles.teamLogoContainer}>
+              { club ? (
+                <>
+                  <img 
+                    src={club.logoLink}
+                    alt={`Logo ${club.name}`}
+                  />
+                  <strong>{club.name}</strong>
+                </>
+              ) : (
+                <LoadingSpinner top='50%' left='50%' transform='translate(-50%, -50%)' />
+              ) }
+            </div>
         </div>
       )}
     </header> 

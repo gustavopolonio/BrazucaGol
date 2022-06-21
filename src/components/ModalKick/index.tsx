@@ -142,7 +142,7 @@ export function ModalKick({
 
       { kickType === 'trail' && (
         <div className={styles.content}>
-          { isLoading && <LoadingSpinner /> }
+          { isLoading && <LoadingSpinner top='2%' left='2%' /> }
 
           <div className={styles.trailContent}>
             <fieldset>
