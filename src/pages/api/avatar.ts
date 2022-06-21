@@ -40,7 +40,6 @@ export default async function handler(
         )
       )
     ).then(response => {
-
       return res.json({
         data: response
       })

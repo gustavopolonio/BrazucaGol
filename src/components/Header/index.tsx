@@ -1,17 +1,9 @@
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
-import { api } from '../../services/api'
 import { LoadingSpinner } from '../Utils/LoadingSpinner'
+import { useAvatarData } from '../../contexts/AvatarDataContext'
 
 import styles from './styles.module.scss'
-
-interface AvatarQueryResponse {
-  name: string,
-  clubId: number,
-  userId: {
-    id: string
-  }
-}
 
 interface Club {
   id: number,
@@ -24,19 +16,8 @@ interface Club {
 
 export function Header() {
   const { data: session } = useSession()
-
-  const [avatarData, setAvatarData] = useState<AvatarQueryResponse>()
   const [club, setClub] = useState<Club>()
-
-  useEffect(() => {
-    if (session?.isAvatarActive) {
-      const getAvatarInfos = async () => {
-        const response = await api.get("/api/avatar")
-        setAvatarData(response.data.data.data)
-      }
-      getAvatarInfos()
-    }
-  }, [session])
+  const avatarData = useAvatarData()
 
   useEffect(() => {
     fetch("https://api-brazilian-soccer-clubs.herokuapp.com/")

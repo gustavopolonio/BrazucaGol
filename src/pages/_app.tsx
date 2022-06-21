@@ -1,8 +1,9 @@
 import { AppProps } from 'next/app'
-import { SessionProvider } from "next-auth/react"
+import { SessionProvider, useSession } from "next-auth/react"
 import { useState } from 'react'
 import Modal from 'react-modal'
 import { IndividualGoalsProvider } from '../contexts/IndividualGoalsContext'
+import { AvatarDataProvider } from '../contexts/AvatarDataContext'
 import { TopBar } from '../components/TopBar'
 import { Header } from '../components/Header'
 import { SignInModal } from '../components/SignInModal'
@@ -29,19 +30,22 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
       <IndividualGoalsProvider>
-        <TopBar onOpenSignInModal={handleOpenModal} />
-        <Header />
-        <CountdownKickContainer />
-        <ClubsHighlightedes />
+        <AvatarDataProvider>
+        
+          <TopBar onOpenSignInModal={handleOpenModal} />
+          <Header />
+          <CountdownKickContainer />
+          <ClubsHighlightedes />
 
-        <MainContainer>
-          <Component {...pageProps} />
-        </MainContainer>
+          <MainContainer>
+            <Component {...pageProps} />
+          </MainContainer>
 
-        <Footer />
+          <Footer />
 
-        <SignInModal isModalOpen={isSignInModalOpen} onCloseSignInModal={handleCloseModal} />
-          
+          <SignInModal isModalOpen={isSignInModalOpen} onCloseSignInModal={handleCloseModal} />
+        
+        </AvatarDataProvider>
       </IndividualGoalsProvider>
     </SessionProvider>
   ) 
