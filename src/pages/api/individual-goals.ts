@@ -43,9 +43,45 @@ export default async function handler(
       )
     )
 
-    console.log('data', data)
+    return res.json({ data })
+  }
 
-    return res.json({ user })
+  if (req.method === 'POST') {
+    const { kickType, goals } = req.body
+    const { user } = await getSession({ req })
+    
+    const userRef = await fauna.query(
+      q.Select(
+        "ref",
+        q.Get(
+          q.Match(
+            q.Index("user_by_email"),
+            user.email
+          )
+        )
+      )
+    )
+
+    await fauna.query(
+      q.Update(
+        q.Select(
+          "ref",
+          q.Get(
+            q.Match(
+              q.Index("individualGoals_by_userId"),
+              userRef
+            )
+          )
+        ),
+        {
+          data: {
+            [kickType]: goals + 1
+          }
+        }
+      )
+    )
+
+    return res.status(201).json({ success: true })
   }
 
   return res.status(405).json({ err: `Method ${req.method} Not Allowed` })

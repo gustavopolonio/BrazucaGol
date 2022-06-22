@@ -35,6 +35,23 @@ export function IndividualGoalsProvider({ children }: IndividualGoalsProviderPro
   const [freeKickGoals, setFreeKickGoals] = useState(0)
   const [trailGoals, setTrailGoals] = useState(0)
   const [totalGoals, setTotalGoals] = useState(0)
+
+  const fetchIndividualGoals = async () => {
+    const response = await api.get("/api/individual-goals")
+    const { 
+      avatarAutoGoals, 
+      avatarPenaltyGoals, 
+      avatarFreeKickGoals, 
+      avatarTrailGoals 
+    } = response.data.data
+
+    setAutoGoals(avatarAutoGoals)
+    setPenaltyGoals(avatarPenaltyGoals)
+    setFreeKickGoals(avatarFreeKickGoals)
+    setTrailGoals(avatarTrailGoals)
+  }
+  fetchIndividualGoals()
+
   const value = { 
     autoGoals, 
     setAutoGoals, 
@@ -52,8 +69,6 @@ export function IndividualGoalsProvider({ children }: IndividualGoalsProviderPro
     // console.log('totalGoals', totalGoals)
   }, [autoGoals, penaltyGoals, freeKickGoals, trailGoals])
 
-
-  api.get("/api/individual-goals")
 
   return (
     <IndividualGoalsContext.Provider value={value}>

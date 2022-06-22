@@ -11,15 +11,18 @@ Individual goals:
   para dar display desses valores no Header?
 
 
-  Pra frente:
-    - Fazer a api de times brasileiros aceitar chamadas pelo id do clube
+Pra frente:
+  - Fazer a api de times brasileiros aceitar chamadas pelo id do clube
 
 
 
-  
+- Não pode abrir duas abas ou mais ao mesmo tempo
+- Colocar barulho de gol opcional
+- Não parar o countdown qnd atualizar a pág
+
+
 
   Ana Clara:
   git pull
   yarn
   yarn dev
-  

@@ -7,6 +7,7 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 
 import styles from './styles.module.scss'
 import 'react-circular-progressbar/dist/styles.css'
+import { api } from '../../services/api'
 
 interface CountdownKickProps {
   title: string,
@@ -26,15 +27,23 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
   const [timeToKick, setTimeToKick] = useState(timeWithVip)
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const timer = setTimeout(async () => {
       const currentTime = Math.floor(new Date().getTime() / 1000)
       if (timeToKick > 1) {
         setTimeToKick(timeKickWillBeReady - currentTime)
       } else { // Time to kick
         if (kickType === 'auto') {
-          setAutoGoals(autoGoals + 1)
           setTimeKickWillBeReady(currentTime + timeWithVip)
           setTimeToKick(timeWithVip)
+
+          const response = await api.post("/api/individual-goals", {
+            kickType: 'avatarAutoGoals',
+            goals: autoGoals
+          })
+
+          if (response.status === 201) {
+            setAutoGoals(autoGoals + 1)
+          }
         } else {
           setIsKickReady(true)       
         }
