@@ -47,7 +47,7 @@ export default async function handler(
   }
 
   if (req.method === 'POST') {
-    const { kickType, goals } = req.body
+    const { kickData} = req.body
     const { user } = await getSession({ req })
     
     const userRef = await fauna.query(
@@ -74,9 +74,7 @@ export default async function handler(
           )
         ),
         {
-          data: {
-            [kickType]: goals + 1
-          }
+          data: kickData
         }
       )
     )

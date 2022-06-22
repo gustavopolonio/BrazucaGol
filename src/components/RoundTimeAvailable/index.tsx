@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react"
+import { useIndividualGoals } from "../../contexts/IndividualGoalsContext"
+import { api } from "../../services/api"
 import { formatTime } from "../../utils/formatTime"
 
 import styles from './styles.module.scss'
 
 export function RoundTimeAvailable() {
   const [roundTimeAvailable, setRoundTimeAvailable] = useState('')
+  const { setHourlyGoals } = useIndividualGoals()
   
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -18,6 +21,17 @@ export function RoundTimeAvailable() {
       })
     
       const [hours, minutes, seconds] = dateInBraziliaTimeZone.split(':')
+
+      if (minutes === '00' && seconds === '00') { // Restart Hourly Goals
+        const restartHourlyGoals = async () => {
+          await api.post("/api/individual-goals", {
+            kickData: { avatarHourlyGoals: 0 }
+          })
+          setHourlyGoals(0)
+        }
+        restartHourlyGoals()
+      }
+
       const currentDateInSeconds = (Number(hours) * 60 * 60) + (Number(minutes) * 60) + Number(seconds)
     
       // Round start at 20:00:00 (Brasilia)

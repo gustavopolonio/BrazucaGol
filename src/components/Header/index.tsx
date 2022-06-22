@@ -2,6 +2,7 @@ import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { LoadingSpinner } from '../Utils/LoadingSpinner'
 import { useAvatarData } from '../../contexts/AvatarDataContext'
+import { useIndividualGoals } from '../../contexts/IndividualGoalsContext'
 
 import styles from './styles.module.scss'
 
@@ -18,6 +19,7 @@ export function Header() {
   const { data: session } = useSession()
   const [club, setClub] = useState<Club>()
   const avatarData = useAvatarData()
+  const { totalGoals, hourlyGoals } = useIndividualGoals()
 
   useEffect(() => {
     fetch("https://api-brazilian-soccer-clubs.herokuapp.com/")
@@ -52,19 +54,19 @@ export function Header() {
               <tbody>
                 <tr>
                   <td>Gols</td>
-                  <td>49079</td>
+                  <td>{totalGoals}</td>
                 </tr>
                 <tr>
                   <td>Temporada</td>
-                  <td>4966</td>
+                  <td>{totalGoals}</td>
                 </tr>
                 <tr>
                   <td>Rodada</td>
-                  <td>284</td>
+                  <td>57</td>
                 </tr>
                 <tr>
                   <td>Hora</td>
-                  <td>27</td>
+                  <td>{hourlyGoals}</td>
                 </tr>
                 <tr>
                   <td>Dinheiro</td>

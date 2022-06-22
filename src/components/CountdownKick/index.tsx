@@ -18,7 +18,7 @@ interface CountdownKickProps {
 export function CountdownKick({ title, kickType, children }: CountdownKickProps) {
   const [isKickReady, setIsKickReady] = useState(false)
   const [isModalKickOpen, setIsModalKickOpen] = useState(false)
-  const { autoGoals, setAutoGoals } = useIndividualGoals()
+  const { autoGoals, setAutoGoals, hourlyGoals, setHourlyGoals } = useIndividualGoals()
 
   const timeWithVip = 300 // Considering a kick of 5 min (300 sec)
 
@@ -37,12 +37,15 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
           setTimeToKick(timeWithVip)
 
           const response = await api.post("/api/individual-goals", {
-            kickType: 'avatarAutoGoals',
-            goals: autoGoals
+            kickData: {
+              avatarAutoGoals: autoGoals + 1,
+              avatarHourlyGoals: hourlyGoals + 1
+            }
           })
 
           if (response.status === 201) {
             setAutoGoals(autoGoals + 1)
+            setHourlyGoals(hourlyGoals + 1)
           }
         } else {
           setIsKickReady(true)       

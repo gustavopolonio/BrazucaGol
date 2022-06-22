@@ -29,7 +29,9 @@ export function ModalKick({
     freeKickGoals, 
     setFreeKickGoals,
     trailGoals,
-    setTrailGoals
+    setTrailGoals,
+    hourlyGoals,
+    setHourlyGoals
   } = useIndividualGoals()
 
   const [showKickMessage, setShowKickMessage] = useState(false)
@@ -68,12 +70,15 @@ export function ModalKick({
         
         if (wasGoal) {
           const response = await api.post("/api/individual-goals", {
-            kickType: 'avatarPenaltyGoals',
-            goals: penaltyGoals
+            kickData: {
+              avatarPenaltyGoals: penaltyGoals + 1,
+              avatarHourlyGoals: hourlyGoals + 1
+            }
           })
 
           if (response.status === 201) {
             setPenaltyGoals(penaltyGoals + 1)
+            setHourlyGoals(hourlyGoals + 1)
           }
         }
       break
@@ -91,12 +96,15 @@ export function ModalKick({
 
         if (wasGoal) {
           const response = await api.post("/api/individual-goals", {
-            kickType: 'avatarFreeKickGoals',
-            goals: freeKickGoals
+            kickData: {
+              avatarFreeKickGoals: freeKickGoals + 1,
+              avatarHourlyGoals: hourlyGoals + 1
+            }
           })
 
           if (response.status === 201) {
             setFreeKickGoals(freeKickGoals + 1)
+            setHourlyGoals(hourlyGoals + 1)
           }
         }
       break
@@ -120,12 +128,15 @@ export function ModalKick({
         setTimeout(async () => {
           if (wasGoal) {
             const response = await api.post("/api/individual-goals", {
-              kickType: 'avatarTrailGoals',
-              goals: trailGoals
+              kickData: {
+                avatarTrailGoals: trailGoals + 1,
+                avatarHourlyGoals: hourlyGoals + 1
+              }
             })
   
             if (response.status === 201) {
               setTrailGoals(trailGoals + 1)
+              setHourlyGoals(hourlyGoals + 1)
             }
           }
         }, 1100)
