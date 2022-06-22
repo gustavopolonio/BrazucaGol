@@ -3,14 +3,6 @@ Route:
 - /api/avatar/[avatar_name] => to search for avatar (if already exists)
 
 
-Individual goals:
-  - No IndividualGoalsContext, setar os valores iniciais fazendo GET no fauna
-  - No CountdownKick, qnd fizer algum gol setar esse valor no IndividualGoalsContext
-  - No IndividualGoalsContext, qnd algum valor mudar faço um POST p att o fauna
-  - Preciso fazer um GET pra pegar os valores dos gols att ou posso usar o IndividualGoalsContext
-  para dar display desses valores no Header?
-
-
 Pra frente:
   - Fazer a api de times brasileiros aceitar chamadas pelo id do clube
 

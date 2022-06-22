@@ -4,6 +4,7 @@ import { useIndividualGoals } from "../../contexts/IndividualGoalsContext"
 import { LoadingSpinner } from '../Utils/LoadingSpinner'
 
 import styles from './styles.module.scss'
+import { api } from "../../services/api"
 
 interface ModalKickProps {
   kickType: string,
@@ -50,31 +51,54 @@ export function ModalKick({
     }, timeoutTimer)
   }
 
-  function handleKickWasGoal() {
+  async function handleKickWasGoal() {
+    let wasGoal = false
     switch (kickType) {
 
       case 'penalty': // Calculate probability to do goal (90% of chance)
         const penaltyProbability = Math.random() * 100
         if (penaltyProbability < 90) { // Penalty goal
-          setPenaltyGoals(penaltyGoals + 1)
+          wasGoal = true
           displayMessageAfterKick('GOL !!!!')
         } else { // Penalty lost
           displayMessageAfterKick('ERROU :(')
         }
 
         setConfigsToRestartCountdown(1800)
+        
+        if (wasGoal) {
+          const response = await api.post("/api/individual-goals", {
+            kickType: 'avatarPenaltyGoals',
+            goals: penaltyGoals
+          })
+
+          if (response.status === 201) {
+            setPenaltyGoals(penaltyGoals + 1)
+          }
+        }
       break
   
       case 'free-kick': // Calculate probability to do goal (70% of chance)
         const freeKickProbability = Math.random() * 100
         if (freeKickProbability < 70) { // Free kick goal
-          setFreeKickGoals(freeKickGoals + 1)
+          wasGoal = true
           displayMessageAfterKick('GOL !!!!')
         } else { // Free kick lost
           displayMessageAfterKick('ERROU :(')
         }
 
         setConfigsToRestartCountdown(1800)
+
+        if (wasGoal) {
+          const response = await api.post("/api/individual-goals", {
+            kickType: 'avatarFreeKickGoals',
+            goals: freeKickGoals
+          })
+
+          if (response.status === 201) {
+            setFreeKickGoals(freeKickGoals + 1)
+          }
+        }
       break
   
       case 'trail': // Calculate probability to do goal (30% of chance)
@@ -84,7 +108,7 @@ export function ModalKick({
         setTimeout(() => {
           setIsLoading(false)
           if (trailProbability < 30) { // Trail goal
-            setTrailGoals(trailGoals + 1)
+            wasGoal = true
             displayMessageAfterKick('GOL !!!!')
           } else { // Trail lost
             displayMessageAfterKick('ERROU :(')
@@ -92,6 +116,19 @@ export function ModalKick({
         }, 1000)
 
         setConfigsToRestartCountdown(2800)
+
+        setTimeout(async () => {
+          if (wasGoal) {
+            const response = await api.post("/api/individual-goals", {
+              kickType: 'avatarTrailGoals',
+              goals: trailGoals
+            })
+  
+            if (response.status === 201) {
+              setTrailGoals(trailGoals + 1)
+            }
+          }
+        }, 1100)
       break
   
       default:
