@@ -6,7 +6,8 @@ Route:
 Pra frente:
   - Fazer a api de times brasileiros aceitar chamadas pelo id do clube
 
-
+- Restart Round goal at 8pm
+- When player log out and come back, see if need to restart avatarHourlyGoals and avatarRoundGoals
 
 - Não pode abrir duas abas ou mais ao mesmo tempo
 - Colocar barulho de gol opcional

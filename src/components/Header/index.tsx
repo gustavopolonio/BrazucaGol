@@ -19,7 +19,7 @@ export function Header() {
   const { data: session } = useSession()
   const [club, setClub] = useState<Club>()
   const avatarData = useAvatarData()
-  const { totalGoals, hourlyGoals } = useIndividualGoals()
+  const { totalGoals, hourlyGoals, roundGoals } = useIndividualGoals()
 
   useEffect(() => {
     fetch("https://api-brazilian-soccer-clubs.herokuapp.com/")
@@ -62,7 +62,7 @@ export function Header() {
                 </tr>
                 <tr>
                   <td>Rodada</td>
-                  <td>57</td>
+                  <td>{roundGoals}</td>
                 </tr>
                 <tr>
                   <td>Hora</td>

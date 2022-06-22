@@ -16,7 +16,9 @@ interface IndividualGoalsContextProps {
   setTrailGoals: Dispatch<SetStateAction<number>>,
   totalGoals: number,
   hourlyGoals: number,
-  setHourlyGoals: Dispatch<SetStateAction<number>>
+  setHourlyGoals: Dispatch<SetStateAction<number>>,
+  roundGoals: number,
+  setRoundGoals: Dispatch<SetStateAction<number>>
 }
 
 const IndividualGoalsContext = createContext({
@@ -30,7 +32,9 @@ const IndividualGoalsContext = createContext({
   setTrailGoals: () => {},
   totalGoals: 0,
   hourlyGoals: 0,
-  setHourlyGoals: () => {}
+  setHourlyGoals: () => {},
+  roundGoals: 0,
+  setRoundGoals: () => {}
 } as IndividualGoalsContextProps)
 
 export function IndividualGoalsProvider({ children }: IndividualGoalsProviderProps) {
@@ -40,16 +44,17 @@ export function IndividualGoalsProvider({ children }: IndividualGoalsProviderPro
   const [trailGoals, setTrailGoals] = useState(0)
   const [totalGoals, setTotalGoals] = useState(0)
   const [hourlyGoals, setHourlyGoals] = useState(0)
+  const [roundGoals, setRoundGoals] = useState(0)
 
   const fetchIndividualGoals = async () => {
-    console.log('hihihi')
     const response = await api.get("/api/individual-goals")
     const { 
       avatarAutoGoals, 
       avatarPenaltyGoals, 
       avatarFreeKickGoals, 
       avatarTrailGoals,
-      avatarHourlyGoals
+      avatarHourlyGoals,
+      avatarRoundGoals
     } = response.data.data
 
     setAutoGoals(avatarAutoGoals)
@@ -57,6 +62,7 @@ export function IndividualGoalsProvider({ children }: IndividualGoalsProviderPro
     setFreeKickGoals(avatarFreeKickGoals)
     setTrailGoals(avatarTrailGoals)
     setHourlyGoals(avatarHourlyGoals)
+    setRoundGoals(avatarRoundGoals)
   }
   fetchIndividualGoals()
 
@@ -71,7 +77,9 @@ export function IndividualGoalsProvider({ children }: IndividualGoalsProviderPro
     setTrailGoals,
     totalGoals,
     hourlyGoals,
-    setHourlyGoals
+    setHourlyGoals,
+    roundGoals,
+    setRoundGoals
   }
 
   useEffect(() => {

@@ -31,7 +31,9 @@ export function ModalKick({
     trailGoals,
     setTrailGoals,
     hourlyGoals,
-    setHourlyGoals
+    setHourlyGoals,
+    roundGoals,
+    setRoundGoals
   } = useIndividualGoals()
 
   const [showKickMessage, setShowKickMessage] = useState(false)
@@ -72,13 +74,15 @@ export function ModalKick({
           const response = await api.post("/api/individual-goals", {
             kickData: {
               avatarPenaltyGoals: penaltyGoals + 1,
-              avatarHourlyGoals: hourlyGoals + 1
+              avatarHourlyGoals: hourlyGoals + 1,
+              avatarRoundGoals: roundGoals + 1
             }
           })
 
           if (response.status === 201) {
             setPenaltyGoals(penaltyGoals + 1)
             setHourlyGoals(hourlyGoals + 1)
+            setRoundGoals(roundGoals + 1)
           }
         }
       break
@@ -98,13 +102,15 @@ export function ModalKick({
           const response = await api.post("/api/individual-goals", {
             kickData: {
               avatarFreeKickGoals: freeKickGoals + 1,
-              avatarHourlyGoals: hourlyGoals + 1
+              avatarHourlyGoals: hourlyGoals + 1,
+              avatarRoundGoals: roundGoals + 1
             }
           })
 
           if (response.status === 201) {
             setFreeKickGoals(freeKickGoals + 1)
             setHourlyGoals(hourlyGoals + 1)
+            setRoundGoals(roundGoals + 1)
           }
         }
       break
@@ -130,13 +136,15 @@ export function ModalKick({
             const response = await api.post("/api/individual-goals", {
               kickData: {
                 avatarTrailGoals: trailGoals + 1,
-                avatarHourlyGoals: hourlyGoals + 1
+                avatarHourlyGoals: hourlyGoals + 1,
+                avatarRoundGoals: roundGoals + 1
               }
             })
   
             if (response.status === 201) {
               setTrailGoals(trailGoals + 1)
               setHourlyGoals(hourlyGoals + 1)
+              setRoundGoals(roundGoals + 1)
             }
           }
         }, 1100)

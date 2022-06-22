@@ -7,7 +7,7 @@ import styles from './styles.module.scss'
 
 export function RoundTimeAvailable() {
   const [roundTimeAvailable, setRoundTimeAvailable] = useState('')
-  const { setHourlyGoals } = useIndividualGoals()
+  const { setHourlyGoals, setRoundGoals } = useIndividualGoals()
   
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -36,6 +36,16 @@ export function RoundTimeAvailable() {
     
       // Round start at 20:00:00 (Brasilia)
       const roundStartInSeconds = 20 * 60 * 60
+
+      if (currentDateInSeconds === roundStartInSeconds) { // Restart Round Goals
+        const restartRoundGoals = async () => {
+          await api.post("/api/individual-goals", {
+            kickData: { avatarRoundGoals: 0 }
+          })
+          setRoundGoals(0)
+        }
+        restartRoundGoals()
+      }
     
       if (currentDateInSeconds < roundStartInSeconds) {
         const roundTimeAvailableInSeconds = roundStartInSeconds - currentDateInSeconds 
