@@ -6,13 +6,16 @@ Route:
 Pra frente:
   - Fazer a api de times brasileiros aceitar chamadas pelo id do clube
 
-- Restart Round goal at 8pm
 - When player log out and come back, see if need to restart avatarHourlyGoals and avatarRoundGoals
+(I can restart every hour and day all these variables on fauna - doing a server to do this?)
 
 - Não pode abrir duas abas ou mais ao mesmo tempo
 - Colocar barulho de gol opcional
 - Não parar o countdown qnd atualizar a pág
 
+- Don't be able to access /create-avatar without logged in
+
+- Create table individualGoals
 
 
   Ana Clara:

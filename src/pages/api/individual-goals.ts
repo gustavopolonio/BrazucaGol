@@ -20,7 +20,7 @@ export default async function handler(
   res: NextApiResponse
 ): Promise<void> {
   if (req.method === 'GET') {
-    const { user } = await getSession({ req })
+    const session = await getSession({ req })
     
     const userRef = await fauna.query(
       q.Select(
@@ -28,7 +28,7 @@ export default async function handler(
         q.Get(
           q.Match(
             q.Index("user_by_email"),
-            user.email
+            session?.user.email
           )
         )
       )

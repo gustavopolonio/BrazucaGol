@@ -142,6 +142,7 @@ export default function CreateAvatar() {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req })
+
   if (session?.isAvatarActive) {
 
     return {

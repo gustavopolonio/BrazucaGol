@@ -87,6 +87,35 @@ export default async function handler(
           }
         )
       )
+
+      // Create individualGoals table
+      await fauna.query(
+        q.If(
+          q.Not(
+            q.Exists(
+              q.Match(
+                q.Index("individualGoals_by_userId"),
+                userRef
+              )
+            )
+          ),
+          q.Create(
+            q.Collection("individualGoals"),
+            { 
+              data: {
+                userId: userRef,
+                avatarAutoGoals: 0,
+                avatarPenaltyGoals: 0,
+                avatarFreeKickGoals: 0,
+                avatarTrailGoals: 0,
+                avatarHourlyGoals: 0,
+                avatarRoundGoals: 0
+              }
+            }
+          ),
+          false
+        )
+      )
   
       return res.status(201).json({ success: true })
     } catch(err) {
