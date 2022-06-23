@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { IoMdRefresh } from 'react-icons/io'
 import { BsCheckCircleFill } from 'react-icons/bs'
+import { LoadingSpinner } from '../components/Utils/LoadingSpinner'
 import { api } from '../services/api'
 
 import styles from './create-avatar.module.scss'
@@ -37,6 +38,7 @@ export default function CreateAvatar() {
   const [clubs, setClubs] = useState<Club[]>([])
   const [nameExists, setNameExists] = useState(false)
   const [showCheckedIcon, setShowCheckedIcon] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const { register, handleSubmit, formState: { errors }, watch, trigger } = useForm()
   
   useEffect(() => {
@@ -63,14 +65,16 @@ export default function CreateAvatar() {
   }
 
   async function onSubmit(data: CreateAvatarData): Promise<void> {
+    setIsLoading(true)
     const response = await api.post('/api/avatars', {
       ...data,
       avatarClub: Number(data.avatarClub)
     })
-
+    
     if (response.status === 201) {
       window.location.replace('/')
     }
+    // setIsLoading(false)
   }
 
   return (
@@ -134,7 +138,17 @@ export default function CreateAvatar() {
           ) }
         </label>
 
-        <button type='submit'>Criar Jogador</button>
+        { isLoading ? (
+          <button type='submit' disabled style={{ cursor: 'not-allowed' }}>
+            Criar Jogador
+            <LoadingSpinner left='106%' top='50%' transform='translateY(-50%)' />
+          </button>
+        ) : (
+          <button type='submit'>
+            Criar Jogador
+          </button>
+        ) }
+
       </form>
     </>
   )

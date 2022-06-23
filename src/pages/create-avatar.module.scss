@@ -96,8 +96,10 @@
     background: #ABFF4F;
     border-radius: 16px;
     font-weight: bold;
+    position: relative;
     
     transition: filter 0.2s;
+
 
     &:hover {
       filter: brightness(0.9);

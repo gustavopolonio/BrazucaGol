@@ -15,7 +15,6 @@ Pra frente:
 
 - Don't be able to access /create-avatar without logged in
 
-- Create table individualGoals
 
 
   Ana Clara:
