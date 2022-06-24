@@ -3,11 +3,11 @@ import { IoIosFootball } from 'react-icons/io'
 import { ModalKick } from '../ModalKick'
 import { useIndividualGoals } from '../../contexts/IndividualGoalsContext'
 import { formatTime } from '../../utils/formatTime'
+import { api } from '../../services/api'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 
 import styles from './styles.module.scss'
 import 'react-circular-progressbar/dist/styles.css'
-import { api } from '../../services/api'
 
 interface CountdownKickProps {
   title: string,

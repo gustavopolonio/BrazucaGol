@@ -11,8 +11,6 @@ export function CountdownKickContainer() {
 
   return (
     <>
-      <p className={styles.temporary}><strong>Gols Totais: {totalGoals}</strong></p>
-
       {session?.isAvatarActive && (
         <div className={styles.ballsContainer}>
           <CountdownKick title='AUTO' kickType='auto'>
