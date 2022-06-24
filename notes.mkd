@@ -6,8 +6,6 @@ Route:
 Pra frente:
   - Fazer a api de times brasileiros aceitar chamadas pelo id do clube
 
-- When player log out and come back, see if need to restart avatarHourlyGoals and avatarRoundGoals
-(I can restart every hour and day all these variables on fauna - doing a server to do this?)
 
 - Não pode abrir duas abas ou mais ao mesmo tempo
 - Colocar barulho de gol opcional

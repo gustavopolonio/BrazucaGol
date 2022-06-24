@@ -22,12 +22,11 @@ export function RoundTimeAvailable() {
     
       const [hours, minutes, seconds] = dateInBraziliaTimeZone.split(':')
 
-      if (minutes === '00' && seconds === '00') { // Restart Hourly Goals
+      if (minutes === '00' && seconds === '00') { // Display restart Hourly Goals
         const restartHourlyGoals = async () => {
-          await api.post("/api/individual-goals", {
-            kickData: { avatarHourlyGoals: 0 }
-          })
-          setHourlyGoals(0)
+          const response = await api.get("/api/individual-goals")
+          const { avatarHourlyGoals } = response.data.data
+          setHourlyGoals(avatarHourlyGoals)
         }
         restartHourlyGoals()
       }
@@ -37,12 +36,11 @@ export function RoundTimeAvailable() {
       // Round start at 20:00:00 (Brasilia)
       const roundStartInSeconds = 20 * 60 * 60
 
-      if (currentDateInSeconds === roundStartInSeconds) { // Restart Round Goals
+      if (currentDateInSeconds === roundStartInSeconds) { // Display Restart Round Goals
         const restartRoundGoals = async () => {
-          await api.post("/api/individual-goals", {
-            kickData: { avatarRoundGoals: 0 }
-          })
-          setRoundGoals(0)
+          const response = await api.get("/api/individual-goals")
+          const { avatarRoundGoals } = response.data.data
+          setRoundGoals(avatarRoundGoals)
         }
         restartRoundGoals()
       }
