@@ -2,6 +2,7 @@ import { useState, useEffect, ReactNode, useRef } from 'react'
 import { IoIosFootball } from 'react-icons/io'
 import { ModalKick } from '../ModalKick'
 import { useIndividualGoals } from '../../contexts/IndividualGoalsContext'
+import { useBlockKicks } from "../../contexts/BlockKicksContext"
 import { formatTime } from '../../utils/formatTime'
 import { api } from '../../services/api'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
@@ -27,6 +28,8 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
     setRoundGoals 
   } = useIndividualGoals()
 
+  const { setBlockNearAutoGoal } = useBlockKicks()
+
   const timeWithVip = 300 // Considering a kick of 5 min (300 sec)
 
   const enteredTime = Math.floor(new Date().getTime() / 1000)
@@ -36,6 +39,11 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
   useEffect(() => {
     const timer = setTimeout(async () => {
       const currentTime = Math.floor(new Date().getTime() / 1000)
+
+      if (timeToKick <= 3) { // Block other kicks to prevent wrong count of goals
+        setBlockNearAutoGoal(true)
+      }
+
       if (timeToKick > 1) {
         setTimeToKick(timeKickWillBeReady - currentTime)
       } else { // Time to kick
@@ -51,10 +59,15 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
             }
           })
 
+          // const test = await api.get("/api/individual-goals")
+          // const { avatarHourlyGoals } = test.data.data
+          // setHourlyGoals(avatarHourlyGoals)
+
           if (response.status === 201) {
             setAutoGoals(autoGoals + 1)
             setHourlyGoals(hourlyGoals + 1)
             setRoundGoals(roundGoals + 1)
+            setBlockNearAutoGoal(false)
           }
         } else {
           setIsKickReady(true)       

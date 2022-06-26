@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Modal from 'react-modal'
 import { IndividualGoalsProvider } from '../contexts/IndividualGoalsContext'
 import { AvatarDataProvider } from '../contexts/AvatarDataContext'
+import { BlockKicksProvider } from '../contexts/BlockKicksContext'
 import { TopBar } from '../components/TopBar'
 import { Header } from '../components/Header'
 import { SignInModal } from '../components/SignInModal'
@@ -31,20 +32,22 @@ function MyApp({ Component, pageProps }: AppProps) {
     <SessionProvider session={pageProps.session}>
       <IndividualGoalsProvider>
         <AvatarDataProvider>
-        
-          <TopBar onOpenSignInModal={handleOpenModal} />
-          <Header />
-          <CountdownKickContainer />
-          <ClubsHighlightedes />
+          <BlockKicksProvider>
 
-          <MainContainer>
-            <Component {...pageProps} />
-          </MainContainer>
+            <TopBar onOpenSignInModal={handleOpenModal} />
+            <Header />
+            <CountdownKickContainer />
+            <ClubsHighlightedes />
 
-          <Footer />
+            <MainContainer>
+              <Component {...pageProps} />
+            </MainContainer>
 
-          <SignInModal isModalOpen={isSignInModalOpen} onCloseSignInModal={handleCloseModal} />
-        
+            <Footer />
+
+            <SignInModal isModalOpen={isSignInModalOpen} onCloseSignInModal={handleCloseModal} />
+          
+          </BlockKicksProvider>
         </AvatarDataProvider>
       </IndividualGoalsProvider>
     </SessionProvider>

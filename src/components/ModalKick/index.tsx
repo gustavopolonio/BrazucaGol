@@ -1,6 +1,7 @@
 import { BsFillArrowUpLeftCircleFill, BsFillArrowUpCircleFill, BsFillArrowUpRightCircleFill } from "react-icons/bs"
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useIndividualGoals } from "../../contexts/IndividualGoalsContext"
+import { useBlockKicks } from "../../contexts/BlockKicksContext"
 import { LoadingSpinner } from '../Utils/LoadingSpinner'
 
 import styles from './styles.module.scss'
@@ -35,6 +36,8 @@ export function ModalKick({
     roundGoals,
     setRoundGoals
   } = useIndividualGoals()
+
+  const { blockNearAutoGoal, setBlockNearAutoGoal } = useBlockKicks()
 
   const [showKickMessage, setShowKickMessage] = useState(false)
   const [messageAfterKick, setMessageAfterKick] = useState('')
@@ -78,6 +81,10 @@ export function ModalKick({
               avatarRoundGoals: roundGoals + 1
             }
           })
+
+          // const test = await api.get("/api/individual-goals")
+          // const { avatarHourlyGoals } = test.data.data
+          // setHourlyGoals(avatarHourlyGoals)
 
           if (response.status === 201) {
             setPenaltyGoals(penaltyGoals + 1)

@@ -21,14 +21,16 @@ export function RoundTimeAvailable() {
       })
     
       const [hours, minutes, seconds] = dateInBraziliaTimeZone.split(':')
-
+      
       if (minutes === '00' && seconds === '00') { // Display restart Hourly Goals
-        const restartHourlyGoals = async () => {
-          const response = await api.get("/api/individual-goals")
-          const { avatarHourlyGoals } = response.data.data
-          setHourlyGoals(avatarHourlyGoals)
-        }
-        restartHourlyGoals()
+        // const restartHourlyGoals = async () => {
+        //   const response = await api.get("/api/individual-goals")
+        //   const { avatarHourlyGoals } = response.data.data
+        //   console.log('avatarHourlyGoals', avatarHourlyGoals)
+        //   setHourlyGoals(avatarHourlyGoals)
+        // }
+        // restartHourlyGoals()
+        setHourlyGoals(0)
       }
 
       const currentDateInSeconds = (Number(hours) * 60 * 60) + (Number(minutes) * 60) + Number(seconds)
@@ -37,12 +39,13 @@ export function RoundTimeAvailable() {
       const roundStartInSeconds = 20 * 60 * 60
 
       if (currentDateInSeconds === roundStartInSeconds) { // Display Restart Round Goals
-        const restartRoundGoals = async () => {
-          const response = await api.get("/api/individual-goals")
-          const { avatarRoundGoals } = response.data.data
-          setRoundGoals(avatarRoundGoals)
-        }
-        restartRoundGoals()
+        // const restartRoundGoals = async () => {
+        //   const response = await api.get("/api/individual-goals")
+        //   const { avatarRoundGoals } = response.data.data
+        //   setRoundGoals(avatarRoundGoals)
+        // }
+        // restartRoundGoals()
+        setRoundGoals(0)
       }
     
       if (currentDateInSeconds < roundStartInSeconds) {
