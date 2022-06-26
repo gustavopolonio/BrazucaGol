@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useIndividualGoals } from "../../contexts/IndividualGoalsContext"
-import { api } from "../../services/api"
+import { useBlockKicks } from "../../contexts/BlockKicksContext"
 import { formatTime } from "../../utils/formatTime"
 
 import styles from './styles.module.scss'
@@ -8,6 +8,7 @@ import styles from './styles.module.scss'
 export function RoundTimeAvailable() {
   const [roundTimeAvailable, setRoundTimeAvailable] = useState('')
   const { setHourlyGoals, setRoundGoals } = useIndividualGoals()
+  const { setBlockNearHourlyChange, blockNearHourlyChange } = useBlockKicks()
   
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -23,14 +24,19 @@ export function RoundTimeAvailable() {
       const [hours, minutes, seconds] = dateInBraziliaTimeZone.split(':')
       
       if (minutes === '00' && seconds === '00') { // Display restart Hourly Goals
-        // const restartHourlyGoals = async () => {
-        //   const response = await api.get("/api/individual-goals")
-        //   const { avatarHourlyGoals } = response.data.data
-        //   console.log('avatarHourlyGoals', avatarHourlyGoals)
-        //   setHourlyGoals(avatarHourlyGoals)
-        // }
-        // restartHourlyGoals()
         setHourlyGoals(0)
+      }
+
+      setBlockNearHourlyChange(false)
+      if (
+        (minutes === '00' && seconds === '02') || 
+        (minutes === '00' && seconds === '01') || 
+        (minutes === '00' && seconds === '00') || 
+        (minutes === '59' && seconds === '60') || 
+        (minutes === '59' && seconds === '59') || 
+        (minutes === '59' && seconds === '58')
+      ) {
+        setBlockNearHourlyChange(true) // 2 sec before and after hourly and round updates I avoid all kicks (requests to faunadb)
       }
 
       const currentDateInSeconds = (Number(hours) * 60 * 60) + (Number(minutes) * 60) + Number(seconds)
@@ -39,12 +45,6 @@ export function RoundTimeAvailable() {
       const roundStartInSeconds = 20 * 60 * 60
 
       if (currentDateInSeconds === roundStartInSeconds) { // Display Restart Round Goals
-        // const restartRoundGoals = async () => {
-        //   const response = await api.get("/api/individual-goals")
-        //   const { avatarRoundGoals } = response.data.data
-        //   setRoundGoals(avatarRoundGoals)
-        // }
-        // restartRoundGoals()
         setRoundGoals(0)
       }
     

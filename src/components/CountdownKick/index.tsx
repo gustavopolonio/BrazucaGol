@@ -30,7 +30,7 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
 
   const { setBlockNearAutoGoal } = useBlockKicks()
 
-  const timeWithVip = 300 // Considering a kick of 5 min (300 sec)
+  const timeWithVip = 30 // Considering a kick of 5 min (300 sec)
 
   const enteredTime = Math.floor(new Date().getTime() / 1000)
   const [timeKickWillBeReady, setTimeKickWillBeReady] = useState(enteredTime + timeWithVip)
@@ -40,8 +40,10 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
     const timer = setTimeout(async () => {
       const currentTime = Math.floor(new Date().getTime() / 1000)
 
-      if (timeToKick <= 3) { // Block other kicks to prevent wrong count of goals
-        setBlockNearAutoGoal(true)
+      if (timeToKick <= 4) { // Block other kicks to prevent wrong count of goals
+        if (kickType === 'auto') {
+          setBlockNearAutoGoal(true)
+        }
       }
 
       if (timeToKick > 1) {
