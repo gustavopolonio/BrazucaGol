@@ -61,10 +61,6 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
             }
           })
 
-          // const test = await api.get("/api/individual-goals")
-          // const { avatarHourlyGoals } = test.data.data
-          // setHourlyGoals(avatarHourlyGoals)
-
           if (response.status === 201) {
             setAutoGoals(autoGoals + 1)
             setHourlyGoals(hourlyGoals + 1)

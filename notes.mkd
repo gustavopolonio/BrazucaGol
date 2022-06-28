@@ -5,28 +5,18 @@ Route:
 
 Pra frente:
   - Fazer a api de times brasileiros aceitar chamadas pelo id do clube
+  - Gols na virada da hora ou rodada pode dar bug
+    - Uns 3 sec antes e 3 sec depois da virada, bloqueio os chutes e desbloquieo qnd acabar (Feito)
+    Como evitar o auto chute de bugar?
 
 
+- State of hourly and round not work if i'm not in the tab, need to do a Request
 
 
-
-<!-- Auto goal junto com outro gol conta apenas um (posso mostrar msg de gol no auto)
-- Uns 2 sec antes da Req do gol auto eu bloqueio os chutes e desbloquieo qnd acabar
-a Req do auto -->
-O contexto esta marcando o mesmo estado para os 3 tipos de chute (penalti, falta, trilha)
-
-Gols na virada da hora ou rodada pode dar bug
-- Uns 3 sec antes e 3 sec depois da virada, bloqueio os chutes e desbloquieo qnd acabar
- E o auto?
-
-
- Deixar fechar os modais de chute
-
-
+- Deixar fechar os modais de chute
 - Não pode abrir duas abas ou mais ao mesmo tempo
 - Colocar barulho de gol opcional
 - Não parar o countdown qnd atualizar a pág
-
 - Don't be able to access /create-avatar without logged in
 
 
