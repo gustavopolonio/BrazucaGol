@@ -49,11 +49,7 @@ export default function CreateAvatar() {
 
   async function checkAvatarName() {
     const avatarName = watch('avatarName')
-    const { data } = await api.get('/api/avatars', {
-      params: {
-        avatarName
-      }
-    })
+    const { data } = await api.get(`/api/avatar/${avatarName}`)
 
     const isInputNameValid = await trigger('avatarName')
 
@@ -66,7 +62,7 @@ export default function CreateAvatar() {
 
   async function onSubmit(data: CreateAvatarData): Promise<void> {
     setIsLoading(true)
-    const response = await api.post('/api/avatars', {
+    const response = await api.post('/api/avatar', {
       ...data,
       avatarClub: Number(data.avatarClub)
     })

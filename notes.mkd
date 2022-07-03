@@ -1,21 +1,18 @@
-Route:
-- /api/avatars => tranform in /api/avatar (to get and post-create new avatars)
-- /api/avatar/[avatar_name] => to search for avatar (if already exists)
-
-
 Pra frente:
   - Fazer a api de times brasileiros aceitar chamadas pelo id do clube
   - Gols na virada da hora ou rodada pode dar bug
     - Uns 3 sec antes e 3 sec depois da virada, bloqueio os chutes e desbloquieo qnd acabar (Feito)
-    Como evitar o auto chute de bugar?
+    Como evitar o auto chute de bugar? (Atrasar a chamada do auto gol em algumn segundos se bater com a virada da hr ou rodada, e esse auto gol será contado na hora seguinte à virada)
+    - Ou fazer fila de requisições (esperar aprender pra ver se da certo)
 
 
-- State of hourly and round not work if i'm not in the tab, need to do a Request
 
 
 - Deixar fechar os modais de chute
 - Não pode abrir duas abas ou mais ao mesmo tempo
-- Colocar barulho de gol opcional
+- Colocar barulho de gol opcional (configurações)
+- Colocar alerta chute está pronto (configurações)
+- Colocar opção para deletar a conta (configs)
 - Não parar o countdown qnd atualizar a pág
 - Don't be able to access /create-avatar without logged in
 
