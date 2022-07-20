@@ -28,7 +28,7 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
     setRoundGoals 
   } = useIndividualGoals()
 
-  const { setBlockNearAutoGoal } = useBlockKicks()
+  const { setBlockNearAutoGoal, setBlockTrailNearAutoGoal } = useBlockKicks()
 
   const timeWithVip = 15 // Considering a kick of 5 min (300 sec)
 
@@ -39,6 +39,12 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
   useEffect(() => {
     const timer = setTimeout(async () => {
       const currentTime = Math.floor(new Date().getTime() / 1000)
+
+      if (timeToKick <= 9) { // Block other kicks to prevent wrong count of goals
+        if (kickType === 'auto') {
+          setBlockTrailNearAutoGoal(true)
+        }
+      }
 
       if (timeToKick <= 4) { // Block other kicks to prevent wrong count of goals
         if (kickType === 'auto') {
@@ -66,6 +72,7 @@ export function CountdownKick({ title, kickType, children }: CountdownKickProps)
             setHourlyGoals(hourlyGoals + 1)
             setRoundGoals(roundGoals + 1)
             setBlockNearAutoGoal(false)
+            setBlockTrailNearAutoGoal(false)
           }
         } else {
           setIsKickReady(true)       

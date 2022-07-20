@@ -41,7 +41,6 @@ export function ModalKick({
 
   const [showKickMessage, setShowKickMessage] = useState(false)
   const [messageAfterKick, setMessageAfterKick] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
 
   function displayMessageAfterKick(message: string) {
     setShowKickMessage(true)
@@ -58,8 +57,9 @@ export function ModalKick({
     }, timeoutTimer)
   }
 
-  async function handleKickWasGoal() {
+  async function handleKickWasGoal(wasTrailGoal?: boolean) {
     let wasGoal = false
+
     switch (kickType) {
 
       case 'penalty': // Calculate probability to do goal (90% of chance)
@@ -123,34 +123,26 @@ export function ModalKick({
       break
   
       case 'trail': // Calculate probability to do goal (30% of chance)
-        const trailProbability = Math.random() * 100
-        setIsLoading(true)
+        if (wasTrailGoal) {
+          displayMessageAfterKick('GOL !!!!')
 
-        setTimeout(async () => {
-          setIsLoading(false)
-          if (trailProbability < 30) { // Trail goal
-            wasGoal = true
-            displayMessageAfterKick('GOL !!!!')
-          } else { // Trail lost
-            displayMessageAfterKick('ERROU :(')
-          }
-
-          if (wasGoal) {
-            const response = await api.post("/api/individual-goals", {
-              kickData: {
-                avatarTrailGoals: trailGoals + 1,
-                avatarHourlyGoals: hourlyGoals + 1,
-                avatarRoundGoals: roundGoals + 1
-              }
-            })
-  
-            if (response.status === 201) {
-              setTrailGoals(trailGoals + 1)
-              setHourlyGoals(hourlyGoals + 1)
-              setRoundGoals(roundGoals + 1)
+          const response = await api.post("/api/individual-goals", {
+            kickData: {
+              avatarTrailGoals: trailGoals + 1,
+              avatarHourlyGoals: hourlyGoals + 1,
+              avatarRoundGoals: roundGoals + 1
             }
+          })
+          
+          if (response.status === 201) {
+            setTrailGoals(trailGoals + 1)
+            setHourlyGoals(hourlyGoals + 1)
+            setRoundGoals(roundGoals + 1)
           }
-        }, 1000)
+
+        } else {
+          displayMessageAfterKick('ERROU :(')
+        }
 
         setConfigsToRestartCountdown(2800)
       break
@@ -175,15 +167,15 @@ export function ModalKick({
           <div className={styles.kickSideButtonsContainer}>
             { blockNearAutoGoal || blockNearHourlyChange ? (
               <>
-                <button onClick={handleKickWasGoal} type='button' disabled style={{filter:'none'}}><BsFillArrowUpLeftCircleFill /></button>
-                <button onClick={handleKickWasGoal} type='button' disabled style={{filter:'none'}}><BsFillArrowUpCircleFill /></button>
-                <button onClick={handleKickWasGoal} type='button' disabled style={{filter:'none'}}><BsFillArrowUpRightCircleFill /></button>
+                <button type='button' disabled style={{filter:'none'}}><BsFillArrowUpLeftCircleFill /></button>
+                <button type='button' disabled style={{filter:'none'}}><BsFillArrowUpCircleFill /></button>
+                <button type='button' disabled style={{filter:'none'}}><BsFillArrowUpRightCircleFill /></button>
               </>
             ) : (
               <>
-                <button onClick={handleKickWasGoal} type='button'><BsFillArrowUpLeftCircleFill /></button>
-                <button onClick={handleKickWasGoal} type='button'><BsFillArrowUpCircleFill /></button>
-                <button onClick={handleKickWasGoal} type='button'><BsFillArrowUpRightCircleFill /></button>
+                <button onClick={() => handleKickWasGoal()} type='button'><BsFillArrowUpLeftCircleFill /></button>
+                <button onClick={() => handleKickWasGoal()} type='button'><BsFillArrowUpCircleFill /></button>
+                <button onClick={() => handleKickWasGoal()} type='button'><BsFillArrowUpRightCircleFill /></button>
               </>
             ) }
           </div>  
@@ -196,15 +188,15 @@ export function ModalKick({
           <div className={styles.kickSideButtonsContainer}>
             { blockNearAutoGoal || blockNearHourlyChange ? (
               <>
-                <button onClick={handleKickWasGoal} type='button' disabled style={{filter:'none'}}><BsFillArrowUpLeftCircleFill /></button>
-                <button onClick={handleKickWasGoal} type='button' disabled style={{filter:'none'}}><BsFillArrowUpCircleFill /></button>
-                <button onClick={handleKickWasGoal} type='button' disabled style={{filter:'none'}}><BsFillArrowUpRightCircleFill /></button>
+                <button type='button' disabled style={{filter:'none'}}><BsFillArrowUpLeftCircleFill /></button>
+                <button type='button' disabled style={{filter:'none'}}><BsFillArrowUpCircleFill /></button>
+                <button type='button' disabled style={{filter:'none'}}><BsFillArrowUpRightCircleFill /></button>
               </>
             ) : (
               <>
-                <button onClick={handleKickWasGoal} type='button'><BsFillArrowUpLeftCircleFill /></button>
-                <button onClick={handleKickWasGoal} type='button'><BsFillArrowUpCircleFill /></button>
-                <button onClick={handleKickWasGoal} type='button'><BsFillArrowUpRightCircleFill /></button>
+                <button onClick={() => handleKickWasGoal()} type='button'><BsFillArrowUpLeftCircleFill /></button>
+                <button onClick={() => handleKickWasGoal()} type='button'><BsFillArrowUpCircleFill /></button>
+                <button onClick={() => handleKickWasGoal()} type='button'><BsFillArrowUpRightCircleFill /></button>
               </>
             ) }
           </div>  

@@ -7,6 +7,8 @@ interface BlockKicksProviderProps {
 interface BlockKicksContextProps {
   blockNearAutoGoal: boolean;
   setBlockNearAutoGoal: Dispatch<SetStateAction<boolean>>;
+  blockTrailNearAutoGoal: boolean;
+  setBlockTrailNearAutoGoal: Dispatch<SetStateAction<boolean>>;
   blockNearHourlyChange: boolean;
   setBlockNearHourlyChange: Dispatch<SetStateAction<boolean>>
 }
@@ -14,19 +16,24 @@ interface BlockKicksContextProps {
 const BlockKicksContext = createContext({
   blockNearAutoGoal: false,
   setBlockNearAutoGoal: () => {},
+  blockTrailNearAutoGoal: false,
+  setBlockTrailNearAutoGoal: () => {},
   blockNearHourlyChange: false,
   setBlockNearHourlyChange: () => {}
 } as BlockKicksContextProps)
 
 export function BlockKicksProvider({ children }: BlockKicksProviderProps) {
   const [blockNearAutoGoal, setBlockNearAutoGoal] = useState(false)
+  const [blockTrailNearAutoGoal, setBlockTrailNearAutoGoal] = useState(false)
   const [blockNearHourlyChange, setBlockNearHourlyChange] = useState(false)
 
   const value = {
     blockNearAutoGoal,
     setBlockNearAutoGoal,
     blockNearHourlyChange,
-    setBlockNearHourlyChange
+    setBlockNearHourlyChange,
+    blockTrailNearAutoGoal,
+    setBlockTrailNearAutoGoal
   }
 
   return (
