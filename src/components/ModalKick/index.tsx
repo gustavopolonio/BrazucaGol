@@ -1,8 +1,8 @@
 import { BsFillArrowUpLeftCircleFill, BsFillArrowUpCircleFill, BsFillArrowUpRightCircleFill } from "react-icons/bs"
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState, useRef } from 'react'
+import { TrailAnimation } from "../TrailAnimation"
 import { useIndividualGoals } from "../../contexts/IndividualGoalsContext"
 import { useBlockKicks } from "../../contexts/BlockKicksContext"
-import { LoadingSpinner } from '../Utils/LoadingSpinner'
 
 import styles from './styles.module.scss'
 import { api } from "../../services/api"
@@ -160,16 +160,6 @@ export function ModalKick({
     }
   }
 
-  const [trailFirstColumn, setTrailFirstColumn] = useState(false)
-  const [trailSecondColumn, setTrailSecondColumn] = useState(false)
-  const [trailThirdColumn, setTrailThirdColumn] = useState(false)
-  
-  useEffect(() => {
-    if (trailFirstColumn && trailSecondColumn && trailThirdColumn) {
-      handleKickWasGoal()
-    }
-  }, [trailFirstColumn, trailSecondColumn, trailThirdColumn])
-
 
   return (
     <div className={styles.container}>
@@ -222,45 +212,7 @@ export function ModalKick({
       ) }
 
       { kickType === 'trail' && (
-        <div className={styles.content}>
-          { isLoading && <LoadingSpinner top='2%' left='2%' /> }
-
-          <div className={styles.trailContent}>
-            <fieldset>
-              <input type="radio" name='trail-goalkepper' checked readOnly />
-            </fieldset>
-
-            <fieldset onChange={() => setTrailFirstColumn(true)}>
-              <input type="radio" name='trail-part-one' />
-              <input type="radio" name='trail-part-one' />
-              <input type="radio" name='trail-part-one' />
-              <input type="radio" name='trail-part-one' />
-            </fieldset>
-
-            <fieldset onChange={() => setTrailSecondColumn(true)}>
-              <input type="radio" name='trail-part-two' />
-              <input type="radio" name='trail-part-two' />
-              <input type="radio" name='trail-part-two' />
-              <input type="radio" name='trail-part-two' />
-            </fieldset>
-
-            <fieldset onChange={() => setTrailThirdColumn(true)}>
-              { blockNearAutoGoal || blockNearHourlyChange ? (
-                <>
-                  <input type="radio" name='trail-part-three' disabled />
-                  <input type="radio" name='trail-part-three' disabled />
-                  <input type="radio" name='trail-part-three' disabled />
-                </>
-              ) : (
-                <>
-                  <input type="radio" name='trail-part-three' />
-                  <input type="radio" name='trail-part-three' />
-                  <input type="radio" name='trail-part-three' />
-                </>
-              ) }
-            </fieldset>
-          </div>
-        </div>
+        <TrailAnimation handleKickWasGoal={handleKickWasGoal} />
       ) }
       
     </div>

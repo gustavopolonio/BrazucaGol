@@ -14,6 +14,7 @@ import { ClubsHighlightedes } from '../components/ClubsHighlightedes'
 import { MainContainer } from '../components/MainContainer'
 
 import '../styles/global.scss'
+import '../styles/trail-animation.scss'
 
 Modal.setAppElement('#__next')
 
