@@ -144,7 +144,7 @@ export function ModalKick({
           displayMessageAfterKick('ERROU :(')
         }
 
-        setConfigsToRestartCountdown(2800)
+        setConfigsToRestartCountdown(800)
       break
   
       default:

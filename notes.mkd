@@ -4,10 +4,10 @@ Pra frente:
     - Uns 3 sec antes e 3 sec depois da virada, bloqueio os chutes e desbloquieo qnd acabar (Feito)
     Como evitar o auto chute de bugar? (Atrasar a chamada do auto gol em algumn segundos se bater com a virada da hr ou rodada, e esse auto gol será contado na hora seguinte à virada)
     - Ou fazer fila de requisições (esperar aprender pra ver se da certo)
+    - Trilha buga gol junto com auto (8 sec auto pra n bugar) e junto com virada da hora
 
 
 
-- Trilha buga gol junto com auto (8 sec auto pra n bugar) e junto com virada da hora
 - Deixar fechar os modais de chute
 - Não pode abrir duas abas ou mais ao mesmo tempo
 - Colocar barulho de gol opcional (configurações)

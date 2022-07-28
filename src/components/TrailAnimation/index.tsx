@@ -1,5 +1,5 @@
 
-import { useEffect, useRef, useState } from 'react'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 import { LoadingSpinner } from '../Utils/LoadingSpinner'
 import { useBlockKicks } from "../../contexts/BlockKicksContext"
 
@@ -44,12 +44,20 @@ export function TrailAnimation({ handleKickWasGoal }: TrailAnimationProps) {
   const trailThirdColumnFieldset = useRef<HTMLFieldSetElement>(null)
   
   useEffect(() => {
-    const firstColumnChoosed = Object.values(trailFirstColumnFieldset.current.children).filter(input => input.checked)
-    const firstColumnNotChoosed = Object.values(trailFirstColumnFieldset.current.children).filter(input => !input.checked)
-    const secondColumnChoosed = Object.values(trailSecondColumnFieldset.current.children).filter(input => input.checked)
-    const secondColumnNotChoosed = Object.values(trailSecondColumnFieldset.current.children).filter(input => !input.checked)
-    const thirdColumnChoosed = Object.values(trailThirdColumnFieldset.current.children).filter(input => input.checked)
-    const thirdColumnNotChoosed = Object.values(trailThirdColumnFieldset.current.children).filter(input => !input.checked)
+    // const firstColumnChoosed = Object.values(trailFirstColumnFieldset.current.children).filter(input => input.checked)
+    const firstColumnChoosedAux = Object.values(trailFirstColumnFieldset.current.children)
+    const firstColumnChoosed = firstColumnChoosedAux.filter((input: HTMLInputElement) => input.checked)
+    // const firstColumnNotChoosed = Object.values(trailFirstColumnFieldset.current.children).filter(input => !input.checked)
+    const firstColumnNotChoosed = firstColumnChoosedAux.filter((input: HTMLInputElement) => !input.checked)
+
+    const secondColumnChoosedAux = Object.values(trailSecondColumnFieldset.current.children)
+    const secondColumnChoosed = secondColumnChoosedAux.filter((input: HTMLInputElement) => input.checked)
+    const secondColumnNotChoosed = secondColumnChoosedAux.filter((input: HTMLInputElement) => !input.checked)
+    
+    const thirdColumnChoosedAux = Object.values(trailThirdColumnFieldset.current.children)
+    const thirdColumnChoosed = thirdColumnChoosedAux.filter((input: HTMLInputElement) => input.checked)
+    const thirdColumnNotChoosed = thirdColumnChoosedAux.filter((input: HTMLInputElement) => !input.checked)
+    
     const classInputChoosedThirdColumn = thirdColumnChoosed[0]?.classList[0] // Ball goes to it
 
     if (trailFirstColumnIsChoosed && trailSecondColumnIsChoosed && trailThirdColumnIsChoosed) {
@@ -59,7 +67,7 @@ export function TrailAnimation({ handleKickWasGoal }: TrailAnimationProps) {
 
       setTimeout(async () => {
         setIsLoading(false)
-        if (trailProbability < 30) { // Trail goal (Input has to go until the end)
+        if (trailProbability < 100) { // Trail goal (Input has to go until the end)
           wasTrailGoal = true
 
           // First column (3 inputs right and 1 wrong)       
