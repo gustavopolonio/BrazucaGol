@@ -1,4 +1,12 @@
-import { createContext, ReactNode, useState, useContext, Dispatch, SetStateAction, useEffect } from 'react'
+import {
+  createContext,
+  ReactNode,
+  useState,
+  useContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+} from 'react'
 import { api } from '../services/api'
 
 interface IndividualGoalsProviderProps {
@@ -6,18 +14,18 @@ interface IndividualGoalsProviderProps {
 }
 
 interface IndividualGoalsContextProps {
-  autoGoals: number,
-  setAutoGoals: Dispatch<SetStateAction<number>>,
-  penaltyGoals: number,
-  setPenaltyGoals: Dispatch<SetStateAction<number>>,
-  freeKickGoals: number,
-  setFreeKickGoals: Dispatch<SetStateAction<number>>,
-  trailGoals: number,
-  setTrailGoals: Dispatch<SetStateAction<number>>,
-  totalGoals: number,
-  hourlyGoals: number,
-  setHourlyGoals: Dispatch<SetStateAction<number>>,
-  roundGoals: number,
+  autoGoals: number
+  setAutoGoals: Dispatch<SetStateAction<number>>
+  penaltyGoals: number
+  setPenaltyGoals: Dispatch<SetStateAction<number>>
+  freeKickGoals: number
+  setFreeKickGoals: Dispatch<SetStateAction<number>>
+  trailGoals: number
+  setTrailGoals: Dispatch<SetStateAction<number>>
+  totalGoals: number
+  hourlyGoals: number
+  setHourlyGoals: Dispatch<SetStateAction<number>>
+  roundGoals: number
   setRoundGoals: Dispatch<SetStateAction<number>>
 }
 
@@ -34,10 +42,12 @@ const IndividualGoalsContext = createContext({
   hourlyGoals: 0,
   setHourlyGoals: () => {},
   roundGoals: 0,
-  setRoundGoals: () => {}
+  setRoundGoals: () => {},
 } as IndividualGoalsContextProps)
 
-export function IndividualGoalsProvider({ children }: IndividualGoalsProviderProps) {
+export function IndividualGoalsProvider({
+  children,
+}: IndividualGoalsProviderProps) {
   const [autoGoals, setAutoGoals] = useState(0)
   const [penaltyGoals, setPenaltyGoals] = useState(0)
   const [freeKickGoals, setFreeKickGoals] = useState(0)
@@ -46,17 +56,16 @@ export function IndividualGoalsProvider({ children }: IndividualGoalsProviderPro
   const [hourlyGoals, setHourlyGoals] = useState(0)
   const [roundGoals, setRoundGoals] = useState(0)
 
-  
   useEffect(() => {
     const fetchIndividualGoals = async () => {
-      const response = await api.get("/api/individual-goals")
-      const { 
-        avatarAutoGoals, 
-        avatarPenaltyGoals, 
-        avatarFreeKickGoals, 
+      const response = await api.get('/api/individual-goals')
+      const {
+        avatarAutoGoals,
+        avatarPenaltyGoals,
+        avatarFreeKickGoals,
         avatarTrailGoals,
         avatarHourlyGoals,
-        avatarRoundGoals
+        avatarRoundGoals,
       } = response.data.data
 
       setAutoGoals(avatarAutoGoals)
@@ -70,12 +79,12 @@ export function IndividualGoalsProvider({ children }: IndividualGoalsProviderPro
     fetchIndividualGoals()
   }, [])
 
-  const value = { 
-    autoGoals, 
-    setAutoGoals, 
-    penaltyGoals, 
-    setPenaltyGoals, 
-    freeKickGoals, 
+  const value = {
+    autoGoals,
+    setAutoGoals,
+    penaltyGoals,
+    setPenaltyGoals,
+    freeKickGoals,
     setFreeKickGoals,
     trailGoals,
     setTrailGoals,
@@ -83,14 +92,13 @@ export function IndividualGoalsProvider({ children }: IndividualGoalsProviderPro
     hourlyGoals,
     setHourlyGoals,
     roundGoals,
-    setRoundGoals
+    setRoundGoals,
   }
 
   useEffect(() => {
     setTotalGoals(autoGoals + penaltyGoals + freeKickGoals + trailGoals)
     // console.log('totalGoals', totalGoals)
   }, [autoGoals, penaltyGoals, freeKickGoals, trailGoals])
-
 
   return (
     <IndividualGoalsContext.Provider value={value}>

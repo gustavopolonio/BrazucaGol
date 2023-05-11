@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
-import { MenuSidebar } from "../MenuSidebar";
-import { MyAccountSidebar } from "../MyAccountSidebar";
+import { ReactNode } from 'react'
+import { MenuSidebar } from './MenuSidebar'
+import { MyAccountSidebar } from './MyAccountSidebar'
 
 import styles from './styles.module.scss'
 
@@ -9,11 +9,10 @@ interface MainContainerProps {
 }
 
 export function MainContainer({ children }: MainContainerProps) {
-
   return (
     <main className={styles.mainContainer}>
       <MenuSidebar />
-      { children }
+      {children}
       <MyAccountSidebar />
     </main>
   )

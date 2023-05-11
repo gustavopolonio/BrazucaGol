@@ -9,56 +9,6 @@
   }
 }
 
-.trailAnimation {
-  input {
-    transition: 1.4s;
-
-    &.vanish {
-      opacity: 0;
-    }
-    
-    &[name="trail-goalkepper"] {
-      z-index: 1;
-
-      &.trail-first-column-first-row {
-        transform: translate(115px, -123px);
-      }
-      &.trail-first-column-second-row {
-        transform: translate(115px, -41px);
-      }
-      &.trail-first-column-third-row {
-        transform: translate(115px, 40px);
-      }
-      &.trail-first-column-fourth-row {
-        transform: translate(115px, 123px);
-      }
-
-      &.trail-second-column-first-row {
-        transform: translate(231px, -123px);
-      }
-      &.trail-second-column-second-row {
-        transform: translate(231px, -41px);
-      }
-      &.trail-second-column-third-row {
-        transform: translate(231px, 40px);
-      }
-      &.trail-second-column-fourth-row {
-        transform: translate(231px, 123px);
-      }
-
-      &.trail-third-column-first-row {
-        transform: translate(346px, -123px);
-      }
-      &.trail-third-column-second-row {
-        transform: translate(346px, 0px);
-      }
-      &.trail-third-column-third-row {
-        transform: translate(346px, 123px);
-      }
-    }
-  }
-}
-
 .trailContent {
   height: 100%;
   display: flex;
@@ -111,6 +61,56 @@
 
       &:checked::after {
         border: 5px solid white;
+      }
+    }
+  }
+}
+
+.trailAnimation {
+  input {
+    transition: 1.4s;
+
+    &.vanish {
+      opacity: 0;
+    }
+    
+    &[name="trail-goalkepper"] {
+      z-index: 1;
+
+      &.trailFirstColumnFirstRow {
+        transform: translate(104px, -123px);
+      }
+      &.trailFirstColumnSecondRow {
+        transform: translate(104px, -41px);
+      }
+      &.trailFirstColumnThirdRow {
+        transform: translate(104px, 40px);
+      }
+      &.trailFirstColumnFourthRow {
+        transform: translate(104px, 123px);
+      }
+
+      &.trailSecondColumnFirstRow {
+        transform: translate(208px, -123px);
+      }
+      &.trailSecondColumnSecondRow {
+        transform: translate(208px, -41px);
+      }
+      &.trailSecondColumnThirdRow {
+        transform: translate(208px, 40px);
+      }
+      &.trailSecondColumnFourthRow {
+        transform: translate(208px, 123px);
+      }
+
+      &.trailThirdColumnFirstRow {
+        transform: translate(312px, -122px);
+      }
+      &.trailThirdColumnSecondRow {
+        transform: translate(312px, 0px);
+      }
+      &.trailThirdColumnThirdRow {
+        transform: translate(312px, 122px);
       }
     }
   }

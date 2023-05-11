@@ -1,58 +1,53 @@
 import { AppProps } from 'next/app'
-import { SessionProvider } from "next-auth/react"
-import { useState } from 'react'
-import Modal from 'react-modal'
+import { SessionProvider } from 'next-auth/react'
+import { useEffect } from 'react'
 import { IndividualGoalsProvider } from '../contexts/IndividualGoalsContext'
 import { AvatarDataProvider } from '../contexts/AvatarDataContext'
-import { BlockKicksProvider } from '../contexts/BlockKicksContext'
-import { TopBar } from '../components/TopBar'
-import { Header } from '../components/Header'
-import { SignInModal } from '../components/SignInModal'
 import { Footer } from '../components/Footer'
-import { CountdownKickContainer } from '../components/CountdownKickContainer'
-import { ClubsHighlightedes } from '../components/ClubsHighlightedes'
-import { MainContainer } from '../components/MainContainer'
 
 import '../styles/global.scss'
-import '../styles/trail-animation.scss'
-
-Modal.setAppElement('#__next')
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [isSignInModalOpen, setIsSignInModalOpen] = useState(false)
+  useEffect(() => {
+    const alreadyHasKickTab = localStorage.getItem('brazucagol:hasKickTab')
 
-  function handleOpenModal() {
-    setIsSignInModalOpen(true)
-  }
+    if (alreadyHasKickTab === null) {
+      localStorage.setItem('brazucagol:hasKickTab', 'true')
+    } else {
+      return
+    }
 
-  function handleCloseModal() {
-    setIsSignInModalOpen(false)
-  }
+    window.addEventListener('pagehide', () => {
+      const alreadyHasKickTab = localStorage.getItem('brazucagol:hasKickTab')
+
+      if (alreadyHasKickTab !== null) {
+        localStorage.removeItem('brazucagol:hasKickTab')
+      }
+    })
+
+    window.addEventListener('storage', () => {
+      // Prevent hard localStorage delete
+      const alreadyHasKickTab = localStorage.getItem('brazucagol:hasKickTab')
+
+      if (alreadyHasKickTab === null) {
+        localStorage.setItem('brazucagol:hasKickTab', 'true')
+      }
+    })
+
+    return () => localStorage.removeItem('brazucagol:hasKickTab')
+  }, [])
 
   return (
     <SessionProvider session={pageProps.session}>
       <IndividualGoalsProvider>
         <AvatarDataProvider>
-          <BlockKicksProvider>
+          <Component {...pageProps} />
 
-            <TopBar onOpenSignInModal={handleOpenModal} />
-            <Header />
-            <CountdownKickContainer />
-            <ClubsHighlightedes />
-
-            <MainContainer>
-              <Component {...pageProps} />
-            </MainContainer>
-
-            <Footer />
-
-            <SignInModal isModalOpen={isSignInModalOpen} onCloseSignInModal={handleCloseModal} />
-          
-          </BlockKicksProvider>
+          <Footer />
         </AvatarDataProvider>
       </IndividualGoalsProvider>
     </SessionProvider>
-  ) 
+  )
 }
 
 export default MyApp

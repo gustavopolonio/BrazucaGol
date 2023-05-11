@@ -1,19 +1,21 @@
 import NextAuth from 'next-auth'
-import FacebookProvider from "next-auth/providers/facebook"
+import FacebookProvider from 'next-auth/providers/facebook'
 import GoogleProvider from 'next-auth/providers/google'
 import { fauna } from '../../../services/faunadb'
 import { query as q } from 'faunadb'
 
-export default NextAuth({
+import type { NextAuthOptions } from 'next-auth'
+
+export const authOptions: NextAuthOptions = {
   providers: [
     FacebookProvider({
       clientId: process.env.FACEBOOK_ID,
-      clientSecret: process.env.FACEBOOK_SECRET
+      clientSecret: process.env.FACEBOOK_SECRET,
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET
-    })
+      clientSecret: process.env.GOOGLE_SECRET,
+    }),
   ],
 
   callbacks: {
@@ -24,33 +26,20 @@ export default NextAuth({
         await fauna.query(
           q.If(
             q.Not(
-              q.Exists(
-                q.Match(
-                  q.Index('user_by_email'),
-                  q.Casefold(email)
-                )
-              )
+              q.Exists(q.Match(q.Index('user_by_email'), q.Casefold(email))),
             ),
-            q.Create(
-              q.Collection('users'),
-              { data: { email, isAvatarActive: false } }
-            ),
-            q.Get(
-              q.Match(
-                q.Index('user_by_email'),
-                q.Casefold(email)
-              )
-            )
-          )
+            q.Create(q.Collection('users'), {
+              data: { email, isAvatarActive: false },
+            }),
+            q.Get(q.Match(q.Index('user_by_email'), q.Casefold(email))),
+          ),
         )
 
         return true
-
-      } catch(err) {
+      } catch (err) {
         console.log('err', err)
         return false
       }
-
     },
 
     async session({ session }) {
@@ -60,29 +49,24 @@ export default NextAuth({
         await fauna.query(
           q.Get(
             q.Intersection([
-              q.Match(
-                q.Index('user_by_email'),
-                q.Casefold(email)
-              ),
-              q.Match(
-                q.Index('user_by_isAvatarActive'),
-                true
-              )
-            ])
-          )
+              q.Match(q.Index('user_by_email'), q.Casefold(email)),
+              q.Match(q.Index('user_by_isAvatarActive'), true),
+            ]),
+          ),
         )
 
         return {
           ...session,
-          isAvatarActive: true
+          isAvatarActive: true,
         }
       } catch {
-
         return {
           ...session,
-          isAvatarActive: false
+          isAvatarActive: false,
         }
       }
-    }
-  }
-})
+    },
+  },
+}
+
+export default NextAuth(authOptions)

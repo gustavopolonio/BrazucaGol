@@ -1,32 +1,31 @@
-import { useIndividualGoals } from "../../contexts/IndividualGoalsContext";
-import { CountdownKick } from "../CountdownKick";
+import { CountdownKick } from './CountdownKick'
 import { useSession } from 'next-auth/react'
+import { useEffect, useState } from 'react'
 
 import styles from './styles.module.scss'
 
+type HasKickType = string | null
 
 export function CountdownKickContainer() {
   const { data: session } = useSession()
-  const { autoGoals, penaltyGoals, freeKickGoals, trailGoals, totalGoals } = useIndividualGoals()
+  const [hasKickTab, setHasKickTab] = useState<HasKickType>()
 
-  return (
-    <>
-      {session?.isAvatarActive && (
-        <div className={styles.ballsContainer}>
-          <CountdownKick title='AUTO' kickType='auto'>
-            Gols de auto: {autoGoals}
-          </CountdownKick>
-          <CountdownKick title='PÊNALTI' kickType='penalty'>
-            Gols de penalti: {penaltyGoals}
-          </CountdownKick>
-          <CountdownKick title='FALTA' kickType='free-kick'>
-            Gols de falta: {freeKickGoals}
-          </CountdownKick>
-          <CountdownKick title='TRILHA' kickType='trail'>
-            Gols de trilha: {trailGoals}
-          </CountdownKick>
-        </div>
-      )}
-    </>
-  )
+  useEffect(() => {
+    setHasKickTab(localStorage.getItem('brazucagol:hasKickTab'))
+  }, [])
+
+  if (!hasKickTab) {
+    return (
+      <>
+        {session?.isAvatarActive && (
+          <div className={styles.ballsContainer}>
+            <CountdownKick title="AUTO" kickType="auto" />
+            <CountdownKick title="PÊNALTI" kickType="penalty" />
+            <CountdownKick title="FALTA" kickType="free-kick" />
+            <CountdownKick title="TRILHA" kickType="trail" />
+          </div>
+        )}
+      </>
+    )
+  }
 }

@@ -1,17 +1,22 @@
-import { ReactElement, ElementType } from 'react'
+import { ElementType } from 'react'
 
 import styles from './styles.module.scss'
 
 interface PlayerDetailsProps {
-  ranking: number,
-  Nivel: ElementType,
-  clubLogo: string,
-  playerName: string,
+  ranking: number
+  Nivel: ElementType
+  clubLogo: string
+  playerName: string
   playerGoals: number
 }
 
-export function PlayerDetails({ ranking, Nivel, clubLogo, playerName, playerGoals }: PlayerDetailsProps) {
-
+export function PlayerDetails({
+  ranking,
+  Nivel,
+  clubLogo,
+  playerName,
+  playerGoals,
+}: PlayerDetailsProps) {
   return (
     <li className={styles.playerDetailsContainer}>
       <div className={styles.borderBottom}></div>
@@ -21,9 +26,7 @@ export function PlayerDetails({ ranking, Nivel, clubLogo, playerName, playerGoal
         <a href="" className={styles.iconPlayerClub}>
           <img src={clubLogo} alt="" />
         </a>
-        <a href="">
-          {playerName}
-        </a>
+        <a href="">{playerName}</a>
       </div>
       {playerGoals}
     </li>
