@@ -1,6 +1,6 @@
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
-import { LoadingSpinner } from '../utils/LoadingSpinner'
+import { LoadingSpinner } from '../LoadingSpinner'
 import { useAvatarData } from '../../contexts/AvatarDataContext'
 import { useIndividualGoals } from '../../contexts/IndividualGoalsContext'
 import Image from 'next/image'

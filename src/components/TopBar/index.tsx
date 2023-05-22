@@ -1,7 +1,7 @@
 import { RiSearchLine, RiLogoutCircleRLine } from 'react-icons/ri'
 import { useSession, signOut } from 'next-auth/react'
 import { RoundTimeAvailable } from './RoundTimeAvailable'
-import { LoadingSpinner } from '../utils/LoadingSpinner'
+import { LoadingSpinner } from '../LoadingSpinner'
 import { useAvatarData } from '../../contexts/AvatarDataContext'
 import { SignInModal } from './SignInModal'
 import { useState } from 'react'

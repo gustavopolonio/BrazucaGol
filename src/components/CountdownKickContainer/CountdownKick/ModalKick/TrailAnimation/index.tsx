@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { LoadingSpinner } from '../../../../utils/LoadingSpinner'
+import { LoadingSpinner } from '../../../../LoadingSpinner'
 
 import styles from './styles.module.scss'
 

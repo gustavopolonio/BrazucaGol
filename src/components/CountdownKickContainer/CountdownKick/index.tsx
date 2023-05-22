@@ -7,7 +7,7 @@ import { api } from '../../../services/api'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import * as Dialog from '@radix-ui/react-dialog'
 import { signOut } from 'next-auth/react'
-import { LoadingSpinner } from '../../utils/LoadingSpinner'
+import { LoadingSpinner } from '../../LoadingSpinner'
 
 import styles from './styles.module.scss'
 import 'react-circular-progressbar/dist/styles.css'
