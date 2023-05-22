@@ -42,8 +42,6 @@
     align-items: center;
 
     > img {
-      width: 44px;
-      height: 44px;
       border: 2px solid black;
       padding: 0.2rem;
       border-radius: 4px;
@@ -95,8 +93,8 @@
   position: relative;
 
   img {
-    width: 100%;
-    height: auto;
+    // width: 100%;
+    // height: auto;
   }
 
   strong {

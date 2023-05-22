@@ -1,26 +1,33 @@
 import Head from 'next/head'
 import { GoalsAmountTables } from '../../components/GoalsAmount'
-import { TopBar } from '../../components/TopBar'
-import { Header } from '../../components/Header'
-import { CountdownKickContainer } from '../../components/CountdownKickContainer'
-import { ClubsHighlightedes } from '../../components/ClubsHighlightedes'
-import { MainContainer } from '../../components/MainContainer'
+import { useSession } from 'next-auth/react'
+import { useEffect } from 'react'
+import { ActivateAvatarPopover } from '../../components/ActivateAvatarPopover'
 
 export default function Home() {
+  const { data: session } = useSession()
+
+  useEffect(() => {
+    if (session === null) {
+      // Reset countdown kick time when logout
+      sessionStorage.removeItem('brazucagol:timeToKick=trail')
+      sessionStorage.removeItem('brazucagol:timeToKick=penalty')
+      sessionStorage.removeItem('brazucagol:timeToKick=free-kick')
+      sessionStorage.removeItem('brazucagol:timeToKick=auto')
+    }
+  }, [session])
+
+  console.log(session)
+
   return (
     <>
       <Head>
         <title>Home | Brazucagol</title>
       </Head>
 
-      <TopBar />
-      <Header />
-      <CountdownKickContainer />
-      <ClubsHighlightedes />
+      <GoalsAmountTables />
 
-      <MainContainer>
-        <GoalsAmountTables />
-      </MainContainer>
+      {session?.isAvatarActive === false && <ActivateAvatarPopover />}
     </>
   )
 }

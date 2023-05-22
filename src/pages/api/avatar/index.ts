@@ -1,9 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getSession } from 'next-auth/react'
 import { query as q } from 'faunadb'
 import { fauna } from '../../../services/faunadb'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../auth/[...nextauth]'
+import { buildNextAuthOption } from '../auth/[...nextauth]'
 
 interface AvatarQueryResponse {
   data: {
@@ -20,10 +19,21 @@ export default async function handler(
   res: NextApiResponse,
 ): Promise<void> {
   if (req.method === 'GET') {
-    const { user } = await getSession({ req })
+    const session = await getServerSession(
+      req,
+      res,
+      buildNextAuthOption(req, res),
+    )
+    if (!session) return res.status(400).send('Session não iniciada')
+    if (session.isAvatarActive === false) {
+      return res.status(400).send('Avatar não está ativo')
+    }
 
     const userRef = await fauna.query(
-      q.Select('ref', q.Get(q.Match(q.Index('user_by_email'), user.email))),
+      q.Select(
+        'ref',
+        q.Get(q.Match(q.Index('user_by_email'), session.user.email)),
+      ),
     )
 
     return fauna
@@ -31,7 +41,7 @@ export default async function handler(
         q.Get(q.Match(q.Index('avatar_by_userId'), userRef)),
       )
       .then((response) => {
-        return res.json({
+        return res.status(200).json({
           data: response,
         })
       })
@@ -42,7 +52,11 @@ export default async function handler(
 
   if (req.method === 'POST') {
     const { avatarName, avatarClub } = req.body
-    const { user } = await getServerSession(req, res, authOptions)
+    const { user } = await getServerSession(
+      req,
+      res,
+      buildNextAuthOption(req, res),
+    )
 
     // search user_by_email and catch its Ref (this is my userId in avatars Collection)
     const userRef = await fauna.query(

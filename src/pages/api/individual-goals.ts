@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { getServerSession } from 'next-auth/next'
 import { fauna } from '../../services/faunadb'
 import { query as q } from 'faunadb'
-import { authOptions } from './auth/[...nextauth]'
+import { buildNextAuthOption } from './auth/[...nextauth]'
 
 interface IndividualGoalsQueryResponse {
   data: {
@@ -21,33 +21,45 @@ export default async function handler(
   res: NextApiResponse,
 ): Promise<void> {
   if (req.method === 'GET') {
-    // const session = await getSession({ req })
-    const session = await getServerSession(req, res, authOptions)
-
-    if (!session?.isAvatarActive) return
-
-    const userRef = await fauna.query(
-      q.Select(
-        'ref',
-        q.Get(q.Match(q.Index('user_by_email'), session?.user.email)),
-      ),
+    const session = await getServerSession(
+      req,
+      res,
+      buildNextAuthOption(req, res),
     )
+    if (!session) return res.status(400).send('Session não iniciada')
+    if (session.isAvatarActive === false) {
+      return res.status(400).send('Avatar não está ativo')
+    }
 
-    const { data } = await fauna.query<IndividualGoalsQueryResponse>(
-      q.Get(q.Match(q.Index('individualGoals_by_userId'), userRef)),
-    )
+    try {
+      const userRef = await fauna.query(
+        q.Select(
+          'ref',
+          q.Get(q.Match(q.Index('user_by_email'), session?.user.email)),
+        ),
+      )
 
-    return res.json({ data })
+      const { data } = await fauna.query<IndividualGoalsQueryResponse>(
+        q.Get(q.Match(q.Index('individualGoals_by_userId'), userRef)),
+      )
+
+      return res.status(200).json({ data })
+    } catch (err) {
+      return res.status(400).json({ message: err })
+    }
   }
 
   if (req.method === 'POST') {
     const { kickData } = req.body
-    const { user } = await getServerSession(req, res, authOptions)
+    const { user } = await getServerSession(
+      req,
+      res,
+      buildNextAuthOption(req, res),
+    )
 
     const userRef = await fauna.query(
       q.Select('ref', q.Get(q.Match(q.Index('user_by_email'), user.email))),
     )
-
     await fauna.query(
       q.Update(
         q.Select(

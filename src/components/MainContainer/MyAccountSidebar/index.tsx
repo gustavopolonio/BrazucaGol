@@ -1,6 +1,7 @@
 import { BsPersonFill, BsFillGearFill } from 'react-icons/bs'
 import { GiOpenBook, GiSoccerKick } from 'react-icons/gi'
 import { FaExchangeAlt } from 'react-icons/fa'
+import Link from 'next/link'
 
 import styles from './styles.module.scss'
 
@@ -30,10 +31,10 @@ export function MyAccountSidebar() {
           <GiSoccerKick />
           Opções de chute<div className={styles.borderBottom}></div>
         </a>
-        <a href="">
+        <Link href="/settings">
           <BsFillGearFill />
           Configurações<div className={styles.borderBottom}></div>
-        </a>
+        </Link>
         <strong>VIP 7 dias 08 minutos</strong>
       </nav>
     </aside>

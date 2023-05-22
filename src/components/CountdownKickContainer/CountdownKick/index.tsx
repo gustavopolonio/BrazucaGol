@@ -5,18 +5,12 @@ import { useIndividualGoals } from '../../../contexts/IndividualGoalsContext'
 import { formatTime } from '../../../utils/formatTime'
 import { api } from '../../../services/api'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
-import {
-  Root,
-  Portal,
-  Overlay,
-  Content,
-  Close,
-  Trigger,
-} from '@radix-ui/react-dialog'
+import * as Dialog from '@radix-ui/react-dialog'
+import { signOut } from 'next-auth/react'
+import { LoadingSpinner } from '../../utils/LoadingSpinner'
 
 import styles from './styles.module.scss'
 import 'react-circular-progressbar/dist/styles.css'
-import { LoadingSpinner } from '../../utils/LoadingSpinner'
 
 interface CountdownKickProps {
   title: string
@@ -38,7 +32,7 @@ export function CountdownKick({ title, kickType }: CountdownKickProps) {
     setRoundGoals,
   } = useIndividualGoals()
 
-  const timeWithVip = 300 // Considering a kick of 5 min (300 sec)
+  const timeWithVip = 30 // Considering a kick of 5 min (300 sec)
 
   const [timeToKick, setTimeToKick] = useState<number>()
   const [timeKickWillBeReady, setTimeKickWillBeReady] = useState<number>()
@@ -68,12 +62,12 @@ export function CountdownKick({ title, kickType }: CountdownKickProps) {
 
   useEffect(() => {
     const timer = setTimeout(async () => {
+      const currentTime = Math.floor(new Date().getTime() / 1000)
+
       sessionStorage.setItem(
         `brazucagol:timeToKick=${kickType}`,
         String(timeToKick),
       )
-
-      const currentTime = Math.floor(new Date().getTime() / 1000)
 
       if (timeToKick > 1) {
         setTimeToKick(timeKickWillBeReady - currentTime)
@@ -83,18 +77,22 @@ export function CountdownKick({ title, kickType }: CountdownKickProps) {
           setTimeKickWillBeReady(currentTime + timeWithVip)
           setTimeToKick(timeWithVip)
 
-          const response = await api.post('/api/individual-goals', {
-            kickData: {
-              avatarAutoGoals: autoGoals + 1,
-              avatarHourlyGoals: hourlyGoals + 1,
-              avatarRoundGoals: roundGoals + 1,
-            },
-          })
+          try {
+            const response = await api.post('/api/individual-goals', {
+              kickData: {
+                avatarAutoGoals: autoGoals + 1,
+                avatarHourlyGoals: hourlyGoals + 1,
+                avatarRoundGoals: roundGoals + 1,
+              },
+            })
 
-          if (response.status === 201) {
-            setAutoGoals((state) => state + 1)
-            setHourlyGoals((state) => state + 1)
-            setRoundGoals((state) => state + 1)
+            if (response.status === 201) {
+              setAutoGoals((state) => state + 1)
+              setHourlyGoals((state) => state + 1)
+              setRoundGoals((state) => state + 1)
+            }
+          } catch (err) {
+            signOut({ callbackUrl: '/' })
           }
         } else {
           setIsKickReady(true)
@@ -146,8 +144,8 @@ export function CountdownKick({ title, kickType }: CountdownKickProps) {
         </div>
       ) : (
         // Kick is ready
-        <Root open={isModalKickOpen} onOpenChange={setIsModalKickOpen}>
-          <Trigger asChild>
+        <Dialog.Root open={isModalKickOpen} onOpenChange={setIsModalKickOpen}>
+          <Dialog.Trigger asChild>
             <button
               type="button"
               className={`${styles.ballContent} ${styles.kickIsReady}`}
@@ -155,11 +153,11 @@ export function CountdownKick({ title, kickType }: CountdownKickProps) {
             >
               <IoIosFootball fontSize={108} />
             </button>
-          </Trigger>
+          </Dialog.Trigger>
 
-          <Portal>
-            <Overlay className={styles.modalOverlay} />
-            <Content
+          <Dialog.Portal>
+            <Dialog.Overlay className={styles.modalOverlay} />
+            <Dialog.Content
               className={styles.modalContent}
               onInteractOutside={(e) =>
                 isModalKickBlockedToClose && e.preventDefault()
@@ -177,15 +175,15 @@ export function CountdownKick({ title, kickType }: CountdownKickProps) {
                 timeWithVip={timeWithVip}
                 blockCloseModalKick={blockCloseModalKick}
               />
-              <Close
+              <Dialog.Close
                 className={styles.closeModalButton}
                 onClick={(e) => isModalKickBlockedToClose && e.preventDefault()}
               >
                 <IoMdClose size={28} />
-              </Close>
-            </Content>
-          </Portal>
-        </Root>
+              </Dialog.Close>
+            </Dialog.Content>
+          </Dialog.Portal>
+        </Dialog.Root>
       )}
       <h1>{title}</h1>
     </div>

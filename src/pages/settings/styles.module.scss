@@ -1,0 +1,67 @@
+.settingsContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0 2rem;
+
+  h1 {
+    margin-bottom: 2rem;
+  }
+}
+
+.formSettings {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  button[type="submit"] {
+    width: fit-content;
+    padding: 1rem 1.5rem;
+    background-color: #ABFF4F;
+    border: 0;
+    border-radius: 0.5rem;
+    font-weight: bold;
+
+    transition: filter 0.2s;
+  }
+
+  button[type="submit"]:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  label {
+    font-size: 18px;
+  }
+}
+
+.checkboxRoot {
+  background-color: white;
+  width: 25px;
+  height: 25px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px var(--blackA7);
+}
+
+.checkboxRoot:hover {
+  background-color: var(--violet3);
+}
+
+.checkboxRoot:focus {
+  box-shadow: 0 0 0 2px black;
+}
+
+.checkboxIndicator {
+  color: #59a606;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

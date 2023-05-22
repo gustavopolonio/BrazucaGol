@@ -59,21 +59,24 @@ export function IndividualGoalsProvider({
   useEffect(() => {
     const fetchIndividualGoals = async () => {
       const response = await api.get('/api/individual-goals')
-      const {
-        avatarAutoGoals,
-        avatarPenaltyGoals,
-        avatarFreeKickGoals,
-        avatarTrailGoals,
-        avatarHourlyGoals,
-        avatarRoundGoals,
-      } = response.data.data
 
-      setAutoGoals(avatarAutoGoals)
-      setPenaltyGoals(avatarPenaltyGoals)
-      setFreeKickGoals(avatarFreeKickGoals)
-      setTrailGoals(avatarTrailGoals)
-      setHourlyGoals(avatarHourlyGoals)
-      setRoundGoals(avatarRoundGoals)
+      if (response.status === 200) {
+        const {
+          avatarAutoGoals,
+          avatarPenaltyGoals,
+          avatarFreeKickGoals,
+          avatarTrailGoals,
+          avatarHourlyGoals,
+          avatarRoundGoals,
+        } = response.data.data
+
+        setAutoGoals(avatarAutoGoals)
+        setPenaltyGoals(avatarPenaltyGoals)
+        setFreeKickGoals(avatarFreeKickGoals)
+        setTrailGoals(avatarTrailGoals)
+        setHourlyGoals(avatarHourlyGoals)
+        setRoundGoals(avatarRoundGoals)
+      }
     }
 
     fetchIndividualGoals()

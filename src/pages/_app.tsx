@@ -4,10 +4,15 @@ import { useEffect } from 'react'
 import { IndividualGoalsProvider } from '../contexts/IndividualGoalsContext'
 import { AvatarDataProvider } from '../contexts/AvatarDataContext'
 import { Footer } from '../components/Footer'
+import { TopBar } from '../components/TopBar'
+import { Header } from '../components/Header'
+import { CountdownKickContainer } from '../components/CountdownKickContainer'
+import { ClubsHighlightedes } from '../components/ClubsHighlightedes'
+import { MainContainer } from '../components/MainContainer'
 
 import '../styles/global.scss'
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   useEffect(() => {
     const alreadyHasKickTab = localStorage.getItem('brazucagol:hasKickTab')
 
@@ -38,10 +43,17 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [])
 
   return (
-    <SessionProvider session={pageProps.session}>
+    <SessionProvider session={session}>
       <IndividualGoalsProvider>
         <AvatarDataProvider>
-          <Component {...pageProps} />
+          <TopBar />
+          <Header />
+          <CountdownKickContainer />
+          <ClubsHighlightedes />
+
+          <MainContainer>
+            <Component {...pageProps} />
+          </MainContainer>
 
           <Footer />
         </AvatarDataProvider>

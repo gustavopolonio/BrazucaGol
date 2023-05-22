@@ -5,7 +5,6 @@ import {
   useEffect,
   useContext,
 } from 'react'
-import { useSession } from 'next-auth/react'
 import { api } from '../services/api'
 
 interface AvatarDataProviderProps {
@@ -23,18 +22,17 @@ interface AvatarQueryResponse {
 const AvatarDataContext = createContext({} as AvatarQueryResponse)
 
 export function AvatarDataProvider({ children }: AvatarDataProviderProps) {
-  const { data: session } = useSession()
   const [avatarData, setAvatarData] = useState<AvatarQueryResponse>()
 
   useEffect(() => {
-    if (session?.isAvatarActive) {
-      const getAvatarInfos = async () => {
-        const response = await api.get('/api/avatar')
-        setAvatarData(response.data.data.data)
-      }
-      getAvatarInfos()
+    // if (session?.isAvatarActive) {
+    const getAvatarInfos = async () => {
+      const response = await api.get('/api/avatar')
+      setAvatarData(response.data.data.data)
     }
-  }, [session])
+    getAvatarInfos()
+    // }
+  }, [])
 
   return (
     <AvatarDataContext.Provider value={avatarData}>

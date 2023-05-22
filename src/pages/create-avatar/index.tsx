@@ -1,5 +1,5 @@
 import { getServerSession } from 'next-auth/next'
-import { GetServerSideProps } from 'next'
+import { GetServerSideProps, NextApiRequest, NextApiResponse } from 'next'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -8,15 +8,11 @@ import { IoMdRefresh } from 'react-icons/io'
 import { BsCheckCircleFill } from 'react-icons/bs'
 import { LoadingSpinner } from '../../components/utils/LoadingSpinner'
 import { api } from '../../services/api'
-import { authOptions } from '../api/auth/[...nextauth]'
+import { buildNextAuthOption } from '../api/auth/[...nextauth]'
 import z from 'zod'
-import { TopBar } from '../../components/TopBar'
-import { Header } from '../../components/Header'
-import { CountdownKickContainer } from '../../components/CountdownKickContainer'
-import { ClubsHighlightedes } from '../../components/ClubsHighlightedes'
-import { MainContainer } from '../../components/MainContainer'
+import { destroyCookie } from 'nookies'
 
-import styles from './create-avatar.module.scss'
+import styles from './styles.module.scss'
 
 interface Club {
   id: number
@@ -92,6 +88,7 @@ export default function CreateAvatar() {
 
     if (response.status === 201) {
       window.location.replace('/')
+      destroyCookie(null, 'brazucagol:isAvatarActive')
     }
   }
 
@@ -101,91 +98,88 @@ export default function CreateAvatar() {
         <title>Cadastre-se | Brazucagol</title>
       </Head>
 
-      <TopBar />
-      <Header />
-      <CountdownKickContainer />
-      <ClubsHighlightedes />
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={styles.createAvatarForm}
+      >
+        <label>
+          Nome do jogador
+          <div>
+            <input
+              {...register('avatarName', {
+                onChange: () => {
+                  setNameExists(false)
+                  setShowCheckedIcon(false)
+                },
+              })}
+            />
 
-      <MainContainer>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className={styles.createAvatarForm}
-        >
-          <label>
-            Nome do jogador
-            <div>
-              <input
-                {...register('avatarName', {
-                  onChange: () => {
-                    setNameExists(false)
-                    setShowCheckedIcon(false)
-                  },
-                })}
+            {showCheckedIcon && (
+              <BsCheckCircleFill
+                style={{
+                  position: 'absolute',
+                  right: '42px',
+                  color: 'green',
+                }}
               />
-
-              {showCheckedIcon && (
-                <BsCheckCircleFill
-                  style={{
-                    position: 'absolute',
-                    right: '42px',
-                    color: 'green',
-                  }}
-                />
-              )}
-
-              <button type="button" onClick={() => checkAvatarName()}>
-                <IoMdRefresh />
-                <div className={styles.messageHolder}>
-                  <p>Clique aqui para checar se esse nome está disponível</p>
-                </div>
-              </button>
-            </div>
-            {nameExists ? (
-              <span>Esse nome já está em uso</span>
-            ) : errors.avatarName ? (
-              <span>{errors.avatarName.message}</span>
-            ) : (
-              <span></span>
             )}
-          </label>
 
-          <label>
-            Selecione seu time
-            <select {...register('avatarClub')}>
-              <option value={-1}>------------</option>
-              {clubs.map((club) => (
-                <option key={club.id} value={club.id}>
-                  {club.name}
-                </option>
-              ))}
-            </select>
-            {errors.avatarClub ? (
-              <span>{errors.avatarClub.message}</span>
-            ) : (
-              <span></span>
-            )}
-          </label>
-
-          {isSubmitting ? (
-            <button type="submit" disabled style={{ cursor: 'not-allowed' }}>
-              Criar Jogador
-              <LoadingSpinner
-                left="106%"
-                top="50%"
-                transform="translateY(-50%)"
-              />
+            <button type="button" onClick={() => checkAvatarName()}>
+              <IoMdRefresh />
+              <div className={styles.messageHolder}>
+                <p>Clique aqui para checar se esse nome está disponível</p>
+              </div>
             </button>
+          </div>
+          {nameExists ? (
+            <span>Esse nome já está em uso</span>
+          ) : errors.avatarName ? (
+            <span>{errors.avatarName.message}</span>
           ) : (
-            <button type="submit">Criar Jogador</button>
+            <span></span>
           )}
-        </form>
-      </MainContainer>
+        </label>
+
+        <label>
+          Selecione seu time
+          <select {...register('avatarClub')}>
+            <option value={-1}>------------</option>
+            {clubs.map((club) => (
+              <option key={club.id} value={club.id}>
+                {club.name}
+              </option>
+            ))}
+          </select>
+          {errors.avatarClub ? (
+            <span>{errors.avatarClub.message}</span>
+          ) : (
+            <span></span>
+          )}
+        </label>
+
+        {isSubmitting ? (
+          <button type="submit" disabled style={{ cursor: 'not-allowed' }}>
+            Criar Jogador
+            <LoadingSpinner
+              left="106%"
+              top="50%"
+              transform="translateY(-50%)"
+            />
+          </button>
+        ) : (
+          <button type="submit">Criar Jogador</button>
+        )}
+      </form>
     </>
   )
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const session = await getServerSession(req, res, authOptions)
+  const session = await getServerSession(
+    req,
+    res,
+    buildNextAuthOption(req as NextApiRequest, res as NextApiResponse),
+  )
 
   if (session?.isAvatarActive) {
     return {

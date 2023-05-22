@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 
 import styles from './styles.module.scss'
 
@@ -24,7 +25,7 @@ export function ClubsHighlightedes() {
     <div className={styles.clubsContainer}>
       {clubs?.map((club) => (
         <div key={club.encodedName} className={styles.clubLogoContainer}>
-          <img src={club.logoLink} alt={club.name} />
+          <Image src={club.logoLink} alt={club.name} fill />
         </div>
       ))}
     </div>

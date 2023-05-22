@@ -2,14 +2,7 @@ import { getProviders, signIn } from 'next-auth/react'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { FaFacebook, FaGoogle } from 'react-icons/fa'
 import { IoMdClose } from 'react-icons/io'
-import {
-  Root,
-  Portal,
-  Overlay,
-  Content,
-  Close,
-  Title,
-} from '@radix-ui/react-dialog'
+import * as Dialog from '@radix-ui/react-dialog'
 
 import styles from './styles.module.scss'
 
@@ -34,11 +27,11 @@ export function SignInModal({ isModalOpen, onOpenModal }: SignInModalProps) {
   }, [])
 
   return (
-    <Root open={isModalOpen} onOpenChange={onOpenModal}>
-      <Portal>
-        <Overlay className={styles.modalOverlay} />
-        <Content className={styles.modalContent}>
-          <Title className={styles.modalTitle}>Faça Login</Title>
+    <Dialog.Root open={isModalOpen} onOpenChange={onOpenModal}>
+      <Dialog.Portal>
+        <Dialog.Overlay className={styles.modalOverlay} />
+        <Dialog.Content className={styles.modalContent}>
+          <Dialog.Title className={styles.modalTitle}>Faça Login</Dialog.Title>
 
           {providers?.map((provider) => (
             <button
@@ -54,11 +47,11 @@ export function SignInModal({ isModalOpen, onOpenModal }: SignInModalProps) {
             </button>
           ))}
 
-          <Close className={styles.closeModalButton}>
+          <Dialog.Close className={styles.closeModalButton}>
             <IoMdClose size={28} />
-          </Close>
-        </Content>
-      </Portal>
-    </Root>
+          </Dialog.Close>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   )
 }
