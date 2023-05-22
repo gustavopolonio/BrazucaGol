@@ -101,7 +101,7 @@ export function TrailAnimation({
 
       setTimeout(async () => {
         setIsLoading(false)
-        if (trailProbability < 100) {
+        if (trailProbability < 30) {
           // Trail goal (Input has to go until the end)
           wasTrailGoal = true
 

@@ -7,6 +7,8 @@ páginas q não é a 'create-avatar'
   - Deixar botão igual ao do create-avatar (fazer um componente)
   - Deixar o botão das configurações igual tbm
 
+- Validação create avatar nome sem nada
+
 - Qnd chuto e atualizo a pág logo em seguida posso chutar dnv
 
 - Pág de Configurações (ver nos vídeos o que pode ter)
