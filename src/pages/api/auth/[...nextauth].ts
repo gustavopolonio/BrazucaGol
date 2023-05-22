@@ -112,6 +112,8 @@ export function buildNextAuthOption(
         // }
       },
     },
+
+    secret: process.env.NEXTAUTH_SECRET,
   }
 }
 
