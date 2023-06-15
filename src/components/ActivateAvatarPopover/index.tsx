@@ -1,9 +1,9 @@
 import * as Popover from '@radix-ui/react-popover'
 import { Cross2Icon, MixerHorizontalIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 import styles from './styles.module.scss'
-import { useEffect, useState } from 'react'
 
 export function ActivateAvatarPopover() {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)

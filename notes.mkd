@@ -1,13 +1,4 @@
-- Ficar aparecendo alerta quando o avatar não foi criado e o user tá em outras
-páginas q não é a 'create-avatar'
-  
-  - Tentar colocar pra aparecer em tds as pags menos na de create
-  - Tentar fazer ele aparecer qnd a pag carregar, ao inves de ja estar la
-  - Fazer botão de fechar
-  - Deixar botão igual ao do create-avatar (fazer um componente)
-  - Deixar o botão das configurações igual tbm
-
-- Validação create avatar nome sem nada
+- Não deixar trocar a escolha qnd estiver jogando
 
 - Qnd chuto e atualizo a pág logo em seguida posso chutar dnv
 
@@ -26,6 +17,7 @@ Pra frente:
     - Uns 3 sec antes e 3 sec depois da virada, bloqueio os chutes e desbloquieo qnd acabar (Feito)
     Como evitar o auto chute de bugar? (Atrasar a chamada do auto gol em algumn segundos se bater com a virada da hr ou rodada, e esse auto gol será contado na hora seguinte à virada)
 
+  - ActivateAvatarPopover => algum jeito de não precisar importar ele em todas as págs
 
   Ana Clara:
   git pull

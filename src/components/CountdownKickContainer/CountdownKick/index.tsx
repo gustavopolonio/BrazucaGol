@@ -32,7 +32,7 @@ export function CountdownKick({ title, kickType }: CountdownKickProps) {
     setRoundGoals,
   } = useIndividualGoals()
 
-  const timeWithVip = 300 // Considering a kick of 5 min (300 sec)
+  const timeWithVip = 30 // Considering a kick of 5 min (300 sec)
 
   const [timeToKick, setTimeToKick] = useState<number>()
   const [timeKickWillBeReady, setTimeKickWillBeReady] = useState<number>()

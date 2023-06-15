@@ -1,10 +1,14 @@
 import Head from 'next/head'
 import * as Checkbox from '@radix-ui/react-checkbox'
 import { CheckIcon } from '@radix-ui/react-icons'
+import { ActivateAvatarPopover } from '../../components/ActivateAvatarPopover'
+import { useSession } from 'next-auth/react'
 
 import styles from './styles.module.scss'
 
 export default function Settings() {
+  const { data: session } = useSession()
+
   return (
     <>
       <Head>
@@ -46,6 +50,8 @@ export default function Settings() {
 
         <button style={{ marginTop: '10rem' }}>Deletar conta</button>
       </div>
+
+      {session?.isAvatarActive === false && <ActivateAvatarPopover />}
     </>
   )
 }

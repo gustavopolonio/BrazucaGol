@@ -17,8 +17,6 @@ export default function Home() {
     }
   }, [session])
 
-  console.log(session)
-
   return (
     <>
       <Head>

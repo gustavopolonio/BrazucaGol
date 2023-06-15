@@ -1,4 +1,5 @@
 import { MdPlayArrow } from 'react-icons/md'
+import Link from 'next/link'
 
 import styles from './styles.module.scss'
 
@@ -8,66 +9,77 @@ export function MenuSidebar() {
       <h2>Menu</h2>
 
       <nav>
-        <a href="">
+        <Link href="/">
           Principal
           <MdPlayArrow />
           <div></div>
-        </a>
-        <a href="">
+        </Link>
+
+        <Link href="" className="temporarily-disabled">
           Rodadas
           <MdPlayArrow />
           <div></div>
-        </a>
-        <a href="">
+        </Link>
+
+        <Link href="" className="temporarily-disabled">
           Níveis
           <MdPlayArrow />
           <div></div>
-        </a>
-        <a href="">
+        </Link>
+
+        <Link href="" className="temporarily-disabled">
           Premiações
           <MdPlayArrow />
           <div></div>
-        </a>
-        <a href="">
+        </Link>
+
+        <Link href="" className="temporarily-disabled">
           Ranking
           <MdPlayArrow />
           <div></div>
-        </a>
-        <a href="">
+        </Link>
+
+        <Link href="" className="temporarily-disabled">
           Regras
           <MdPlayArrow />
           <div></div>
-        </a>
-        <a href="">
+        </Link>
+
+        <Link href="" className="temporarily-disabled">
           Dúvidas
           <MdPlayArrow />
           <div></div>
-        </a>
-        <a href="">
+        </Link>
+
+        <Link href="" className="temporarily-disabled">
           Divisão de Acesso
           <MdPlayArrow />
           <div></div>
-        </a>
-        <a href="">
+        </Link>
+
+        <Link href="" className="temporarily-disabled">
           Divisão de Jogadores
           <MdPlayArrow />
           <div></div>
-        </a>
-        <a href="">
+        </Link>
+
+        <Link href="" className="temporarily-disabled">
           Movimentações
           <MdPlayArrow />
           <div></div>
-        </a>
-        <a href="">
+        </Link>
+
+        <Link href="" className="temporarily-disabled">
           Vips
           <MdPlayArrow />
           <div></div>
-        </a>
-        <a href="">
+        </Link>
+
+        <Link href="" className="temporarily-disabled">
           Confirmar VIP
           <MdPlayArrow />
           <div></div>
-        </a>
+        </Link>
       </nav>
     </aside>
   )

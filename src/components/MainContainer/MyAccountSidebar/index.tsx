@@ -11,30 +11,36 @@ export function MyAccountSidebar() {
       <h2>Minha Conta</h2>
 
       <nav>
-        <a href="">
+        <Link href="" className="temporarily-disabled">
           <div className={styles.messageInbox}>08</div>Recados
           <div className={styles.borderBottom}></div>
-        </a>
-        <a href="">
+        </Link>
+
+        <Link href="" className="temporarily-disabled">
           <BsPersonFill />
           Aparência<div className={styles.borderBottom}></div>
-        </a>
-        <a href="">
+        </Link>
+
+        <Link href="" className="temporarily-disabled">
           <GiOpenBook />
           Habilidades<div className={styles.borderBottom}></div>
-        </a>
-        <a href="">
+        </Link>
+
+        <Link href="" className="temporarily-disabled">
           <FaExchangeAlt />
           Mudar de time<div className={styles.borderBottom}></div>
-        </a>
-        <a href="">
+        </Link>
+
+        <Link href="" className="temporarily-disabled">
           <GiSoccerKick />
           Opções de chute<div className={styles.borderBottom}></div>
-        </a>
+        </Link>
+
         <Link href="/settings">
           <BsFillGearFill />
           Configurações<div className={styles.borderBottom}></div>
         </Link>
+
         <strong>VIP 7 dias 08 minutos</strong>
       </nav>
     </aside>

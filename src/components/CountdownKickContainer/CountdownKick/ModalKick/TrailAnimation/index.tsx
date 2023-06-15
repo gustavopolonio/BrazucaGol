@@ -43,6 +43,7 @@ export function TrailAnimation({
 }: TrailAnimationProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [trailGoalkepperInputClass, setTrailGoalkepperInputClass] = useState('')
+  const [disableRadioInput, setDisableRadioInput] = useState(false)
 
   const [trailFirstColumnIsChoosed, setTrailFirstColumnIsChoosed] =
     useState(false)
@@ -95,6 +96,7 @@ export function TrailAnimation({
       trailThirdColumnIsChoosed
     ) {
       blockCloseModal()
+      setDisableRadioInput(true)
       let wasTrailGoal = false
       const trailProbability = Math.random() * 100
       setIsLoading(true)
@@ -215,30 +217,77 @@ export function TrailAnimation({
         <fieldset
           ref={trailFirstColumnFieldset}
           onChange={() => setTrailFirstColumnIsChoosed(true)}
+          disabled={disableRadioInput}
         >
-          <input type="radio" className="trailFirstColumnFirstRow" />
-          <input type="radio" className="trailFirstColumnSecondRow" />
-          <input type="radio" className="trailFirstColumnThirdRow" />
-          <input type="radio" className="trailFirstColumnFourthRow" />
+          <input
+            type="radio"
+            className="trailFirstColumnFirstRow"
+            name="trailFirstColumn"
+          />
+          <input
+            type="radio"
+            className="trailFirstColumnSecondRow"
+            name="trailFirstColumn"
+          />
+          <input
+            type="radio"
+            className="trailFirstColumnThirdRow"
+            name="trailFirstColumn"
+          />
+          <input
+            type="radio"
+            className="trailFirstColumnFourthRow"
+            name="trailFirstColumn"
+          />
         </fieldset>
 
         <fieldset
           ref={trailSecondColumnFieldset}
           onChange={() => setTrailSecondColumnIsChoosed(true)}
+          disabled={disableRadioInput}
         >
-          <input type="radio" className="trailSecondColumnFirstRow" />
-          <input type="radio" className="trailSecondColumnSecondRow" />
-          <input type="radio" className="trailSecondColumnThirdRow" />
-          <input type="radio" className="trailSecondColumnFourthRow" />
+          <input
+            type="radio"
+            className="trailSecondColumnFirstRow"
+            name="trailSecondColumn"
+          />
+          <input
+            type="radio"
+            className="trailSecondColumnSecondRow"
+            name="trailSecondColumn"
+          />
+          <input
+            type="radio"
+            className="trailSecondColumnThirdRow"
+            name="trailSecondColumn"
+          />
+          <input
+            type="radio"
+            className="trailSecondColumnFourthRow"
+            name="trailSecondColumn"
+          />
         </fieldset>
 
         <fieldset
           ref={trailThirdColumnFieldset}
           onChange={() => setTrailThirdColumnIsChoosed(true)}
+          disabled={disableRadioInput}
         >
-          <input type="radio" className="trailThirdColumnFirstRow" />
-          <input type="radio" className="trailThirdColumnSecondRow" />
-          <input type="radio" className="trailThirdColumnThirdRow" />
+          <input
+            type="radio"
+            className="trailThirdColumnFirstRow"
+            name="trailThirdColumn"
+          />
+          <input
+            type="radio"
+            className="trailThirdColumnSecondRow"
+            name="trailThirdColumn"
+          />
+          <input
+            type="radio"
+            className="trailThirdColumnThirdRow"
+            name="trailThirdColumn"
+          />
         </fieldset>
       </div>
     </div>

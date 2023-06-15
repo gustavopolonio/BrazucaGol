@@ -34,7 +34,7 @@ function compare(a: Club, b: Club) {
 }
 
 const createAvatarFormSchema = z.object({
-  avatarName: z.string().min(3, { message: 'Mínimo 3 caracteres' }),
+  avatarName: z.string().trim().min(3, { message: 'Mínimo 3 caracteres' }),
   avatarClub: z.coerce.number().min(0, { message: 'Escolha seu time!' }),
 })
 
@@ -65,9 +65,9 @@ export default function CreateAvatar() {
 
   async function checkAvatarName() {
     const avatarName = watch('avatarName')
-    const { data } = await api.get(`/api/avatar/${avatarName}`)
-
     const isInputNameValid = await trigger('avatarName')
+
+    const { data } = await api.get(`/api/avatar/${avatarName}`)
 
     if (!data.avatarExists && isInputNameValid) {
       setShowCheckedIcon(true)
