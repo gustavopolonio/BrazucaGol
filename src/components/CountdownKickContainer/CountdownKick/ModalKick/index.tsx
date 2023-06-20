@@ -8,6 +8,8 @@ import { TrailAnimation } from './TrailAnimation'
 import { useIndividualGoals } from '../../../../contexts/IndividualGoalsContext'
 import { useUserPreferences } from '../../../../contexts/UserPreferencesContext'
 import { api } from '../../../../services/api'
+import Image from 'next/legacy/image'
+// import penaltyKickBackgroundImage from '../../../../../public/assets/penalty-image-background.jpg'
 
 import celebrationSound from '../../../../audios/celebration.mp3'
 import lamentSound from '../../../../audios/lament.mp3'
@@ -206,10 +208,14 @@ export function ModalKick({
 
       {kickType === 'penalty' && (
         <>
-          <img
+          <Image
             className={styles.kickImage}
-            src="https://img.freepik.com/free-vector/goalkeeper-area-playing_1214-396.jpg?w=2000"
+            src="/assets/penalty-image-background.png"
             alt=""
+            placeholder="blur"
+            blurDataURL="/assets/penalty-image-background.png"
+            width={368}
+            height={276}
           />
           <div className={styles.kickSideButtonsContainer}>
             <button onClick={() => handleKickWasGoal()} type="button">
@@ -227,10 +233,14 @@ export function ModalKick({
 
       {kickType === 'free-kick' && (
         <>
-          <img
+          <Image
             className={styles.kickImage}
-            src="https://media.istockphoto.com/vectors/free-kick-vector-id472298675?k=20&m=472298675&s=612x612&w=0&h=52SwbGdqzSP85vBkC8ACz7YpmHkEthTzS4_l2scB7Ss="
+            src="/assets/free-kick-image-background.png"
             alt=""
+            placeholder="blur"
+            blurDataURL="/assets/free-kick-image-background.png"
+            width={368}
+            height={276}
           />
           <div className={styles.kickSideButtonsContainer}>
             <button onClick={() => handleKickWasGoal()} type="button">

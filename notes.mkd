@@ -1,9 +1,3 @@
-- Pág de Configurações (ver nos vídeos o que pode ter)
-  - Colocar barulho de gol opcional (configurações) ok
-  - Colocar alerta chute está pronto (configurações) ok
-  - Colocar opção para deletar a conta (configs) https://www.radix-ui.com/docs/primitives/components/alert-dialog
-  - Testar o botão de salvar
-
 - quando abro o modal de chute a 1a vez demora pra aparecer
 - Configurar styled components ou stitches
 
