@@ -6,6 +6,9 @@ import styles from './styles.module.scss'
 interface TrailAnimationProps {
   handleKickWasGoal: (wasTrailGoal?: boolean) => Promise<void>
   blockCloseModal: () => void
+  resetSessionStorageKickTime: (
+    kickType: 'penalty' | 'free-kick' | 'trail',
+  ) => void
 }
 
 function passFirstColumn(
@@ -40,6 +43,7 @@ function passSecondColumn(
 export function TrailAnimation({
   handleKickWasGoal,
   blockCloseModal,
+  resetSessionStorageKickTime,
 }: TrailAnimationProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [trailGoalkepperInputClass, setTrailGoalkepperInputClass] = useState('')
@@ -95,6 +99,8 @@ export function TrailAnimation({
       trailSecondColumnIsChoosed &&
       trailThirdColumnIsChoosed
     ) {
+      resetSessionStorageKickTime('trail')
+
       blockCloseModal()
       setDisableRadioInput(true)
       let wasTrailGoal = false

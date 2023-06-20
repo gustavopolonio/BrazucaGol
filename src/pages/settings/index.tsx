@@ -1,13 +1,64 @@
 import Head from 'next/head'
-import * as Checkbox from '@radix-ui/react-checkbox'
-import { CheckIcon } from '@radix-ui/react-icons'
+import { GetServerSideProps, NextApiRequest, NextApiResponse } from 'next'
 import { ActivateAvatarPopover } from '../../components/ActivateAvatarPopover'
 import { useSession } from 'next-auth/react'
+import { useForm } from 'react-hook-form'
+import z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { getServerSession } from 'next-auth'
+import { buildNextAuthOption } from '../api/auth/[...nextauth]'
+import { getUserPreferences } from '../api/user-preferences'
+import { api } from '../../services/api'
+import { useUserPreferences } from '../../contexts/UserPreferencesContext'
+import { useState } from 'react'
+import { LoadingSpinner } from '../../components/LoadingSpinner'
 
 import styles from './styles.module.scss'
 
-export default function Settings() {
+const updateUserPreferencesFormSchema = z.object({
+  goalAlert: z.boolean(),
+  kickIsReadyAlert: z.boolean(),
+})
+
+type UpdateFormData = z.infer<typeof updateUserPreferencesFormSchema>
+
+interface UserPreferences {
+  userPreferences: {
+    kickAlert: boolean
+    goalSound: boolean
+  }
+}
+
+export default function Settings({ userPreferences }: UserPreferences) {
+  const [displayUpdateMessage, setDisplayUpdateMessage] = useState(false)
   const { data: session } = useSession()
+  const { updateUserPreferences } = useUserPreferences()
+
+  const {
+    handleSubmit,
+    register,
+    formState: { isSubmitting },
+  } = useForm<UpdateFormData>({
+    defaultValues: {
+      goalAlert: userPreferences.goalSound,
+      kickIsReadyAlert: userPreferences.kickAlert,
+    },
+    resolver: zodResolver(updateUserPreferencesFormSchema),
+  })
+
+  async function handleUpdateUserPreferences(data: UpdateFormData) {
+    const response = await api.post('/api/user-preferences', data)
+
+    if (response.status === 201) {
+      updateUserPreferences({
+        goalSound: data.goalAlert,
+        kickAlert: data.kickIsReadyAlert,
+      })
+    }
+
+    setDisplayUpdateMessage(true)
+    setTimeout(() => setDisplayUpdateMessage(false), 2500)
+  }
 
   return (
     <>
@@ -18,34 +69,48 @@ export default function Settings() {
       <div className={styles.settingsContainer}>
         <h1>Configurações</h1>
 
-        <form className={styles.formSettings}>
+        <form
+          className={styles.formSettings}
+          onSubmit={handleSubmit(handleUpdateUserPreferences)}
+        >
           <div className={styles.checkboxContainer}>
             <label htmlFor="goalAlertCheckbox">Alerta ao marcar gol</label>
-            <Checkbox.Root
-              className={styles.checkboxRoot}
+            <input
               id="goalAlertCheckbox"
-            >
-              <Checkbox.Indicator className={styles.checkboxIndicator}>
-                <CheckIcon width={24} height={24} />
-              </Checkbox.Indicator>
-            </Checkbox.Root>
+              type="checkbox"
+              {...register('goalAlert')}
+            />
           </div>
 
           <div className={styles.checkboxContainer}>
             <label htmlFor="kickIsReadyAlertCheckbox">
               Alerta chute está pronto
             </label>
-            <Checkbox.Root
-              className={styles.checkboxRoot}
+            <input
               id="kickIsReadyAlertCheckbox"
-            >
-              <Checkbox.Indicator className={styles.checkboxIndicator}>
-                <CheckIcon width={24} height={24} />
-              </Checkbox.Indicator>
-            </Checkbox.Root>
+              type="checkbox"
+              {...register('kickIsReadyAlert')}
+            />
           </div>
 
-          <button type="submit">Salvar alterações</button>
+          {isSubmitting ? (
+            <button type="submit" disabled style={{ cursor: 'not-allowed' }}>
+              Salvar alterações
+              <LoadingSpinner
+                left="106%"
+                top="50%"
+                transform="translateY(-50%)"
+              />
+            </button>
+          ) : (
+            <button type="submit">Salvar alterações</button>
+          )}
+
+          {displayUpdateMessage && (
+            <strong className={styles.updateMessage}>
+              Alterações salvas com sucesso!
+            </strong>
+          )}
         </form>
 
         <button style={{ marginTop: '10rem' }}>Deletar conta</button>
@@ -56,4 +121,34 @@ export default function Settings() {
   )
 }
 
-// Antes de acessar essa pág checar as settings do usuário
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getServerSession(
+    req,
+    res,
+    buildNextAuthOption(req as NextApiRequest, res as NextApiResponse),
+  )
+
+  if (session?.isAvatarActive === false || !session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    }
+  }
+
+  try {
+    const userPreferences = await getUserPreferences(session)
+
+    return {
+      props: { userPreferences },
+    }
+  } catch (err) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    }
+  }
+}

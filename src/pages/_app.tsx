@@ -3,6 +3,7 @@ import { SessionProvider } from 'next-auth/react'
 import { useEffect } from 'react'
 import { IndividualGoalsProvider } from '../contexts/IndividualGoalsContext'
 import { AvatarDataProvider } from '../contexts/AvatarDataContext'
+import { UserPreferencesProvider } from '../contexts/UserPreferencesContext'
 import { Footer } from '../components/Footer'
 import { TopBar } from '../components/TopBar'
 import { Header } from '../components/Header'
@@ -46,16 +47,18 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     <SessionProvider session={session}>
       <IndividualGoalsProvider>
         <AvatarDataProvider>
-          <TopBar />
-          <Header />
-          <CountdownKickContainer />
-          <ClubsHighlightedes />
+          <UserPreferencesProvider>
+            <TopBar />
+            <Header />
+            <CountdownKickContainer />
+            <ClubsHighlightedes />
 
-          <MainContainer>
-            <Component {...pageProps} />
-          </MainContainer>
+            <MainContainer>
+              <Component {...pageProps} />
+            </MainContainer>
 
-          <Footer />
+            <Footer />
+          </UserPreferencesProvider>
         </AvatarDataProvider>
       </IndividualGoalsProvider>
     </SessionProvider>

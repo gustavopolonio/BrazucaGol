@@ -47,7 +47,7 @@ export function buildNextAuthOption(
                 data: {
                   email,
                   isAvatarActive: false,
-                  settings: { kickAlert: true, goalSound: true },
+                  preferences: { kickAlert: true, goalSound: true },
                 },
               }),
               q.Get(q.Match(q.Index('user_by_email'), q.Casefold(email))),

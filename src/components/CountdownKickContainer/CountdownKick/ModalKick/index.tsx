@@ -6,7 +6,11 @@ import {
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { TrailAnimation } from './TrailAnimation'
 import { useIndividualGoals } from '../../../../contexts/IndividualGoalsContext'
+import { useUserPreferences } from '../../../../contexts/UserPreferencesContext'
 import { api } from '../../../../services/api'
+
+import celebrationSound from '../../../../audios/celebration.mp3'
+import lamentSound from '../../../../audios/lament.mp3'
 
 import styles from './styles.module.scss'
 
@@ -42,6 +46,9 @@ export function ModalKick({
     setRoundGoals,
   } = useIndividualGoals()
 
+  const { userPreferences } = useUserPreferences()
+  const { goalSound } = userPreferences
+
   const [showKickMessage, setShowKickMessage] = useState(false)
   const [messageAfterKick, setMessageAfterKick] = useState('')
 
@@ -70,6 +77,18 @@ export function ModalKick({
     setMessageAfterKick(message)
   }
 
+  function playKickAudio(wasGoal: boolean) {
+    let audio: HTMLAudioElement
+
+    if (wasGoal) {
+      audio = new Audio(celebrationSound)
+    } else {
+      audio = new Audio(lamentSound)
+    }
+
+    audio.play()
+  }
+
   function setConfigsToRestartCountdown(timeoutTimer: number) {
     setTimeout(() => {
       setIsKickReady(false)
@@ -80,12 +99,23 @@ export function ModalKick({
     }, timeoutTimer)
   }
 
+  function resetSessionStorageKickTime(
+    kickType: 'penalty' | 'free-kick' | 'trail',
+  ) {
+    sessionStorage.setItem(
+      `brazucagol:timeToKick=${kickType}`,
+      String(timeWithVip),
+    )
+  }
+
   async function handleKickWasGoal(wasTrailGoal?: boolean) {
     blockCloseModalKick()
     let wasGoal = false
 
     switch (kickType) {
       case 'penalty': {
+        resetSessionStorageKickTime(kickType)
+
         // Calculate probability to do goal (90% of chance)
         const penaltyProbability = Math.random() * 100
         if (penaltyProbability < 90) {
@@ -95,6 +125,10 @@ export function ModalKick({
         } else {
           // Penalty lost
           displayMessageAfterKick('ERROU :(')
+        }
+
+        if (goalSound) {
+          playKickAudio(wasGoal)
         }
 
         setConfigsToRestartCountdown(1800)
@@ -109,6 +143,8 @@ export function ModalKick({
       }
 
       case 'free-kick': {
+        resetSessionStorageKickTime(kickType)
+
         // Calculate probability to do goal (70% of chance)
         const freeKickProbability = Math.random() * 100
         if (freeKickProbability < 70) {
@@ -120,6 +156,9 @@ export function ModalKick({
           displayMessageAfterKick('ERROU :(')
         }
 
+        if (goalSound) {
+          playKickAudio(wasGoal)
+        }
         setConfigsToRestartCountdown(1800)
 
         if (wasGoal) {
@@ -141,6 +180,10 @@ export function ModalKick({
           setRoundGoals((state) => state + 1)
         } else {
           displayMessageAfterKick('ERROU :(')
+        }
+
+        if (goalSound) {
+          playKickAudio(wasTrailGoal)
         }
 
         setConfigsToRestartCountdown(1800)
@@ -207,6 +250,7 @@ export function ModalKick({
         <TrailAnimation
           handleKickWasGoal={handleKickWasGoal}
           blockCloseModal={blockCloseModalKick}
+          resetSessionStorageKickTime={resetSessionStorageKickTime}
         />
       )}
     </>

@@ -1,13 +1,13 @@
-- Não deixar trocar a escolha qnd estiver jogando
-
-- Qnd chuto e atualizo a pág logo em seguida posso chutar dnv
-
 - Pág de Configurações (ver nos vídeos o que pode ter)
-  - Colocar barulho de gol opcional (configurações)
-  - Colocar alerta chute está pronto (configurações)
-  - Colocar opção para deletar a conta (configs)
+  - Colocar barulho de gol opcional (configurações) ok
+  - Colocar alerta chute está pronto (configurações) ok
+  - Colocar opção para deletar a conta (configs) https://www.radix-ui.com/docs/primitives/components/alert-dialog
 
+- quando abro o modal de chute a 1a vez demora pra aparecer
 - Configurar styled components ou stitches
+
+- Saber quantas pessoas estão online
+- Buscar jogador por nome (criar página do jogador antes)
 
 Pra frente:
   - Fazer a api de times brasileiros aceitar chamadas pelo id do clube

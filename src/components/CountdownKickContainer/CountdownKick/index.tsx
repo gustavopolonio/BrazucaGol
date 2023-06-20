@@ -2,12 +2,16 @@ import { useState, useEffect } from 'react'
 import { IoIosFootball, IoMdClose } from 'react-icons/io'
 import { ModalKick } from './ModalKick'
 import { useIndividualGoals } from '../../../contexts/IndividualGoalsContext'
+import { useUserPreferences } from '../../../contexts/UserPreferencesContext'
 import { formatTime } from '../../../utils/formatTime'
 import { api } from '../../../services/api'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import * as Dialog from '@radix-ui/react-dialog'
 import { signOut } from 'next-auth/react'
 import { LoadingSpinner } from '../../LoadingSpinner'
+
+import whistleSound from '../../../audios/whistle.mp3'
+import celebrationSound from '../../../audios/celebration.mp3'
 
 import styles from './styles.module.scss'
 import 'react-circular-progressbar/dist/styles.css'
@@ -31,6 +35,9 @@ export function CountdownKick({ title, kickType }: CountdownKickProps) {
     roundGoals,
     setRoundGoals,
   } = useIndividualGoals()
+
+  const { userPreferences } = useUserPreferences()
+  const { goalSound, kickAlert } = userPreferences
 
   const timeWithVip = 30 // Considering a kick of 5 min (300 sec)
 
@@ -64,18 +71,23 @@ export function CountdownKick({ title, kickType }: CountdownKickProps) {
     const timer = setTimeout(async () => {
       const currentTime = Math.floor(new Date().getTime() / 1000)
 
-      sessionStorage.setItem(
-        `brazucagol:timeToKick=${kickType}`,
-        String(timeToKick),
-      )
-
       if (timeToKick > 1) {
         setTimeToKick(timeKickWillBeReady - currentTime)
+
+        sessionStorage.setItem(
+          `brazucagol:timeToKick=${kickType}`,
+          String(timeKickWillBeReady - currentTime),
+        )
       } else {
         // Time to kick
         if (kickType === 'auto') {
           setTimeKickWillBeReady(currentTime + timeWithVip)
           setTimeToKick(timeWithVip)
+
+          if (goalSound) {
+            const audio = new Audio(celebrationSound)
+            audio.play()
+          }
 
           try {
             const response = await api.post('/api/individual-goals', {
@@ -95,6 +107,10 @@ export function CountdownKick({ title, kickType }: CountdownKickProps) {
             signOut({ callbackUrl: '/' })
           }
         } else {
+          if (kickAlert) {
+            const audio = new Audio(whistleSound)
+            audio.play()
+          }
           setIsKickReady(true)
         }
       }
