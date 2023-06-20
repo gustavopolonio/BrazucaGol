@@ -48,7 +48,101 @@
 }
 
 .updateMessage {
+  height: 1rem;
   font-size: 14px;
   margin-top: 8px;
   color: red;
+}
+
+.deleteAccountButton {
+  margin-top: 6rem;
+  width: fit-content;
+  background-color: #F21B3F;
+  border: none;
+  padding: 1rem 2rem;
+  font-weight: bold;
+  color: #F8F9FA;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  transition: filter 0.2s;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
+.AlertDialogOverlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  inset: 0;
+}
+
+.AlertDialogContent {
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  max-width: 560px;
+  max-height: 85vh;
+  padding: 25px;
+}
+.AlertDialogContent:focus {
+  outline: none;
+}
+
+.AlertDialogTitle {
+  margin: 0;
+  color: black;
+  font-size: 1.4rem;
+}
+
+.AlertDialogDescription {
+  margin: 1rem 0 1.5rem;
+  color: gray;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.AlterDialogButtonsContainer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.DialogButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  padding: 0 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  height: 3rem;
+  border: none;
+
+  transition: background-color 0.2s;
+}
+
+.DialogCancelButton {
+  background-color: rgb(238, 237, 239);
+  color: rgb(96, 95, 103);
+
+  &:hover {
+    background-color: rgb(233, 232, 234);
+  }
+}
+
+.DialogDeleteButton {
+  background-color: rgb(255, 229, 229);
+  color: rgb(205, 43, 49);  
+
+  &:hover {
+    background-color: rgb(253, 216, 216);
+  }
 }

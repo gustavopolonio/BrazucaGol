@@ -1,7 +1,5 @@
 import Head from 'next/head'
 import { GetServerSideProps, NextApiRequest, NextApiResponse } from 'next'
-import { ActivateAvatarPopover } from '../../components/ActivateAvatarPopover'
-import { useSession } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
 import z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -12,6 +10,8 @@ import { api } from '../../services/api'
 import { useUserPreferences } from '../../contexts/UserPreferencesContext'
 import { useState } from 'react'
 import { LoadingSpinner } from '../../components/LoadingSpinner'
+import * as AlertDialog from '@radix-ui/react-alert-dialog'
+import { signOut } from 'next-auth/react'
 
 import styles from './styles.module.scss'
 
@@ -31,7 +31,6 @@ interface UserPreferences {
 
 export default function Settings({ userPreferences }: UserPreferences) {
   const [displayUpdateMessage, setDisplayUpdateMessage] = useState(false)
-  const { data: session } = useSession()
   const { updateUserPreferences } = useUserPreferences()
 
   const {
@@ -58,6 +57,13 @@ export default function Settings({ userPreferences }: UserPreferences) {
 
     setDisplayUpdateMessage(true)
     setTimeout(() => setDisplayUpdateMessage(false), 2500)
+  }
+
+  async function handleDeleteAccount() {
+    const response = await api.delete('/api/user')
+    if (response.status === 200) {
+      signOut({ callbackUrl: '/' })
+    }
   }
 
   return (
@@ -106,17 +112,58 @@ export default function Settings({ userPreferences }: UserPreferences) {
             <button type="submit">Salvar alterações</button>
           )}
 
-          {displayUpdateMessage && (
+          {displayUpdateMessage ? (
             <strong className={styles.updateMessage}>
               Alterações salvas com sucesso!
             </strong>
+          ) : (
+            <strong className={styles.updateMessage}></strong>
           )}
         </form>
 
-        <button style={{ marginTop: '10rem' }}>Deletar conta</button>
-      </div>
+        <AlertDialog.Root>
+          <AlertDialog.Trigger asChild>
+            <button className={styles.deleteAccountButton}>
+              Deletar conta
+            </button>
+          </AlertDialog.Trigger>
 
-      {session?.isAvatarActive === false && <ActivateAvatarPopover />}
+          <AlertDialog.Portal>
+            <AlertDialog.Overlay className={styles.AlertDialogOverlay} />
+            <AlertDialog.Content className={styles.AlertDialogContent}>
+              <AlertDialog.Title className={styles.AlertDialogTitle}>
+                Você tem certeza?
+              </AlertDialog.Title>
+              <AlertDialog.Description
+                className={styles.AlertDialogDescription}
+              >
+                Essa ação não pode ser desfeita. Você deletará permanentemente
+                sua conta e removerá seus dados dos nossos servidores.
+              </AlertDialog.Description>
+              <div className={styles.AlterDialogButtonsContainer}>
+                <AlertDialog.Cancel
+                  className={`${styles.DialogButton} ${styles.DialogCancelButton}`}
+                  asChild
+                >
+                  <button>Cancelar</button>
+                </AlertDialog.Cancel>
+                {/* <AlertDialog.Action
+                  className={`${styles.DialogButton} ${styles.DialogDeleteButton}`}
+                  onClick={handleDeleteAccount}
+                  asChild
+                > */}
+                <button
+                  className={`${styles.DialogButton} ${styles.DialogDeleteButton}`}
+                  onClick={handleDeleteAccount}
+                >
+                  Sim, deletar conta
+                </button>
+                {/* </AlertDialog.Action> */}
+              </div>
+            </AlertDialog.Content>
+          </AlertDialog.Portal>
+        </AlertDialog.Root>
+      </div>
     </>
   )
 }
