@@ -1,4 +1,5 @@
 import { ElementType } from 'react'
+import Image from 'next/image'
 
 import styles from './styles.module.scss'
 
@@ -24,7 +25,7 @@ export function PlayerDetails({
         <div className={styles.rankingPosition}>{ranking}</div>
         <Nivel />
         <a href="" className={styles.iconPlayerClub}>
-          <img src={clubLogo} alt="" />
+          <Image src={clubLogo} alt="" width={22} height={22} />
         </a>
         <a href="">{playerName}</a>
       </div>

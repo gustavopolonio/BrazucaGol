@@ -9,7 +9,6 @@ import { useIndividualGoals } from '../../../../contexts/IndividualGoalsContext'
 import { useUserPreferences } from '../../../../contexts/UserPreferencesContext'
 import { api } from '../../../../services/api'
 import Image from 'next/legacy/image'
-// import penaltyKickBackgroundImage from '../../../../../public/assets/penalty-image-background.jpg'
 
 import celebrationSound from '../../../../audios/celebration.mp3'
 import lamentSound from '../../../../audios/lament.mp3'

@@ -22,14 +22,14 @@ const updateUserPreferencesFormSchema = z.object({
 
 type UpdateFormData = z.infer<typeof updateUserPreferencesFormSchema>
 
-interface UserPreferences {
+interface SettingsProps {
   userPreferences: {
     kickAlert: boolean
     goalSound: boolean
   }
 }
 
-export default function Settings({ userPreferences }: UserPreferences) {
+export default function Settings({ userPreferences }: SettingsProps) {
   const [displayUpdateMessage, setDisplayUpdateMessage] = useState(false)
   const { updateUserPreferences } = useUserPreferences()
 

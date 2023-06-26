@@ -5,33 +5,54 @@ import { LoadingSpinner } from '../LoadingSpinner'
 import { useAvatarData } from '../../contexts/AvatarDataContext'
 import { SignInModal } from './SignInModal'
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 
 import styles from './styles.module.scss'
+
+const searchForPlayerFormSchema = z.object({
+  avatarName: z.string().trim(),
+})
+
+type SearchForPlayerFormData = z.infer<typeof searchForPlayerFormSchema>
 
 export function TopBar() {
   const { data: session } = useSession()
   const avatarData = useAvatarData()
+  const router = useRouter()
 
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false)
+
+  const { handleSubmit, register, reset } = useForm<SearchForPlayerFormData>({
+    resolver: zodResolver(searchForPlayerFormSchema),
+  })
 
   function handleOpenModal() {
     setIsSignInModalOpen(true)
   }
 
+  function handleSearchForPlayer(data: SearchForPlayerFormData) {
+    router.push(`/avatar/${data.avatarName}`)
+    reset()
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <div className={styles.searchBox}>
-          <label htmlFor="username">
-            <input
-              type="text"
-              id="username"
-              name="username"
-              placeholder="Buscar nome do jogador"
-            />
-            <RiSearchLine fontSize={20} color={'#F8F9FA'} />
-          </label>
-        </div>
+        <form
+          className={styles.searchBox}
+          onSubmit={handleSubmit(handleSearchForPlayer)}
+        >
+          <input
+            {...register('avatarName')}
+            placeholder="Buscar nome do jogador"
+          />
+          <button type="submit">
+            <RiSearchLine fontSize={20} />
+          </button>
+        </form>
 
         <div className={styles.seasonInfo}>
           <p>19 RODADA</p>

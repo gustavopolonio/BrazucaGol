@@ -14,14 +14,7 @@ import { destroyCookie } from 'nookies'
 
 import styles from './styles.module.scss'
 
-interface Club {
-  id: number
-  name: string
-  encodedName: string
-  logoLink: string
-  stadiumName: string
-  state: string
-}
+import { Club } from '../../@types/index'
 
 function compare(a: Club, b: Club) {
   if (a.name < b.name) {
@@ -34,14 +27,24 @@ function compare(a: Club, b: Club) {
 }
 
 const createAvatarFormSchema = z.object({
-  avatarName: z.string().trim().min(3, { message: 'Mínimo 3 caracteres' }),
+  // avatarName: z.string().trim().min(3, { message: 'Mínimo 3 caracteres' }),
+  avatarName: z
+    .string()
+    .min(3, { message: 'Mínimo 3 caracteres' })
+    .regex(/^[a-zA-Z0-9]*$/, {
+      message: 'Apenas letras e/ou números',
+    }),
   avatarClub: z.coerce.number().min(0, { message: 'Escolha seu time!' }),
 })
 
 type CreateFormData = z.infer<typeof createAvatarFormSchema>
 
-export default function CreateAvatar() {
-  const [clubs, setClubs] = useState<Club[]>([])
+interface CreateAvatarProps {
+  clubs: Club[]
+}
+
+export default function CreateAvatar({ clubs }: CreateAvatarProps) {
+  const [clubsSorted, setClubsSorted] = useState<Club[]>()
   const [nameExists, setNameExists] = useState(false)
   const [showCheckedIcon, setShowCheckedIcon] = useState(false)
 
@@ -58,10 +61,9 @@ export default function CreateAvatar() {
   })
 
   useEffect(() => {
-    fetch('https://api-brazilian-soccer-clubs.cyclic.app/')
-      .then((response) => response.json())
-      .then((data) => setClubs(data.sort(compare)))
-  }, [])
+    const sorted = clubs?.sort(compare)
+    setClubsSorted(sorted)
+  }, [clubs])
 
   async function checkAvatarName() {
     const avatarName = watch('avatarName')
@@ -144,7 +146,7 @@ export default function CreateAvatar() {
           Selecione seu time
           <select {...register('avatarClub')}>
             <option value={-1}>------------</option>
-            {clubs.map((club) => (
+            {clubsSorted?.map((club) => (
               <option key={club.id} value={club.id}>
                 {club.name}
               </option>

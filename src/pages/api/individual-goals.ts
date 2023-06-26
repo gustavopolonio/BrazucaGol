@@ -6,9 +6,7 @@ import { buildNextAuthOption } from './auth/[...nextauth]'
 
 interface IndividualGoalsQueryResponse {
   data: {
-    userId: {
-      id: string
-    }
+    userId: object
     avatarAutoGoals: number
     avatarPenaltyGoals: number
     avatarFreeKickGoals: number

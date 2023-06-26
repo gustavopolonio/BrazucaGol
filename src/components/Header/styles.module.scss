@@ -30,57 +30,7 @@
 .dataContainer {
   display: flex;
   align-items: center;
-}
-
-.playerData {
-  margin-right: 2.5rem;
-  display: flex;
-  flex-direction: column;
-
-  .playerLevel {
-    display: flex;
-    align-items: center;
-
-    > img {
-      border: 2px solid black;
-      padding: 0.2rem;
-      border-radius: 4px;
-    }
-
-    .levelData {
-      margin-left: 0.5rem;
-      font-size: 14px;
-      font-weight: 700;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-    }
-  }
-
-  .progressBarContainer {
-    margin: 0.5rem 0 1rem;
-    width: 100%;
-    height: 10px;
-    background: #e0e0de;
-    border-radius: 20px;
-    border: 1px solid black;
-
-    .fillerProgressBar {
-      height: 100%;
-      background: #ABFF4F;
-      border-radius: 20px;
-      width: 72%;
-    }
-  }
-
-  table {
-    tr {
-      font-size: 14px;
-      font-weight: bold;
-      height: 22px;
-    }
-  }
+  gap: 2.5rem;
 }
 
 .teamLogoContainer {

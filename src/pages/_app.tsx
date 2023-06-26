@@ -1,6 +1,6 @@
 import { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { IndividualGoalsProvider } from '../contexts/IndividualGoalsContext'
 import { AvatarDataProvider } from '../contexts/AvatarDataContext'
 import { UserPreferencesProvider } from '../contexts/UserPreferencesContext'
@@ -13,7 +13,11 @@ import { MainContainer } from '../components/MainContainer'
 
 import '../styles/global.scss'
 
+import { Club } from '../@types/index'
+
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+  const [clubs, setClubs] = useState<Club[]>()
+
   useEffect(() => {
     const alreadyHasKickTab = localStorage.getItem('brazucagol:hasKickTab')
 
@@ -43,18 +47,24 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     return () => localStorage.removeItem('brazucagol:hasKickTab')
   }, [])
 
+  useEffect(() => {
+    fetch('https://api-brazilian-soccer-clubs.cyclic.app/')
+      .then((response) => response.json())
+      .then((data) => setClubs(data))
+  }, [])
+
   return (
     <SessionProvider session={session}>
       <IndividualGoalsProvider>
         <AvatarDataProvider>
           <UserPreferencesProvider>
             <TopBar />
-            <Header />
+            <Header clubs={clubs} />
             <CountdownKickContainer />
-            <ClubsHighlightedes />
+            <ClubsHighlightedes clubs={clubs} />
 
             <MainContainer>
-              <Component {...pageProps} />
+              <Component {...pageProps} clubs={clubs} />
             </MainContainer>
 
             <Footer />

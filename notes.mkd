@@ -1,8 +1,18 @@
-- quando abro o modal de chute a 1a vez demora pra aparecer
+- Criar página Jogador [ok]
+  - Entrar na pág do jogador pela url do nome dele
+  https://pbs.twimg.com/media/BAiHSaTCYAE5Qma?format=png&name=large
+  https://www.youtube.com/watch?v=PaLvyZHuYRY&ab_channel=bullyplaystation2
+- Buscar jogador por nome (criar página do jogador antes) [ok]
+- Fazer a pág de erro qnd o avatar nao existe [ok]
+- Não deixar criar jogador com espaço e caracteres especiais no nome [ok]
+- Modal histórico [ok]
+- Validação forms mensagem [ok]
+
+- Ver onde os contextos são chamados e se eles são necessários
+- Saber quantas pessoas estão online
 - Configurar styled components ou stitches
 
-- Saber quantas pessoas estão online
-- Buscar jogador por nome (criar página do jogador antes)
+- Mensagem privada '/avatar/[avatarName]'
 
 Pra frente:
   - Fazer a api de times brasileiros aceitar chamadas pelo id do clube

@@ -8,9 +8,7 @@ interface AvatarQueryResponse {
   data: {
     name: string
     clubId: number
-    userId: {
-      id: string
-    }
+    userId: object
   }
 }
 
