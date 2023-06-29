@@ -17,12 +17,7 @@ export default async function handler(
 
     try {
       await fauna.query(
-        q.Delete(
-          q.Select(
-            'ref',
-            q.Get(q.Match(q.Index('user_by_email'), session.user.email)),
-          ),
-        ),
+        q.Delete(q.Ref(q.Collection('users'), session.user.documentIdFauna)),
       )
 
       return res.status(200).json({ deleted: true })

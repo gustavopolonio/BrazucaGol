@@ -10,11 +10,11 @@ import { LoadingSpinner } from '../../components/LoadingSpinner'
 import { api } from '../../services/api'
 import { buildNextAuthOption } from '../api/auth/[...nextauth]'
 import z from 'zod'
-import { destroyCookie } from 'nookies'
 
 import styles from './styles.module.scss'
 
 import { Club } from '../../@types/index'
+import { useSession } from 'next-auth/react'
 
 function compare(a: Club, b: Club) {
   if (a.name < b.name) {
@@ -47,6 +47,8 @@ export default function CreateAvatar({ clubs }: CreateAvatarProps) {
   const [clubsSorted, setClubsSorted] = useState<Club[]>()
   const [nameExists, setNameExists] = useState(false)
   const [showCheckedIcon, setShowCheckedIcon] = useState(false)
+
+  const { update } = useSession()
 
   let nameIsAlreadyInUse = false
 
@@ -89,8 +91,9 @@ export default function CreateAvatar({ clubs }: CreateAvatarProps) {
     })
 
     if (response.status === 201) {
+      await update({ isAvatarActive: true })
       window.location.replace('/')
-      destroyCookie(null, 'brazucagol:isAvatarActive')
+      // destroyCookie(null, 'brazucagol:isAvatarActive')
     }
   }
 

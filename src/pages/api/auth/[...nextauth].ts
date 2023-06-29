@@ -4,9 +4,13 @@ import FacebookProvider from 'next-auth/providers/facebook'
 import GoogleProvider from 'next-auth/providers/google'
 import { fauna } from '../../../services/faunadb'
 import { query as q } from 'faunadb'
-import { setCookie, parseCookies } from 'nookies'
 
 interface UserResponse {
+  ref: {
+    value: {
+      id: string
+    }
+  }
   data: {
     email: string
     isAvatarActive: boolean
@@ -34,7 +38,7 @@ export function buildNextAuthOption(
     ],
 
     callbacks: {
-      async signIn({ user }) {
+      async signIn({ user, account }) {
         const { email } = user
 
         try {
@@ -54,13 +58,18 @@ export function buildNextAuthOption(
             ),
           )
 
-          const isAvatarActive = response.data.isAvatarActive
-          if (!isAvatarActive) {
-            setCookie({ res }, 'brazucagol:isAvatarActive', 'false', {
-              maxAge: 30 * 24 * 60 * 60, // 30 days
-              path: '/',
-            })
-          }
+          // O documentIdFauna vai ser O document ID do FaunaDB
+          account.documentIdFauna = response.ref.value.id
+
+          account.isAvatarActive = response.data.isAvatarActive
+
+          // const isAvatarActive = response.data.isAvatarActive
+          // if (!isAvatarActive) {
+          //   setCookie({ res }, 'brazucagol:isAvatarActive', 'false', {
+          //     maxAge: 30 * 24 * 60 * 60, // 30 days
+          //     path: '/',
+          //   })
+          // }
 
           return true
         } catch (err) {
@@ -69,24 +78,45 @@ export function buildNextAuthOption(
         }
       },
 
-      async session({ session }) {
-        const { 'brazucagol:isAvatarActive': isAvatarActive } = parseCookies({
-          req,
-        })
-
-        if (!isAvatarActive) {
-          // Cookie doesn't exists
-          return {
-            ...session,
-            isAvatarActive: true,
-          }
-        } else {
-          const isAvatarActiveBoolean = isAvatarActive === 'true'
-          return {
-            ...session,
-            isAvatarActive: isAvatarActiveBoolean,
-          }
+      async jwt({ token, account, trigger, session }) {
+        if (account) {
+          // account only exists on first time user login
+          token.documentIdFauna = account.documentIdFauna
+          token.isAvatarActive = account.isAvatarActive
         }
+
+        if (trigger === 'update' && session?.isAvatarActive) {
+          token.isAvatarActive = session.isAvatarActive
+        }
+
+        return token
+      },
+
+      async session({ session, token }) {
+        // user ref e user id (faunaDB)
+        session.user.documentIdFauna = token.documentIdFauna
+
+        session.isAvatarActive = token.isAvatarActive
+
+        return session
+
+        // const { 'brazucagol:isAvatarActive': isAvatarActive } = parseCookies({
+        //   req,
+        // })
+
+        // if (!isAvatarActive) {
+        //   // Cookie doesn't exists
+        //   return {
+        //     ...session,
+        //     isAvatarActive: true,
+        //   }
+        // } else {
+        //   const isAvatarActiveBoolean = isAvatarActive === 'true'
+        //   return {
+        //     ...session,
+        //     isAvatarActive: isAvatarActiveBoolean,
+        //   }
+        // }
 
         // const { email } = session.user
 

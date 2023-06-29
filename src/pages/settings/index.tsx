@@ -73,7 +73,7 @@ export default function Settings({ userPreferences }: SettingsProps) {
       </Head>
 
       <div className={styles.settingsContainer}>
-        <h1>Configurações</h1>
+        <h2>Configurações</h2>
 
         <form
           className={styles.formSettings}

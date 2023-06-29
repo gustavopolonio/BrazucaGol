@@ -30,15 +30,20 @@ export default async function handler(
     }
 
     try {
-      const userRef = await fauna.query(
-        q.Select(
-          'ref',
-          q.Get(q.Match(q.Index('user_by_email'), session?.user.email)),
-        ),
-      )
+      // const userRef = await fauna.query(
+      //   q.Select(
+      //     'ref',
+      //     q.Get(q.Match(q.Index('user_by_email'), session?.user.email)),
+      //   ),
+      // )
 
       const { data } = await fauna.query<IndividualGoalsQueryResponse>(
-        q.Get(q.Match(q.Index('individualGoals_by_userId'), userRef)),
+        q.Get(
+          q.Match(
+            q.Index('individualGoals_by_userId'),
+            q.Ref(q.Collection('users'), session.user.documentIdFauna),
+          ),
+        ),
       )
 
       return res.status(200).json({ data })
@@ -55,14 +60,19 @@ export default async function handler(
       buildNextAuthOption(req, res),
     )
 
-    const userRef = await fauna.query(
-      q.Select('ref', q.Get(q.Match(q.Index('user_by_email'), user.email))),
-    )
+    // const userRef = await fauna.query(
+    //   q.Select('ref', q.Get(q.Match(q.Index('user_by_email'), user.email))),
+    // )
     await fauna.query(
       q.Update(
         q.Select(
           'ref',
-          q.Get(q.Match(q.Index('individualGoals_by_userId'), userRef)),
+          q.Get(
+            q.Match(
+              q.Index('individualGoals_by_userId'),
+              q.Ref(q.Collection('users'), user.documentIdFauna),
+            ),
+          ),
         ),
         {
           data: kickData,

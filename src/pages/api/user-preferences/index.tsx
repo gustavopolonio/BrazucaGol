@@ -13,7 +13,7 @@ export async function getUserPreferences(session: Session) {
   const userPreferences: UserPreferences = await fauna.query(
     q.Select(
       ['data', 'preferences'],
-      q.Get(q.Match(q.Index('user_by_email'), session.user.email)),
+      q.Get(q.Ref(q.Collection('users'), session.user.documentIdFauna)),
     ),
   )
 
@@ -55,17 +55,14 @@ export default async function handler(
 
     try {
       await fauna.query(
-        q.Update(
-          q.Select('ref', q.Get(q.Match(q.Index('user_by_email'), user.email))),
-          {
-            data: {
-              preferences: {
-                kickAlert: kickIsReadyAlert,
-                goalSound: goalAlert,
-              },
+        q.Update(q.Ref(q.Collection('users'), user.documentIdFauna), {
+          data: {
+            preferences: {
+              kickAlert: kickIsReadyAlert,
+              goalSound: goalAlert,
             },
           },
-        ),
+        }),
       )
 
       return res.status(201).json({ success: true })

@@ -27,16 +27,21 @@ export default async function handler(
       return res.status(400).send('Avatar não está ativo')
     }
 
-    const userRef = await fauna.query(
-      q.Select(
-        'ref',
-        q.Get(q.Match(q.Index('user_by_email'), session.user.email)),
-      ),
-    )
+    // const userRef = await fauna.query(
+    //   q.Select(
+    //     'ref',
+    //     q.Get(q.Match(q.Index('user_by_email'), session.user.email)),
+    //   ),
+    // )
 
     return fauna
       .query<AvatarQueryResponse>(
-        q.Get(q.Match(q.Index('avatar_by_userId'), userRef)),
+        q.Get(
+          q.Match(
+            q.Index('avatar_by_userId'),
+            q.Ref(q.Collection('users'), session.user.documentIdFauna),
+          ),
+        ),
       )
       .then((response) => {
         return res.status(200).json({
@@ -57,11 +62,16 @@ export default async function handler(
     )
 
     // search user_by_email and catch its Ref (this is my userId in avatars Collection)
+    // const userRef = await fauna.query(
+    //   q.Select('ref', q.Get(q.Match(q.Index('user_by_email'), user.email))),
+    // )
+
     const userRef = await fauna.query(
-      q.Select('ref', q.Get(q.Match(q.Index('user_by_email'), user.email))),
+      q.Ref(q.Collection('users'), user.documentIdFauna),
     )
 
     try {
+      // Create avatar document
       await fauna.query(
         q.If(
           q.Not(q.Exists(q.Match(q.Index('avatar_by_name'), avatarName))),
@@ -85,7 +95,7 @@ export default async function handler(
         }),
       )
 
-      // Create individualGoals table
+      // Create individualGoals document
       await fauna.query(
         q.If(
           q.Not(

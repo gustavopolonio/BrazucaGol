@@ -1,20 +1,20 @@
-- Criar página Jogador [ok]
-  - Entrar na pág do jogador pela url do nome dele
-  https://pbs.twimg.com/media/BAiHSaTCYAE5Qma?format=png&name=large
-  https://www.youtube.com/watch?v=PaLvyZHuYRY&ab_channel=bullyplaystation2
-- Buscar jogador por nome (criar página do jogador antes) [ok]
-- Fazer a pág de erro qnd o avatar nao existe [ok]
-- Não deixar criar jogador com espaço e caracteres especiais no nome [ok]
-- Modal histórico [ok]
-- Validação forms mensagem [ok]
-
-- Ver onde os contextos são chamados e se eles são necessários
-- Saber quantas pessoas estão online
-- Configurar styled components ou stitches
+- Fazer o jwt pro isAvatarActive
 
 - Mensagem privada '/avatar/[avatarName]'
+  https://www.youtube.com/watch?v=k4mjF4sPITE&ab_channel=LamaDev
+- Não deixar mandar msg para mim mesmo
+
+- Deixar criar nome com _ e colocar na pág de dúvidas oq é permitido ao criar nome
+- Saber quantas pessoas estão online
+- Configurar styled components ou stitches
+- Progress radix ui no level
+
+- Procura jogador sem nada escrito da 404
+- Entrar sem estar logado no /messages
 
 Pra frente:
+  - Qnd necessário transferir login e DB pra o firebase (mais funcionalidades), ver preços - Seguir https://www.youtube.com/watch?v=k4mjF4sPITE&ab_channel=LamaDev
+  - Ver onde os contextos são chamados e se eles são necessários (o avatarDataContext não é necessário agora, mas vou deixá-lo. No futuro vejo se ele será necessário)
   - Fazer a api de times brasileiros aceitar chamadas pelo id do clube
 
   - Gols na virada da hora ou rodada pode dar bug (checar se ta com esse bug)

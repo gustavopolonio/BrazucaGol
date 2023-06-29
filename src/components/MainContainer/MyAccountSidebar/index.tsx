@@ -11,7 +11,7 @@ export function MyAccountSidebar() {
       <h2>Minha Conta</h2>
 
       <nav>
-        <Link href="" className="temporarily-disabled">
+        <Link href="/messages">
           <div className={styles.messageInbox}>08</div>Recados
           <div className={styles.borderBottom}></div>
         </Link>

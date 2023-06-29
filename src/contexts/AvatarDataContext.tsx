@@ -15,7 +15,9 @@ interface AvatarQueryResponse {
   name: string
   clubId: number
   userId: {
-    id: string
+    ['@ref']: {
+      id: string
+    }
   }
 }
 

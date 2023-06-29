@@ -10,6 +10,8 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import z from 'zod'
+import { ActivateAvatarPopover } from '../../components/ActivateAvatarPopover'
+import { useSession } from 'next-auth/react'
 
 import { IoMdClose } from 'react-icons/io'
 import {
@@ -71,6 +73,7 @@ type SendMessage = z.infer<typeof sendPrivateMessageFormSchema>
 export default function AvatarName({ avatar, clubs }: AvatarNameProps) {
   const [avatarClub, setAvatarClub] = useState<Club>()
   const refAvatarContainer = useRef(null)
+  const { data: session } = useSession()
   const {
     register,
     handleSubmit,
@@ -255,34 +258,38 @@ export default function AvatarName({ avatar, clubs }: AvatarNameProps) {
           earum saepe distinctio error harum!
         </p>
 
-        <form
-          onSubmit={handleSubmit(handleSendPrivateMessage)}
-          className={styles.sendPrivateMessageForm}
-        >
-          <label>
-            <textarea
-              {...register('privateMessage')}
-              rows={4}
-              placeholder={`Escreva aqui sua mensagem para ${avatar.name}`}
-            ></textarea>
-            {errors.privateMessage && (
-              <span>{errors.privateMessage.message}</span>
-            )}
-          </label>
+        {session?.isAvatarActive && (
+          <form
+            onSubmit={handleSubmit(handleSendPrivateMessage)}
+            className={styles.sendPrivateMessageForm}
+          >
+            <label>
+              <textarea
+                {...register('privateMessage')}
+                rows={4}
+                placeholder={`Escreva aqui sua mensagem para ${avatar.name}`}
+              ></textarea>
+              {errors.privateMessage && (
+                <span>{errors.privateMessage.message}</span>
+              )}
+            </label>
 
-          <span>{charactersRemaining} N° restante</span>
-          <button type="submit">
-            Enviar
-            {isSubmitting && (
-              <LoadingSpinner
-                right="2%"
-                top="50%"
-                transform="translateY(-50%)"
-              />
-            )}
-          </button>
-        </form>
+            <span>{charactersRemaining} N° restante</span>
+            <button type="submit">
+              Enviar
+              {isSubmitting && (
+                <LoadingSpinner
+                  right="2%"
+                  top="50%"
+                  transform="translateY(-50%)"
+                />
+              )}
+            </button>
+          </form>
+        )}
       </div>
+
+      {session?.isAvatarActive === false && <ActivateAvatarPopover />}
     </>
   )
 }
