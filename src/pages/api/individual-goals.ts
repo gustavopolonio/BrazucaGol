@@ -6,7 +6,7 @@ import { buildNextAuthOption } from './auth/[...nextauth]'
 
 interface IndividualGoalsQueryResponse {
   data: {
-    userId: object
+    userId: string
     avatarAutoGoals: number
     avatarPenaltyGoals: number
     avatarFreeKickGoals: number
@@ -38,12 +38,7 @@ export default async function handler(
       // )
 
       const { data } = await fauna.query<IndividualGoalsQueryResponse>(
-        q.Get(
-          q.Match(
-            q.Index('individualGoals_by_userId'),
-            q.Ref(q.Collection('users'), session.user.documentIdFauna),
-          ),
-        ),
+        q.Get(q.Match(q.Index('individualGoals_by_userId'), session.user.id)),
       )
 
       return res.status(200).json({ data })
@@ -67,12 +62,7 @@ export default async function handler(
       q.Update(
         q.Select(
           'ref',
-          q.Get(
-            q.Match(
-              q.Index('individualGoals_by_userId'),
-              q.Ref(q.Collection('users'), user.documentIdFauna),
-            ),
-          ),
+          q.Get(q.Match(q.Index('individualGoals_by_userId'), user.id)),
         ),
         {
           data: kickData,

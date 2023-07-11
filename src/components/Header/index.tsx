@@ -20,8 +20,6 @@ export function Header({ clubs }: HeaderProps) {
   const avatarData = useAvatarData()
   const { totalGoals, hourlyGoals, roundGoals } = useIndividualGoals()
 
-  console.log(session)
-
   useEffect(() => {
     const clubAux = clubs?.find((club) => club.id === avatarData?.clubId)
     setAvatarClub(clubAux)

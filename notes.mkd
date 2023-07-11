@@ -1,8 +1,20 @@
-- Fazer o jwt pro isAvatarActive
-
-- Mensagem privada '/avatar/[avatarName]'
+- Mensagem privada '/avatar/[avatarName]' [ok]
   https://www.youtube.com/watch?v=k4mjF4sPITE&ab_channel=LamaDev
+
+
+- fç: Atualizar para ver se tem recado novo
+- Msg lida e msg nova na pág messages
+- Deletar com radix (criar mesmo componente para as pages settings e messages)
+- Deixar o historico do chat salvo pra nao fazer a mesma requsiição em sequencia varias vezes
+- Aparecer qnts mensagem não lidas tem na sidebar
+- Na coleção userChats salvar em ordem, o ultimo que enviou fica em 1°
 - Não deixar mandar msg para mim mesmo
+- Na página de mensagens: nomes com diferentes tamanhos quebram (ver o max de caracteres pra criar o nome)
+- Pegar quebra de linhas nas msgs enviadas e ver se precisa de overflow
+
+- Em avatar/[avatarName] diferenciar se a ultima msg foi mandada por mim ou pelo secondary
+
+- Entrar direto no link avatar/userName dá erro
 
 - Deixar criar nome com _ e colocar na pág de dúvidas oq é permitido ao criar nome
 - Saber quantas pessoas estão online

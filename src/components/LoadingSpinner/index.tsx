@@ -5,6 +5,7 @@ interface LoadingSpinnerProps {
   left?: string
   right?: string
   transform?: string
+  position?: 'unset' | 'absolute' | 'relative'
 }
 
 export function LoadingSpinner({
@@ -12,11 +13,12 @@ export function LoadingSpinner({
   left = 'unset',
   right = 'unset',
   transform,
+  position,
 }: LoadingSpinnerProps) {
   return (
     <div
       className={styles.spinnerContainer}
-      style={{ top, left, right, transform }}
+      style={{ top, left, right, transform, position }}
     >
       <div className={styles.loadingSpinner}></div>
     </div>

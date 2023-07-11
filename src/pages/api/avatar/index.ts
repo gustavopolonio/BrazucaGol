@@ -36,12 +36,7 @@ export default async function handler(
 
     return fauna
       .query<AvatarQueryResponse>(
-        q.Get(
-          q.Match(
-            q.Index('avatar_by_userId'),
-            q.Ref(q.Collection('users'), session.user.documentIdFauna),
-          ),
-        ),
+        q.Get(q.Match(q.Index('avatar_by_userId'), session.user.id)),
       )
       .then((response) => {
         return res.status(200).json({
@@ -66,10 +61,6 @@ export default async function handler(
     //   q.Select('ref', q.Get(q.Match(q.Index('user_by_email'), user.email))),
     // )
 
-    const userRef = await fauna.query(
-      q.Ref(q.Collection('users'), user.documentIdFauna),
-    )
-
     try {
       // Create avatar document
       await fauna.query(
@@ -79,7 +70,7 @@ export default async function handler(
             data: {
               name: avatarName,
               clubId: avatarClub,
-              userId: userRef,
+              userId: user.id,
             },
           }),
           true,
@@ -88,7 +79,7 @@ export default async function handler(
 
       // Change the isAvatarActive to True
       await fauna.query(
-        q.Update(userRef, {
+        q.Update(q.Ref(q.Collection('users'), user.id), {
           data: {
             isAvatarActive: true,
           },
@@ -99,11 +90,11 @@ export default async function handler(
       await fauna.query(
         q.If(
           q.Not(
-            q.Exists(q.Match(q.Index('individualGoals_by_userId'), userRef)),
+            q.Exists(q.Match(q.Index('individualGoals_by_userId'), user.id)),
           ),
           q.Create(q.Collection('individualGoals'), {
             data: {
-              userId: userRef,
+              userId: user.id,
               avatarAutoGoals: 0,
               avatarPenaltyGoals: 0,
               avatarFreeKickGoals: 0,
@@ -112,7 +103,21 @@ export default async function handler(
               avatarRoundGoals: 0,
             },
           }),
-          false,
+          true,
+        ),
+      )
+
+      // Create userChats document
+      await fauna.query(
+        q.If(
+          q.Not(q.Exists(q.Match(q.Index('userChats_by_userId'), user.id))),
+          q.Create(q.Collection('userChats'), {
+            data: {
+              userId: user.id,
+              chats: [],
+            },
+          }),
+          true,
         ),
       )
 

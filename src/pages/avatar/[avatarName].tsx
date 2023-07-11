@@ -12,6 +12,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import z from 'zod'
 import { ActivateAvatarPopover } from '../../components/ActivateAvatarPopover'
 import { useSession } from 'next-auth/react'
+import { api } from '../../services/api'
+import { useAvatarData } from '../../contexts/AvatarDataContext'
 
 import { IoMdClose } from 'react-icons/io'
 import {
@@ -36,22 +38,25 @@ interface Avatar {
   data: {
     name: string
     clubId: number
-    userId: object
+    userId: string
   }
 }
 
 interface IndividualGoals {
   data: {
-    userId: object
+    userId: string
     avatarAutoGoals: number
     avatarPenaltyGoals: number
     avatarFreeKickGoals: number
     avatarTrailGoals: number
+    avatarHourlyGoals: number
+    avatarRoundGoals: number
   }
 }
 
 interface AvatarNameProps {
   avatar: {
+    userId: string
     name: string
     clubId: number
     avatarAutoGoals: number
@@ -65,23 +70,29 @@ interface AvatarNameProps {
 }
 
 const sendPrivateMessageFormSchema = z.object({
-  privateMessage: z.string().max(250, { message: 'Max. 250 caracteres' }),
+  privateMessage: z
+    .string()
+    .min(1, { message: 'Min. 1 caracter' })
+    .max(250, { message: 'Max. 250 caracteres' }),
 })
 
 type SendMessage = z.infer<typeof sendPrivateMessageFormSchema>
 
 export default function AvatarName({ avatar, clubs }: AvatarNameProps) {
   const [avatarClub, setAvatarClub] = useState<Club>()
+  const [displayMessageSent, setDisplayMessageSent] = useState(false)
   const refAvatarContainer = useRef(null)
   const { data: session } = useSession()
   const {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<SendMessage>({
     resolver: zodResolver(sendPrivateMessageFormSchema),
   })
+  const { name } = useAvatarData()
 
   const watchPrivateMessage = watch('privateMessage', '')
   const charactersRemaining =
@@ -105,8 +116,19 @@ export default function AvatarName({ avatar, clubs }: AvatarNameProps) {
   async function handleSendPrivateMessage(data: SendMessage) {
     if (data.privateMessage.length === 0) return
 
-    console.log(isSubmitting)
     // Fazer req enviar mensagem
+    const response = await api.post('/api/chats', {
+      privateMessage: data.privateMessage,
+      secondaryUserId: avatar.userId,
+      secondaryUserName: avatar.name,
+      senderUserName: name,
+    })
+
+    if (response.status === 201) {
+      reset()
+      setDisplayMessageSent(true)
+      setTimeout(() => setDisplayMessageSent(false), 2500)
+    }
   }
 
   return (
@@ -285,6 +307,10 @@ export default function AvatarName({ avatar, clubs }: AvatarNameProps) {
                 />
               )}
             </button>
+
+            <strong className={displayMessageSent && styles.show}>
+              Mensagem enviada!
+            </strong>
           </form>
         )}
       </div>
@@ -307,9 +333,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     const avatarGoals = await fauna.query<IndividualGoals>(
       q.Get(q.Match(q.Index('individualGoals_by_userId'), userId)),
     )
-
-    delete avatarData.data.userId
-    delete avatarGoals.data.userId
 
     const avatar = {
       ...avatarData.data,

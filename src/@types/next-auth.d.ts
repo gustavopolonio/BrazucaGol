@@ -7,13 +7,13 @@ declare module 'next-auth' {
   interface Session {
     isAvatarActive: boolean
     user: {
-      documentIdFauna: string
+      id: string
     } & DefaultSession['user']
   }
 
   // eslint-disable-next-line no-unused-vars
   interface Account {
-    documentIdFauna: string
+    userId: string
     isAvatarActive: boolean
   }
 }
@@ -21,7 +21,7 @@ declare module 'next-auth' {
 declare module 'next-auth/jwt' {
   // eslint-disable-next-line no-unused-vars
   interface JWT {
-    documentIdFauna: string
+    userId: string
     isAvatarActive: boolean
   }
 }

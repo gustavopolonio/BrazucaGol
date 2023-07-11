@@ -13,7 +13,7 @@ export async function getUserPreferences(session: Session) {
   const userPreferences: UserPreferences = await fauna.query(
     q.Select(
       ['data', 'preferences'],
-      q.Get(q.Ref(q.Collection('users'), session.user.documentIdFauna)),
+      q.Get(q.Ref(q.Collection('users'), session.user.id)),
     ),
   )
 
@@ -55,7 +55,7 @@ export default async function handler(
 
     try {
       await fauna.query(
-        q.Update(q.Ref(q.Collection('users'), user.documentIdFauna), {
+        q.Update(q.Ref(q.Collection('users'), user.id), {
           data: {
             preferences: {
               kickAlert: kickIsReadyAlert,

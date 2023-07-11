@@ -16,9 +16,7 @@ export default async function handler(
     )
 
     try {
-      await fauna.query(
-        q.Delete(q.Ref(q.Collection('users'), session.user.documentIdFauna)),
-      )
+      await fauna.query(q.Delete(q.Ref(q.Collection('users'), session.user.id)))
 
       return res.status(200).json({ deleted: true })
     } catch (error) {

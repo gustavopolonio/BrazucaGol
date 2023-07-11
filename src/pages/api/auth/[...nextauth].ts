@@ -12,6 +12,7 @@ interface UserResponse {
     }
   }
   data: {
+    id: string
     email: string
     isAvatarActive: boolean
     settings: {
@@ -58,8 +59,8 @@ export function buildNextAuthOption(
             ),
           )
 
-          // O documentIdFauna vai ser O document ID do FaunaDB
-          account.documentIdFauna = response.ref.value.id
+          // O userId vai ser o document ID do FaunaDB
+          account.userId = response.ref.value.id
 
           account.isAvatarActive = response.data.isAvatarActive
 
@@ -81,7 +82,7 @@ export function buildNextAuthOption(
       async jwt({ token, account, trigger, session }) {
         if (account) {
           // account only exists on first time user login
-          token.documentIdFauna = account.documentIdFauna
+          token.userId = account.userId
           token.isAvatarActive = account.isAvatarActive
         }
 
@@ -94,7 +95,7 @@ export function buildNextAuthOption(
 
       async session({ session, token }) {
         // user ref e user id (faunaDB)
-        session.user.documentIdFauna = token.documentIdFauna
+        session.user.id = token.userId
 
         session.isAvatarActive = token.isAvatarActive
 

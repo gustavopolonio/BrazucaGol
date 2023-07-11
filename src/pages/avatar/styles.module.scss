@@ -215,12 +215,14 @@
 .sendPrivateMessageForm {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
   padding: 0 2rem;
   gap: 0.8rem;
 
   label {
     position: relative;
+    width: 100%;
 
     textarea {
       width: 100%;
@@ -259,6 +261,15 @@
 
     &:hover {
       filter: brightness(0.8);
+    }
+  }
+
+  strong {
+    color: #02c202;
+    visibility: hidden;
+
+    &.show {
+      visibility: visible;
     }
   }
 }
