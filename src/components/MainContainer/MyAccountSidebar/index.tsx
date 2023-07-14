@@ -4,8 +4,11 @@ import { FaExchangeAlt } from 'react-icons/fa'
 import Link from 'next/link'
 
 import styles from './styles.module.scss'
+import { useAvatarData } from '../../../contexts/AvatarDataContext'
 
 export function MyAccountSidebar() {
+  const avatar = useAvatarData()
+
   return (
     <aside className={styles.menuContainer}>
       <h2>Minha Conta</h2>
@@ -16,9 +19,9 @@ export function MyAccountSidebar() {
           <div className={styles.borderBottom}></div>
         </Link>
 
-        <Link href="" className="temporarily-disabled">
+        <Link href={`/avatar/${avatar?.name}`}>
           <BsPersonFill />
-          Aparência<div className={styles.borderBottom}></div>
+          Meu perfil<div className={styles.borderBottom}></div>
         </Link>
 
         <Link href="" className="temporarily-disabled">

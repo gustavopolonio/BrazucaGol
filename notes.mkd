@@ -1,8 +1,10 @@
 - Mensagem privada '/avatar/[avatarName]' [ok]
   https://www.youtube.com/watch?v=k4mjF4sPITE&ab_channel=LamaDev
 - Não deixar mandar msg para mim mesmo [ok]
+- See if has an page to see my avatar [ok]
 
-- See if has an page to see my avatar
+- If not logged in or avatar not active, Minha Conta sidebar doesn't appear
+
 - fç: Atualizar para ver se tem recado novo
 - Entrar direto no link avatar/userName dá erro
 
@@ -14,6 +16,7 @@
 - Em avatar/[avatarName] diferenciar se a ultima msg foi mandada por mim ou pelo secondary
 - Delete message on "/messages"
 
+- On "/avatar/[my_current_avatar]" let change avatar style and text
 - Msg lida e msg nova na pág messages
 - Deixar o historico do chat salvo pra nao fazer a mesma requsiição em sequencia varias vezes (react query)
 
