@@ -92,7 +92,7 @@ export default function AvatarName({ avatar, clubs }: AvatarNameProps) {
   } = useForm<SendMessage>({
     resolver: zodResolver(sendPrivateMessageFormSchema),
   })
-  const { name } = useAvatarData()
+  const avatarData = useAvatarData()
 
   const watchPrivateMessage = watch('privateMessage', '')
   const charactersRemaining =
@@ -121,7 +121,7 @@ export default function AvatarName({ avatar, clubs }: AvatarNameProps) {
       privateMessage: data.privateMessage,
       secondaryUserId: avatar.userId,
       secondaryUserName: avatar.name,
-      senderUserName: name,
+      senderUserName: avatarData.name,
     })
 
     if (response.status === 201) {
@@ -280,7 +280,7 @@ export default function AvatarName({ avatar, clubs }: AvatarNameProps) {
           earum saepe distinctio error harum!
         </p>
 
-        {session?.isAvatarActive && (
+        {session?.isAvatarActive && session.user.id !== avatar.userId && (
           <form
             onSubmit={handleSubmit(handleSendPrivateMessage)}
             className={styles.sendPrivateMessageForm}

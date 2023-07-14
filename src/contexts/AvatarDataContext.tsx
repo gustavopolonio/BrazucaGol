@@ -14,11 +14,7 @@ interface AvatarDataProviderProps {
 interface AvatarQueryResponse {
   name: string
   clubId: number
-  userId: {
-    ['@ref']: {
-      id: string
-    }
-  }
+  userId: string
 }
 
 const AvatarDataContext = createContext({} as AvatarQueryResponse)
