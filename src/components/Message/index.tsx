@@ -18,7 +18,7 @@ export function Message({ sentAt, text, senderId }: MessageProps) {
     <li
       key={sentAt}
       className={`${styles.replyModalMessageContent} ${
-        data.user.id === senderId ? styles.owner : ''
+        data.user.id === senderId ? styles.owner : undefined
       }`}
     >
       {!(data.user.id === senderId) && (

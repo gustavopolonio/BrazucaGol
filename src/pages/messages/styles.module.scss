@@ -63,6 +63,7 @@
   width: 30.5rem;
   border: 0;
   text-align: start;
+  position: relative;
 
   &:disabled {
     cursor: not-allowed;
@@ -76,6 +77,14 @@
     background: #f2f2f2;
     overflow-wrap: break-word;
   }
+}
+
+.messageNotRead {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  color: #edde09;
+  font-weight: bold;
 }
 
 .actionButtons {

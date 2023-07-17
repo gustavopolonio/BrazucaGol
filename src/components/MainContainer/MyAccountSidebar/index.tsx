@@ -2,12 +2,25 @@ import { BsPersonFill, BsFillGearFill } from 'react-icons/bs'
 import { GiOpenBook, GiSoccerKick } from 'react-icons/gi'
 import { FaExchangeAlt } from 'react-icons/fa'
 import Link from 'next/link'
+import { useAvatarData } from '../../../contexts/AvatarDataContext'
+import { useEffect, useState } from 'react'
+import { api } from '../../../services/api'
 
 import styles from './styles.module.scss'
-import { useAvatarData } from '../../../contexts/AvatarDataContext'
+
+type UnreadChats = Array<string> | []
 
 export function MyAccountSidebar() {
   const avatar = useAvatarData()
+  const [unreadChats, setUnreadChats] = useState<UnreadChats>([])
+
+  useEffect(() => {
+    const getUnreadChats = async () => {
+      const response = await api.get('/api/chats/unread')
+      setUnreadChats(response.data)
+    }
+    getUnreadChats()
+  }, [])
 
   return (
     <aside className={styles.menuContainer}>
@@ -15,7 +28,12 @@ export function MyAccountSidebar() {
 
       <nav>
         <Link href="/messages">
-          <div className={styles.messageInbox}>08</div>Recados
+          <div className={styles.messageInbox}>
+            {unreadChats.length < 10
+              ? `0${unreadChats.length}`
+              : unreadChats.length}
+          </div>
+          Recados
           <div className={styles.borderBottom}></div>
         </Link>
 

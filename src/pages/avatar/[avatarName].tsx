@@ -131,10 +131,12 @@ export default function AvatarName({ avatar, clubs }: AvatarNameProps) {
     }
   }
 
+  const headTitle = `${avatar.name} | Brazucagol`
+
   return (
     <>
       <Head>
-        <title>{avatar.name} | Brazucagol</title>
+        <title>{headTitle}</title>
       </Head>
 
       <div ref={refAvatarContainer} className={styles.avatarContainer}>
@@ -202,6 +204,7 @@ export default function AvatarName({ avatar, clubs }: AvatarNameProps) {
               alt=""
               width={210}
               height={480}
+              priority
             />
           </div>
 
@@ -308,7 +311,7 @@ export default function AvatarName({ avatar, clubs }: AvatarNameProps) {
               )}
             </button>
 
-            <strong className={displayMessageSent && styles.show}>
+            <strong className={displayMessageSent ? styles.show : undefined}>
               Mensagem enviada!
             </strong>
           </form>

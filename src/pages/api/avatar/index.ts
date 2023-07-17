@@ -115,6 +115,7 @@ export default async function handler(
             data: {
               userId: user.id,
               chats: [],
+              unreadChats: [],
             },
           }),
           true,

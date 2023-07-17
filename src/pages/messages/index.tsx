@@ -46,6 +46,7 @@ interface UserChatsFormatted {
     senderId: string
     sentAt: number
   }
+  isRead: boolean
 }
 
 interface MessagesProps {
@@ -73,6 +74,7 @@ export default function Messages({ userChatsFormatted }: MessagesProps) {
   const [chatHistory, setChatHistory] = useState<ChatHistoryMessage[]>([])
   const [replyMessage, setReplyMessage] = useState('')
   const [combinedId, setCombinedId] = useState('')
+  const [secondaryUserId, setSecondaryUserId] = useState('')
   const [isQueryingChatsHistory, setIsQueryingChatsHistory] = useState(false)
   const messageTextAreaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -125,9 +127,13 @@ export default function Messages({ userChatsFormatted }: MessagesProps) {
     )
   }
 
-  async function handleOpenReplyModal(combinedId: string) {
+  async function handleOpenReplyModal(
+    combinedId: string,
+    secondaryUserId: string,
+  ) {
     setIsQueryingChatsHistory(true)
     setCombinedId(combinedId)
+    setSecondaryUserId(secondaryUserId)
 
     const response = await api.get('/api/chats', {
       params: {
@@ -141,6 +147,10 @@ export default function Messages({ userChatsFormatted }: MessagesProps) {
       setIsQueryingChatsHistory(false)
       setIsReplyModalOpen(true)
     }
+
+    await api.post('/api/chats/unread', {
+      combinedId,
+    })
   }
 
   async function handleSendPrivateMessage(dataForm: SendMessage) {
@@ -148,6 +158,7 @@ export default function Messages({ userChatsFormatted }: MessagesProps) {
       privateMessage: dataForm.privateMessage,
       chatAlreadyExists: true,
       chatAlreadyExistsCombinedId: combinedId,
+      secondaryUserId,
     })
 
     if (response.status === 201) {
@@ -224,10 +235,23 @@ export default function Messages({ userChatsFormatted }: MessagesProps) {
 
                 <button
                   className={styles.textMessage}
-                  onClick={() => handleOpenReplyModal(chat.combinedId)}
+                  onClick={() =>
+                    handleOpenReplyModal(chat.combinedId, chat.secondaryUser.id)
+                  }
                   disabled={isQueryingChatsHistory}
                 >
-                  <p>{chat.lastMessage.text}</p>
+                  <p>
+                    {chat.lastMessage.senderId === chat.secondaryUser.id ? (
+                      <b>{chat.secondaryUser.name}:</b>
+                    ) : (
+                      <b>Você:</b>
+                    )}{' '}
+                    {chat.lastMessage.text}
+                  </p>
+
+                  {!chat.isRead && (
+                    <span className={styles.messageNotRead}>Não lida</span>
+                  )}
                 </button>
 
                 <div className={styles.actionButtons}>
@@ -237,7 +261,12 @@ export default function Messages({ userChatsFormatted }: MessagesProps) {
                   >
                     <button
                       className={styles.replyMessageButton}
-                      onClick={() => handleOpenReplyModal(chat.combinedId)}
+                      onClick={() =>
+                        handleOpenReplyModal(
+                          chat.combinedId,
+                          chat.secondaryUser.id,
+                        )
+                      }
                       disabled={isQueryingChatsHistory}
                     >
                       Responder
@@ -434,7 +463,18 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
       ),
     )
 
-    const userChatsFormatted = userChats.map((chat) => {
+    const userChatsSortedByLastMessageDate = userChats.sort((a, b) => {
+      return b.sentAt - a.sentAt
+    })
+
+    const unreadChats = await fauna.query<[string]>(
+      q.Select(
+        ['data', 'unreadChats'],
+        q.Get(q.Match(q.Index('userChats_by_userId'), session.user.id)),
+      ),
+    )
+
+    const userChatsFormatted = userChatsSortedByLastMessageDate.map((chat) => {
       return {
         combinedId: chat.combinedId,
         secondaryUser: chat.secondaryUser,
@@ -443,6 +483,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
           senderId: chat.senderId,
           sentAt: chat.sentAt,
         },
+        isRead: !unreadChats.includes(chat.combinedId),
       }
     })
 

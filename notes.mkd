@@ -3,20 +3,24 @@
 - Não deixar mandar msg para mim mesmo [ok]
 - See if has an page to see my avatar [ok]
 - If not logged in or avatar not active, Minha Conta sidebar doesn't appear [ok]
+- Entrar direto no link avatar/userName dá erro [ok]
 
+- Na coleção userChats salvar em ordem, o ultimo que enviou fica em 1° [ok]
+- Tirar a msg das unreads qnd clicar na conversa [ok]
+- Msg lida e msg nova na pág messages: deixar a última sempre em primeiro, mas destacar as não lidas [ok]
+- Em avatar/[avatarName] diferenciar se a ultima msg foi mandada por mim ou pelo secondary [ok]
+- Qnd mando uma msg atualizar o texto da msg como a ultima enviada
+- Qnd mando uma msg colocar essa msg em primeiro em '/messages'
 - fç: Atualizar para ver se tem recado novo
-- Entrar direto no link avatar/userName dá erro
+- Depois q li a msg att o estado da sidebar
+- Aparecer qnts mensagem não lidas tem na sidebar. Atualizar qnd muda de pág (streaming) https://forums.fauna.com/t/event-streaming-email-also-on-field-change-create-db-copy/3008/4
 
-- Aparecer qnts mensagem não lidas tem na sidebar
 - Deletar com radix (criar mesmo componente para as pages settings e messages)
-- Na coleção userChats salvar em ordem, o ultimo que enviou fica em 1°
 - Na página de mensagens: nomes com diferentes tamanhos quebram (ver o max de caracteres pra criar o nome)
 - Pegar quebra de linhas nas msgs enviadas e ver se precisa de overflow
-- Em avatar/[avatarName] diferenciar se a ultima msg foi mandada por mim ou pelo secondary
 - Delete message on "/messages"
 
 - On "/avatar/[my_current_avatar]" let change avatar style and text
-- Msg lida e msg nova na pág messages
 - Deixar o historico do chat salvo pra nao fazer a mesma requsiição em sequencia varias vezes (react query)
 
 - Deixar criar nome com _ e colocar na pág de dúvidas oq é permitido ao criar nome
@@ -26,6 +30,8 @@
 
 - Procura jogador sem nada escrito da 404
 - Entrar sem estar logado no /messages
+
+- useReducer
 
 Pra frente:
   - Qnd necessário transferir login e DB pra o firebase (mais funcionalidades), ver preços - Seguir https://www.youtube.com/watch?v=k4mjF4sPITE&ab_channel=LamaDev

@@ -10,7 +10,44 @@ interface RequestBody {
   secondaryUserName: string
   senderUserName: string
   chatAlreadyExists?: boolean
-  chatAlreadyExistsCombinedId?: boolean
+  chatAlreadyExistsCombinedId?: string
+}
+
+async function checkIfAlreadyExistsUnreadMessage(
+  secondaryUserId: string,
+  combinedId: string,
+) {
+  // Checar se já tem mensagem não lida no user que recebeu a mensagem
+  await fauna.query(
+    q.Let(
+      {
+        ref: q.Select(
+          'ref',
+          q.Get(q.Match(q.Index('userChats_by_userId'), secondaryUserId)),
+        ),
+        doc: q.Get(q.Var('ref')),
+        unreadChats: q.Select(['data', 'unreadChats'], q.Var('doc')),
+      },
+      q.If(
+        q.IsEmpty(
+          q.Filter(
+            q.Var('unreadChats'),
+            q.Lambda(
+              'chatCombinedId',
+              q.Equals(q.Var('chatCombinedId'), combinedId),
+            ),
+          ),
+        ),
+        // Não tem msg não lida: adicionar combinedId no array
+        q.Update(q.Var('ref'), {
+          data: {
+            unreadChats: q.Append(combinedId, q.Var('unreadChats')),
+          },
+        }),
+        true, // Já tem msg não lida: não fazer nada
+      ),
+    ),
+  )
 }
 
 export default async function handler(
@@ -45,6 +82,7 @@ export default async function handler(
       chatAlreadyExists,
       chatAlreadyExistsCombinedId,
     }: RequestBody = req.body
+
     const { user } = await getServerSession(
       req,
       res,
@@ -56,34 +94,41 @@ export default async function handler(
 
       try {
         await fauna.query(
-          q.Let(
-            {
-              ref: q.Select(
-                'ref',
-                q.Get(
-                  q.Match(
-                    q.Index('chats_by_combinedId'),
-                    chatAlreadyExistsCombinedId,
+          q.Do(
+            q.Let(
+              {
+                ref: q.Select(
+                  'ref',
+                  q.Get(
+                    q.Match(
+                      q.Index('chats_by_combinedId'),
+                      chatAlreadyExistsCombinedId,
+                    ),
                   ),
                 ),
-              ),
-              doc: q.Get(q.Var('ref')),
-              messages: q.Select(['data', 'messages'], q.Var('doc')),
-            },
-            q.Update(q.Var('ref'), {
-              data: {
-                messages: q.Prepend(
-                  // Mensagens mais recentes ficam em 1o no DB (prepend)
-                  {
-                    // sentAt: q.Now(),
-                    sentAt: Date.now(),
-                    senderId: user.id,
-                    text: privateMessage,
-                  },
-                  q.Var('messages'),
-                ),
+                doc: q.Get(q.Var('ref')),
+                messages: q.Select(['data', 'messages'], q.Var('doc')),
               },
-            }),
+              q.Update(q.Var('ref'), {
+                data: {
+                  messages: q.Prepend(
+                    // Mensagens mais recentes ficam em 1o no DB (prepend)
+                    {
+                      // sentAt: q.Now(),
+                      sentAt: Date.now(),
+                      senderId: user.id,
+                      text: privateMessage,
+                    },
+                    q.Var('messages'),
+                  ),
+                },
+              }),
+            ),
+
+            checkIfAlreadyExistsUnreadMessage(
+              secondaryUserId,
+              chatAlreadyExistsCombinedId,
+            ),
           ),
         )
 
@@ -187,34 +232,39 @@ export default async function handler(
                 },
               }),
             ),
+
+            checkIfAlreadyExistsUnreadMessage(secondaryUserId, combinedId),
           ),
 
           // Já existe chat entre esses users, atualizar com a nova msg
-
-          // Atualizando o chat geral
-          q.Let(
-            {
-              ref: q.Select(
-                'ref',
-                q.Get(q.Match(q.Index('chats_by_combinedId'), combinedId)),
-              ),
-              doc: q.Get(q.Var('ref')),
-              messages: q.Select(['data', 'messages'], q.Var('doc')),
-            },
-            q.Update(q.Var('ref'), {
-              data: {
-                messages: q.Prepend(
-                  // Mensagens mais recentes ficam em 1o no DB (prepend)
-                  {
-                    // sentAt: q.Now(),
-                    sentAt: Date.now(),
-                    senderId: user.id,
-                    text: privateMessage,
-                  },
-                  q.Var('messages'),
+          q.Do(
+            // Atualizando o chat geral
+            q.Let(
+              {
+                ref: q.Select(
+                  'ref',
+                  q.Get(q.Match(q.Index('chats_by_combinedId'), combinedId)),
                 ),
+                doc: q.Get(q.Var('ref')),
+                messages: q.Select(['data', 'messages'], q.Var('doc')),
               },
-            }),
+              q.Update(q.Var('ref'), {
+                data: {
+                  messages: q.Prepend(
+                    // Mensagens mais recentes ficam em 1o no DB (prepend)
+                    {
+                      // sentAt: q.Now(),
+                      sentAt: Date.now(),
+                      senderId: user.id,
+                      text: privateMessage,
+                    },
+                    q.Var('messages'),
+                  ),
+                },
+              }),
+            ),
+
+            checkIfAlreadyExistsUnreadMessage(secondaryUserId, combinedId),
           ),
         ),
       )
