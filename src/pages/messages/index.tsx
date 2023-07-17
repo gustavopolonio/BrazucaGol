@@ -21,6 +21,8 @@ import { fromUnixTime, format } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
 import { Message } from '../../components/Message'
 import { checkDateIsCurrentWeek } from '../../utils/checkDateIsCurrentWeek'
+import { useUnreadChats } from '../../contexts/UreadChats'
+import { useRouter } from 'next/router'
 
 import styles from './styles.module.scss'
 
@@ -77,6 +79,10 @@ export default function Messages({ userChatsFormatted }: MessagesProps) {
   const [secondaryUserId, setSecondaryUserId] = useState('')
   const [isQueryingChatsHistory, setIsQueryingChatsHistory] = useState(false)
   const messageTextAreaRef = useRef<HTMLTextAreaElement>(null)
+  const { updateUnreadChats } = useUnreadChats()
+
+  const router = useRouter()
+  const refreshDataProps = () => router.replace(router.asPath)
 
   const {
     handleSubmit,
@@ -148,9 +154,14 @@ export default function Messages({ userChatsFormatted }: MessagesProps) {
       setIsReplyModalOpen(true)
     }
 
-    await api.post('/api/chats/unread', {
+    const responsePost = await api.post('/api/chats/unread', {
       combinedId,
     })
+
+    if (responsePost.status === 201) {
+      updateUnreadChats(responsePost.data.unreadChats)
+      refreshDataProps()
+    }
   }
 
   async function handleSendPrivateMessage(dataForm: SendMessage) {
@@ -176,6 +187,8 @@ export default function Messages({ userChatsFormatted }: MessagesProps) {
       showDatesOfMessagesOnChat(newChatHistory)
 
       messageTextAreaRef.current.style.height = '36px' // Resizing textarea height to 1 row
+
+      refreshDataProps()
     }
   }
 

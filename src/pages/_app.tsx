@@ -10,6 +10,7 @@ import { Header } from '../components/Header'
 import { CountdownKickContainer } from '../components/CountdownKickContainer'
 import { ClubsHighlightedes } from '../components/ClubsHighlightedes'
 import { MainContainer } from '../components/MainContainer'
+import { UnreadChatsProvider } from '../contexts/UreadChats'
 
 import '../styles/global.scss'
 
@@ -58,16 +59,18 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
       <IndividualGoalsProvider>
         <AvatarDataProvider>
           <UserPreferencesProvider>
-            <TopBar />
-            <Header clubs={clubs} />
-            <CountdownKickContainer />
-            <ClubsHighlightedes clubs={clubs} />
+            <UnreadChatsProvider>
+              <TopBar />
+              <Header clubs={clubs} />
+              <CountdownKickContainer />
+              <ClubsHighlightedes clubs={clubs} />
 
-            <MainContainer>
-              <Component {...pageProps} clubs={clubs} />
-            </MainContainer>
+              <MainContainer>
+                <Component {...pageProps} clubs={clubs} />
+              </MainContainer>
 
-            <Footer />
+              <Footer />
+            </UnreadChatsProvider>
           </UserPreferencesProvider>
         </AvatarDataProvider>
       </IndividualGoalsProvider>

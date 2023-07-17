@@ -3,24 +3,13 @@ import { GiOpenBook, GiSoccerKick } from 'react-icons/gi'
 import { FaExchangeAlt } from 'react-icons/fa'
 import Link from 'next/link'
 import { useAvatarData } from '../../../contexts/AvatarDataContext'
-import { useEffect, useState } from 'react'
-import { api } from '../../../services/api'
+import { useUnreadChats } from '../../../contexts/UreadChats'
 
 import styles from './styles.module.scss'
 
-type UnreadChats = Array<string> | []
-
 export function MyAccountSidebar() {
   const avatar = useAvatarData()
-  const [unreadChats, setUnreadChats] = useState<UnreadChats>([])
-
-  useEffect(() => {
-    const getUnreadChats = async () => {
-      const response = await api.get('/api/chats/unread')
-      setUnreadChats(response.data)
-    }
-    getUnreadChats()
-  }, [])
+  const { unreadChats } = useUnreadChats()
 
   return (
     <aside className={styles.menuContainer}>

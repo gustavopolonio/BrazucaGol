@@ -8,6 +8,12 @@ interface RequestBody {
   combinedId: string
 }
 
+interface UserChats {
+  data: {
+    unreadChats: []
+  }
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
@@ -43,7 +49,7 @@ export default async function handler(
     )
 
     try {
-      await fauna.query(
+      const response = await fauna.query<UserChats>(
         q.Let(
           {
             ref: q.Select(
@@ -66,7 +72,9 @@ export default async function handler(
         ),
       )
 
-      return res.status(201).json({ success: true })
+      return res
+        .status(201)
+        .json({ success: true, unreadChats: response.data.unreadChats })
     } catch (error) {
       return res.status(400).json({ error })
     }
