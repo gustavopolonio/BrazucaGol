@@ -86,6 +86,17 @@
       font-size: 14px;
       height: 14px;
       color: red;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      a {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        text-decoration: underline;
+        color: rgb(59, 59, 242);
+      }
     }
   }
 

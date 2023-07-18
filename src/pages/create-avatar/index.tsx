@@ -4,17 +4,18 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { IoMdRefresh } from 'react-icons/io'
+import { IoMdRefresh, IoIosInformationCircleOutline } from 'react-icons/io'
 import { BsCheckCircleFill } from 'react-icons/bs'
 import { LoadingSpinner } from '../../components/LoadingSpinner'
 import { api } from '../../services/api'
 import { buildNextAuthOption } from '../api/auth/[...nextauth]'
 import z from 'zod'
+import { useSession } from 'next-auth/react'
+import Link from 'next/link'
 
 import styles from './styles.module.scss'
 
 import { Club } from '../../@types/index'
-import { useSession } from 'next-auth/react'
 
 function compare(a: Club, b: Club) {
   if (a.name < b.name) {
@@ -32,8 +33,8 @@ const createAvatarFormSchema = z.object({
     .string()
     .min(3, { message: 'Mínimo 3 caracteres' })
     .max(20, { message: 'Máximo 20 caracteres' })
-    .regex(/^[a-zA-Z0-9]*$/, {
-      message: 'Apenas letras e/ou números',
+    .regex(/^[a-zA-Z0-9-_[\]]*$/, {
+      message: 'Caracter não permitido.',
     }),
   avatarClub: z.coerce.number().min(0, { message: 'Escolha seu time!' }),
 })
@@ -140,7 +141,12 @@ export default function CreateAvatar({ clubs }: CreateAvatarProps) {
           {nameExists ? (
             <span>Esse nome já está em uso</span>
           ) : errors.avatarName ? (
-            <span>{errors.avatarName.message}</span>
+            <span>
+              {errors.avatarName.message}
+              <Link href="/questions">
+                Saiba mais <IoIosInformationCircleOutline />
+              </Link>
+            </span>
           ) : (
             <span></span>
           )}
