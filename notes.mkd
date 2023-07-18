@@ -1,25 +1,10 @@
-- Mensagem privada '/avatar/[avatarName]' [ok]
-  https://www.youtube.com/watch?v=k4mjF4sPITE&ab_channel=LamaDev
-- Não deixar mandar msg para mim mesmo [ok]
-- See if has an page to see my avatar [ok]
-- If not logged in or avatar not active, Minha Conta sidebar doesn't appear [ok]
-- Entrar direto no link avatar/userName dá erro [ok]
+- Na página de mensagens: nomes com diferentes tamanhos quebram (ver o max de caracteres pra criar o nome) [ok]
 
-- Na coleção userChats salvar em ordem, o ultimo que enviou fica em 1° [ok]
-- Tirar a msg das unreads qnd clicar na conversa [ok]
-- Msg lida e msg nova na pág messages: deixar a última sempre em primeiro, mas destacar as não lidas [ok]
-- Em avatar/[avatarName] diferenciar se a ultima msg foi mandada por mim ou pelo secondary [ok]
-- Depois q li a msg att o estado da sidebar [ok]
-- Depois q li a msg tirar msg 'Não lida' [ok]
-- Qnd mando uma msg atualizar o texto da msg como a ultima enviada ("Você: ") [ok]
-
-- router.replace atualizando pag, ver se atrapalha
-- Qnd mando uma msg colocar essa msg em primeiro em '/messages'
-- fç: Atualizar para ver se tem recado novo
+- fç: Atualizar para ver se tem recado novo (não aparece na sidebar qnts mensagens novas tem: possivel solucao: no getserverProps de todas as pgs acessar api.get('/api/chats/unread'))
 - Aparecer qnts mensagem não lidas tem na sidebar. Atualizar qnd muda de pág (streaming) https://forums.fauna.com/t/event-streaming-email-also-on-field-change-create-db-copy/3008/4
+- Quebrar pág '/messages' em mais componentes
 
 - Deletar com radix (criar mesmo componente para as pages settings e messages)
-- Na página de mensagens: nomes com diferentes tamanhos quebram (ver o max de caracteres pra criar o nome)
 - Pegar quebra de linhas nas msgs enviadas e ver se precisa de overflow
 - Delete message on "/messages"
 

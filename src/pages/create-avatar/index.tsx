@@ -31,6 +31,7 @@ const createAvatarFormSchema = z.object({
   avatarName: z
     .string()
     .min(3, { message: 'Mínimo 3 caracteres' })
+    .max(20, { message: 'Máximo 20 caracteres' })
     .regex(/^[a-zA-Z0-9]*$/, {
       message: 'Apenas letras e/ou números',
     }),

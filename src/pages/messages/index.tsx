@@ -79,6 +79,7 @@ export default function Messages({ userChatsFormatted }: MessagesProps) {
   const [secondaryUserId, setSecondaryUserId] = useState('')
   const [isQueryingChatsHistory, setIsQueryingChatsHistory] = useState(false)
   const messageTextAreaRef = useRef<HTMLTextAreaElement>(null)
+  const refMessagesContainer = useRef(null)
   const { updateUnreadChats } = useUnreadChats()
 
   const router = useRouter()
@@ -198,19 +199,23 @@ export default function Messages({ userChatsFormatted }: MessagesProps) {
     el?.scrollTo(0, el.scrollHeight)
   }
 
+  useEffect(() => {
+    refMessagesContainer.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [userChatsFormatted])
+
   return (
     <>
       <Head>
         <title>Mensagens | Brazucagol</title>
       </Head>
 
-      <div className={styles.messagesContainer}>
+      <div ref={refMessagesContainer} className={styles.messagesContainer}>
         <header>
           <h2>Seus recados</h2>
           <Tooltip.Provider>
             <Tooltip.Root>
               <Tooltip.Trigger asChild>
-                <button>
+                <button onClick={refreshDataProps}>
                   <FiRefreshCcw size={24} />
                 </button>
               </Tooltip.Trigger>
@@ -298,11 +303,20 @@ export default function Messages({ userChatsFormatted }: MessagesProps) {
                       <Dialog.Content
                         ref={(el) => scrollToBottomReplyModal(el)}
                         className={styles.modalContent}
+                        onInteractOutside={(e) =>
+                          isSubmitting && e.preventDefault()
+                        }
+                        onEscapeKeyDown={(e) =>
+                          isSubmitting && e.preventDefault()
+                        }
                       >
                         <div className={styles.replyModalHeader}>
                           <Dialog.Title>{chat.secondaryUser.name}</Dialog.Title>
 
-                          <Dialog.Close className={styles.closeModalButton}>
+                          <Dialog.Close
+                            className={styles.closeModalButton}
+                            onClick={(e) => isSubmitting && e.preventDefault()}
+                          >
                             <IoMdClose size={16} />
                           </Dialog.Close>
                         </div>

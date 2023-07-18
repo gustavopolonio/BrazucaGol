@@ -52,10 +52,18 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  width: 120px;
 
   img {
     border-radius: 50%;
     border: 1px solid #ABFF4F;
+  }
+  span {
+    width: inherit;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
   }
 }
 
