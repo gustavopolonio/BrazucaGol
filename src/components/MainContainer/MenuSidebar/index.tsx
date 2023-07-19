@@ -45,7 +45,7 @@ export function MenuSidebar() {
           <div></div>
         </Link>
 
-        <Link href="" className="temporarily-disabled">
+        <Link href="/questions">
           Dúvidas
           <MdPlayArrow />
           <div></div>
