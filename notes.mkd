@@ -1,25 +1,22 @@
-- Deixar criar nome com _ e colocar na pág de dúvidas oq é permitido ao criar nome [ok]
-- Criar página de dúvidas e colocar explicação de quais caracteres são permitidos no nome do avatar e min e max de caracteres [ok]
+- Procura jogador sem nada escrito da 404 [ok]
+
+- Pág 'create-avatar', tootip radix para 'Clique aqui para checar se esse nome está disponível'
+- Deletar com radix (criar mesmo componente para as pages settings e messages)
+- Progress radix ui no level
+
+- Pegar quebra de linhas nas msgs enviadas e ver se precisa de overflow
+- Delete message on "/messages"
+
 
 - fç: Atualizar para ver se tem recado novo (não aparece na sidebar qnts mensagens novas tem: possivel solucao: no getserverProps de todas as pgs acessar api.get('/api/chats/unread'))
 - Aparecer qnts mensagem não lidas tem na sidebar. Atualizar qnd muda de pág (streaming) https://forums.fauna.com/t/event-streaming-email-also-on-field-change-create-db-copy/3008/4
 - Quebrar pág '/messages' em mais componentes
 
-- Pág 'create-avatar', tootip radiz para 'Clique aqui para checar se esse nome está disponível'
-
-- Deletar com radix (criar mesmo componente para as pages settings e messages)
-- Pegar quebra de linhas nas msgs enviadas e ver se precisa de overflow
-- Delete message on "/messages"
-
 - On "/avatar/[my_current_avatar]" let change avatar style and text
-- Deixar o historico do chat salvo pra nao fazer a mesma requsiição em sequencia varias vezes (react query)
+- Deixar o historico do chat salvo pra nao fazer a mesma requsição em sequencia varias vezes (react query)
 
 - Saber quantas pessoas estão online
 - Configurar styled components ou stitches
-- Progress radix ui no level
-
-- Procura jogador sem nada escrito da 404
-- Entrar sem estar logado no /messages
 
 - useReducer
 

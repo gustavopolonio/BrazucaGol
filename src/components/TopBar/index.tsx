@@ -34,7 +34,10 @@ export function TopBar() {
   }
 
   function handleSearchForPlayer(data: SearchForPlayerFormData) {
-    router.push(`/avatar/${data.avatarName}`)
+    if (data.avatarName.length !== 0) {
+      router.push(`/avatar/${data.avatarName}`)
+    }
+
     reset()
   }
 
