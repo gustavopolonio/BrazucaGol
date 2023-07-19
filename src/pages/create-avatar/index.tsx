@@ -12,6 +12,7 @@ import { buildNextAuthOption } from '../api/auth/[...nextauth]'
 import z from 'zod'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
+import * as Tooltip from '@radix-ui/react-tooltip'
 
 import styles from './styles.module.scss'
 
@@ -131,12 +132,29 @@ export default function CreateAvatar({ clubs }: CreateAvatarProps) {
               />
             )}
 
-            <button type="button" onClick={() => checkAvatarName()}>
-              <IoMdRefresh />
-              <div className={styles.messageHolder}>
-                <p>Clique aqui para checar se esse nome está disponível</p>
-              </div>
-            </button>
+            <Tooltip.Provider delayDuration={200}>
+              <Tooltip.Root>
+                <Tooltip.Trigger asChild>
+                  <button type="button" onClick={() => checkAvatarName()}>
+                    <IoMdRefresh size={18} />
+                  </button>
+                </Tooltip.Trigger>
+                <Tooltip.Portal>
+                  <Tooltip.Content
+                    side="right"
+                    sideOffset={5}
+                    className={styles.TooltipContent}
+                  >
+                    Clique para checar se esse nome está disponível
+                    <Tooltip.Arrow
+                      className={styles.TooltipArrow}
+                      width={20}
+                      height={10}
+                    />
+                  </Tooltip.Content>
+                </Tooltip.Portal>
+              </Tooltip.Root>
+            </Tooltip.Provider>
           </div>
           {nameExists ? (
             <span>Esse nome já está em uso</span>
@@ -193,14 +211,14 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     buildNextAuthOption(req as NextApiRequest, res as NextApiResponse),
   )
 
-  if (session?.isAvatarActive) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/',
-      },
-    }
-  }
+  // if (session?.isAvatarActive) {
+  //   return {
+  //     redirect: {
+  //       permanent: false,
+  //       destination: '/',
+  //     },
+  //   }
+  // }
 
   return {
     props: {},

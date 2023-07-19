@@ -1,6 +1,5 @@
-- Procura jogador sem nada escrito da 404 [ok]
+- Pág 'create-avatar', tooltip radix para 'Clique aqui para checar se esse nome está disponível' [ok]
 
-- Pág 'create-avatar', tootip radix para 'Clique aqui para checar se esse nome está disponível'
 - Deletar com radix (criar mesmo componente para as pages settings e messages)
 - Progress radix ui no level
 
