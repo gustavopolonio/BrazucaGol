@@ -1,4 +1,6 @@
 import Image from 'next/image'
+import * as Progress from '@radix-ui/react-progress'
+import { useState } from 'react'
 
 import styles from './styles.module.scss'
 
@@ -16,6 +18,9 @@ export function PlayerLevelAndGoals({
   hourlyGoals,
   money = 22569,
 }: PlayerLevelAndGoalsProps) {
+  const [totalGoalsOnCurrentLevel] = useState(1958)
+  const [goalsToLevelUp] = useState(2714)
+
   return (
     <div className={styles.playerData}>
       <div className={styles.playerLevel}>
@@ -31,9 +36,20 @@ export function PlayerLevelAndGoals({
         </div>
       </div>
 
-      <div className={styles.progressBarContainer}>
-        <div className={styles.fillerProgressBar}></div>
-      </div>
+      <Progress.Root
+        className={styles.ProgressRoot}
+        value={totalGoalsOnCurrentLevel}
+        max={goalsToLevelUp}
+      >
+        <Progress.Indicator
+          className={styles.ProgressIndicator}
+          style={{
+            transform: `translateX(-${
+              100 - (totalGoalsOnCurrentLevel / goalsToLevelUp) * 100
+            }%)`,
+          }}
+        />
+      </Progress.Root>
 
       <table>
         <tbody>

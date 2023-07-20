@@ -1,7 +1,6 @@
-- Pág 'create-avatar', tooltip radix para 'Clique aqui para checar se esse nome está disponível' [ok]
+- Progress radix ui no level [ok]
 
 - Deletar com radix (criar mesmo componente para as pages settings e messages)
-- Progress radix ui no level
 
 - Pegar quebra de linhas nas msgs enviadas e ver se precisa de overflow
 - Delete message on "/messages"

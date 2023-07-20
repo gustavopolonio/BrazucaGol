@@ -211,14 +211,14 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     buildNextAuthOption(req as NextApiRequest, res as NextApiResponse),
   )
 
-  // if (session?.isAvatarActive) {
-  //   return {
-  //     redirect: {
-  //       permanent: false,
-  //       destination: '/',
-  //     },
-  //   }
-  // }
+  if (session?.isAvatarActive) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    }
+  }
 
   return {
     props: {},
