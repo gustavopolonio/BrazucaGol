@@ -12,6 +12,7 @@ interface MessageProps {
 }
 
 export function Message({ sentAt, text, senderId }: MessageProps) {
+  console.log(text)
   const { data } = useSession()
 
   return (
