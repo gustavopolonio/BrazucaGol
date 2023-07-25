@@ -19,17 +19,22 @@ export default async function handler(
   res: NextApiResponse,
 ): Promise<void> {
   if (req.method === 'GET') {
-    const { user } = await getServerSession(
+    const session = await getServerSession(
       req,
       res,
       buildNextAuthOption(req, res),
     )
 
+    if (!session) return res.status(400).send('Session não iniciada')
+    if (session.isAvatarActive === false) {
+      return res.status(400).send('Avatar não está ativo')
+    }
+
     try {
       const unreadChats = await fauna.query(
         q.Select(
           ['data', 'unreadChats'],
-          q.Get(q.Match(q.Index('userChats_by_userId'), user.id)),
+          q.Get(q.Match(q.Index('userChats_by_userId'), session.user.id)),
         ),
       )
 

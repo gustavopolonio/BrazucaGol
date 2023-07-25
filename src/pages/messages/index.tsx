@@ -1,9 +1,9 @@
 import Head from 'next/head'
-import { BsFillSendFill, BsFillTrashFill } from 'react-icons/bs'
+import { BsFillSendFill /* BsFillTrashFill */ } from 'react-icons/bs'
 import { FiRefreshCcw } from 'react-icons/fi'
 import Image from 'next/image'
 import * as Tooltip from '@radix-ui/react-tooltip'
-import * as AlertDialog from '@radix-ui/react-alert-dialog'
+// import * as AlertDialog from '@radix-ui/react-alert-dialog'
 import * as Dialog from '@radix-ui/react-dialog'
 import { GetServerSideProps, NextApiRequest, NextApiResponse } from 'next'
 import { getServerSession } from 'next-auth'
@@ -193,7 +193,18 @@ export default function Messages({ userChatsFormatted }: MessagesProps) {
     }
   }
 
-  function handleDeleteMessage() {}
+  // async function handleDeleteMessage(chatCombinedId: string) {
+  //   // console.log(chatCombinedId)
+  //   const response = await api.delete('/api/chats', {
+  //     params: {
+  //       combinedId: chatCombinedId,
+  //     },
+  //   })
+
+  //   if (response.status === 200) {
+  //     console.log('deletou')
+  //   }
+  // }
 
   function scrollToBottomReplyModal(el: HTMLDivElement) {
     el?.scrollTo(0, el.scrollHeight)
@@ -395,7 +406,7 @@ export default function Messages({ userChatsFormatted }: MessagesProps) {
                     </Dialog.Portal>
                   </Dialog.Root>
 
-                  <AlertDialog.Root>
+                  {/* <AlertDialog.Root>
                     <AlertDialog.Trigger asChild>
                       <button className={styles.deleteMessageButton}>
                         Deletar
@@ -427,7 +438,7 @@ export default function Messages({ userChatsFormatted }: MessagesProps) {
                           </AlertDialog.Cancel>
                           <AlertDialog.Action
                             className={`${styles.DialogButton} ${styles.DialogDeleteButton}`}
-                            onClick={handleDeleteMessage}
+                            onClick={() => handleDeleteMessage(chat.combinedId)}
                             asChild
                           >
                             <button
@@ -440,7 +451,7 @@ export default function Messages({ userChatsFormatted }: MessagesProps) {
                         </div>
                       </AlertDialog.Content>
                     </AlertDialog.Portal>
-                  </AlertDialog.Root>
+                  </AlertDialog.Root> */}
                 </div>
               </li>
             ))}

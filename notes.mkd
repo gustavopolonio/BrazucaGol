@@ -1,9 +1,13 @@
-- Progress radix ui no level [ok]
+- Pegar quebra de linhas nas msgs enviadas e ver se precisa de overflow
+
+- Delete message on "/messages" (
+  - CombinedId = userId + secondaryId
+  - Need to have 2 general chats per chat opened. Because if a user deletes his chat, I only delete the chat of his combinedId
+  - Because of that, when a user sends a message, I need to update (or create) his general chat and the secondary user general chat
+)
 
 - Deletar com radix (criar mesmo componente para as pages settings e messages)
 
-- Pegar quebra de linhas nas msgs enviadas e ver se precisa de overflow
-- Delete message on "/messages"
 
 
 - fç: Atualizar para ver se tem recado novo (não aparece na sidebar qnts mensagens novas tem: possivel solucao: no getserverProps de todas as pgs acessar api.get('/api/chats/unread'))

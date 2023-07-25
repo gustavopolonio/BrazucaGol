@@ -116,7 +116,7 @@ export default function AvatarName({ avatar, clubs }: AvatarNameProps) {
   async function handleSendPrivateMessage(data: SendMessage) {
     if (data.privateMessage.length === 0) return
 
-    // Fazer req enviar mensagem
+    // Make req sends the message
     const response = await api.post('/api/chats', {
       privateMessage: data.privateMessage,
       secondaryUserId: avatar.userId,

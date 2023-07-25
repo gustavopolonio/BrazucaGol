@@ -13,6 +13,12 @@ interface RequestBody {
   chatAlreadyExistsCombinedId?: string
 }
 
+interface UserChats {
+  data: {
+    chats: []
+  }
+}
+
 async function checkIfAlreadyExistsUnreadMessage(
   secondaryUserId: string,
   combinedId: string,
@@ -150,7 +156,7 @@ export default async function handler(
           // Não existe chat entre esses users, criar para os 2:
 
           q.Do(
-            // Criando chat geral da conversa
+            // Criando chat geral da conversa do user que enviou a mensagem
             q.Create(q.Collection('chats'), {
               data: {
                 combinedId,
@@ -272,6 +278,50 @@ export default async function handler(
       return res.status(201).json({ success: true })
     } catch (error) {
       console.log(error)
+    }
+  }
+
+  if (req.method === 'DELETE') {
+    const { combinedId } = req.query
+
+    const { user } = await getServerSession(
+      req,
+      res,
+      buildNextAuthOption(req, res),
+    )
+
+    try {
+      await fauna.query<UserChats>(
+        q.Let(
+          {
+            ref: q.Select(
+              'ref',
+              q.Get(q.Match(q.Index('userChats_by_userId'), user.id)),
+            ),
+            chatsUpdated: q.Filter(
+              q.Select(['data', 'chats'], q.Get(q.Var('ref'))),
+              q.Lambda(
+                'chat',
+                q.Not(
+                  q.Equals(q.Select('combinedId', q.Var('chat')), combinedId),
+                ),
+              ),
+              // q.Not(q.Equals(q.Var('chat'), combinedId))
+            ),
+          },
+          q.Update(q.Var('ref'), {
+            data: {
+              chats: q.Var('chatsUpdated'),
+            },
+          }),
+        ),
+      )
+
+      console.log('DELETED')
+
+      return res.status(200).json({ deleted: true })
+    } catch (error) {
+      return res.status(400).json({ error })
     }
   }
 
