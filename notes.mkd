@@ -1,4 +1,7 @@
-- Pegar quebra de linhas nas msgs enviadas e ver se precisa de overflow
+- Aparecer qnts mensagem não lidas tem na sidebar. Atualizar qnd muda de pág (streaming) https://forums.fauna.com/t/event-streaming-email-also-on-field-change-create-db-copy/3008/4
+- fç: Atualizar para ver se tem recado novo (não aparece na sidebar qnts mensagens novas tem: possivel solucao: no getserverProps de todas as pgs acessar api.get('/api/chats/unread'))
+
+- Ver values do fauna (retorna um campo específico do document do index)
 
 - Delete message on "/messages" (
   - CombinedId = userId + secondaryId
@@ -8,10 +11,6 @@
 
 - Deletar com radix (criar mesmo componente para as pages settings e messages)
 
-
-
-- fç: Atualizar para ver se tem recado novo (não aparece na sidebar qnts mensagens novas tem: possivel solucao: no getserverProps de todas as pgs acessar api.get('/api/chats/unread'))
-- Aparecer qnts mensagem não lidas tem na sidebar. Atualizar qnd muda de pág (streaming) https://forums.fauna.com/t/event-streaming-email-also-on-field-change-create-db-copy/3008/4
 - Quebrar pág '/messages' em mais componentes
 
 - On "/avatar/[my_current_avatar]" let change avatar style and text

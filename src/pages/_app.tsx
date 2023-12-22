@@ -10,7 +10,7 @@ import { Header } from '../components/Header'
 import { CountdownKickContainer } from '../components/CountdownKickContainer'
 import { ClubsHighlightedes } from '../components/ClubsHighlightedes'
 import { MainContainer } from '../components/MainContainer'
-import { UnreadChatsProvider } from '../contexts/UreadChats'
+import { UnreadChatsProvider } from '../contexts/UnreadChats'
 
 import '../styles/global.scss'
 

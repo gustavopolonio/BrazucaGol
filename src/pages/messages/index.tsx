@@ -21,7 +21,7 @@ import { fromUnixTime, format } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
 import { Message } from '../../components/Message'
 import { checkDateIsCurrentWeek } from '../../utils/checkDateIsCurrentWeek'
-import { useUnreadChats } from '../../contexts/UreadChats'
+import { useUnreadChats } from '../../contexts/UnreadChats'
 import { useRouter } from 'next/router'
 
 import styles from './styles.module.scss'
@@ -155,6 +155,7 @@ export default function Messages({ userChatsFormatted }: MessagesProps) {
       setIsReplyModalOpen(true)
     }
 
+    // Deleting this unreadChat id of user unread chats
     const responsePost = await api.post('/api/chats/unread', {
       combinedId,
     })

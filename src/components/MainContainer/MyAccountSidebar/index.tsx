@@ -3,13 +3,50 @@ import { GiOpenBook, GiSoccerKick } from 'react-icons/gi'
 import { FaExchangeAlt } from 'react-icons/fa'
 import Link from 'next/link'
 import { useAvatarData } from '../../../contexts/AvatarDataContext'
-import { useUnreadChats } from '../../../contexts/UreadChats'
+import { useUnreadChats } from '../../../contexts/UnreadChats'
+import { fauna } from '../../../services/faunadb'
+import { query as q } from 'faunadb'
 
 import styles from './styles.module.scss'
 
 export function MyAccountSidebar() {
   const avatar = useAvatarData()
-  const { unreadChats } = useUnreadChats()
+  const { unreadChats, updateUnreadChats } = useUnreadChats()
+
+  // Streaming unread chats
+  const docRef = q.Select(
+    ['ref'],
+    q.Get(q.Match(q.Index('userChats_by_userId'), avatar.userId)),
+  )
+
+  const report = (e) => {
+    console.log('REPORT')
+    const data =
+      'action' in e
+        ? updateUnreadChats(e.document.data.unreadChats)
+        : e.data.unreadChats
+    console.log('DATA', data)
+  }
+
+  let stream
+  const startStream = () => {
+    stream = fauna.stream
+      .document(docRef)
+      .on('snapshot', (snapshot) => {
+        report(snapshot)
+      })
+      .on('version', (version) => {
+        report(version)
+      })
+      .on('error', (error) => {
+        console.log(error)
+        stream.close()
+        setTimeout(startStream, 1000)
+      })
+      .start()
+  }
+
+  // startStream()
 
   return (
     <aside className={styles.menuContainer}>
